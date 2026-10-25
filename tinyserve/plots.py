@@ -1,8 +1,29 @@
-"""Lesson A2: roofline diagram as code. Needs matplotlib."""
+"""Diagrams as code (matplotlib): roofline (Lesson A2), RoPE rotation frequencies (Lesson B3)."""
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+
+
+def plot_rope(inv_freq, num_positions, path):
+    """Left: wavelength (positions per full turn) of each rotation pair. Right: cos(position x frequency)."""
+    inv_freq = np.asarray(inv_freq, dtype=np.float64)
+    fig, (left, right) = plt.subplots(1, 2, figsize=(11, 4))
+    left.semilogy(np.arange(len(inv_freq)), 2 * np.pi / inv_freq, marker="o", markersize=3)
+    left.set_xlabel("pair index i")
+    left.set_ylabel("wavelength (positions per turn)")
+    left.set_title("rotation wavelength per pair")
+    left.grid(True, which="both", alpha=0.3)
+    image = right.imshow(np.cos(np.outer(np.arange(num_positions), inv_freq)), aspect="auto", cmap="RdBu", vmin=-1, vmax=1)
+    right.set_xlabel("pair index i")
+    right.set_ylabel("position")
+    right.set_title("cos(position x frequency)")
+    fig.colorbar(image, ax=right)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path
 
 
 def plot_roofline(peak_flops, peak_bandwidth, points, path, title="Roofline", burst_flops=None):
