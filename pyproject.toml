@@ -17,3 +17,4 @@ include = ["tinyserve*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["slow: needs real model weights (run on Colab)"]
