@@ -8,10 +8,14 @@ import torch
 MODEL_ID = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 
 
-def load_model(device="cuda", dtype=torch.float16, model_id=MODEL_ID):
+def load_model(device="cuda", dtype=torch.float16, model_id=MODEL_ID, quiet=True):
     """Load tokenizer and Hugging Face model in eval mode."""
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
+    if quiet:
+        from tinyserve.quiet import quiet_logs
+
+        quiet_logs()
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id, dtype=dtype).to(device).eval()
     return tokenizer, model
