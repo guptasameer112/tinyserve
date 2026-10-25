@@ -61,7 +61,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 
 ## Progress tracker
 - [x] Repo created on GitHub
-- [ ] A1 (done) A2 (done) A3
+- [x] A1 A2 A3
 - [ ] B1 B2 B3 B4 B5 B6 B7 B8
 - [ ] C1 C2 C3 C4
 - [ ] D1 D2 D3 D4 D5
