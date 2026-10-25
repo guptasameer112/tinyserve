@@ -14,8 +14,10 @@ def test_matmul_flops_and_bytes():
 
 def test_decode_matmul_intensity_is_about_batch():
     # (B, K) @ (K, N) with K=N=4096 in FP16: bytes are dominated by the weight, so intensity ~ B.
+    # Activations add B*(K+N) elements to the weight's K*N, so intensity is slightly below B:
+    # B / (1 + B*(K+N)/(K*N)) = 62.1 at B=64, which is within 5%.
     for batch in (1, 8, 64):
-        assert matmul_intensity(batch, 4096, 4096, 2) == pytest.approx(batch, rel=0.02)
+        assert matmul_intensity(batch, 4096, 4096, 2) == pytest.approx(batch, rel=0.05)
 
 
 def test_ridge_and_attainable():
