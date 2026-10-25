@@ -3,8 +3,13 @@ import pytest
 
 from tinyserve.roofline import (
     T4_DATASHEET, attainable_flops, decode_tokens_per_s_ceiling, is_memory_bound,
-    matmul_bytes, matmul_flops, matmul_intensity, ridge_point, summarize,
+    matmul_bytes, matmul_flops, matmul_intensity, model_bandwidth_utilization, ridge_point, summarize,
 )
+
+
+def test_mbu_formula():
+    # 100 steps/s x 2.2 GB = 220 GB/s of weight traffic out of 241 GB/s.
+    assert model_bandwidth_utilization(100, 2.2e9, 241e9) == pytest.approx(220 / 241)
 
 
 def test_matmul_flops_and_bytes():

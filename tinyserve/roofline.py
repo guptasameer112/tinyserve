@@ -41,6 +41,11 @@ def decode_tokens_per_s_ceiling(weight_bytes, bandwidth, batch=1):
     return batch * bandwidth / weight_bytes
 
 
+def model_bandwidth_utilization(steps_per_s, weight_bytes, peak_bandwidth):
+    """MBU: fraction of memory bandwidth used just to stream the weights once per decode step."""
+    return steps_per_s * weight_bytes / peak_bandwidth
+
+
 def summarize(values):
     """Report ranges, not single numbers."""
     return {"min": min(values), "median": statistics.median(values), "max": max(values), "n": len(values)}
