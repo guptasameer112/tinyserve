@@ -1,0 +1,26 @@
+{
+  "name": "A1_shapes",
+  "timestamp_utc": "2026-10-25T06:03:58Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "git_sha": "5dc03fc",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.20.2"
+  },
+  "data": {
+    "text": "The capital of France is",
+    "tokens": ["<s>", "\u2581The", "\u2581capital", "\u2581of", "\u2581France", "\u2581is"],
+    "input_ids_shape": [6],
+    "embedding_shape": [6, 2048],
+    "logits_shape": [6, 32000],
+    "logits_dtype": "torch.float16",
+    "logits_bytes": 384000,
+    "num_params": 1100048384,
+    "weight_bytes": 2200096768,
+    "greedy_top5_last_row": {"\u2581Paris": 0.50947, "\u2581located": 0.16540, ":": 0.02170, "\u2581the": 0.02170, "?": 0.02103},
+    "fp16_prefix_logit_max_abs_diff": 0.0693359375
+  }
+}
