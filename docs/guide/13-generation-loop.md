@@ -50,6 +50,10 @@ system/user/assistant turns as expected during chat training. Use
 `tokenizer.apply_chat_template(..., tokenize=True, add_generation_prompt=True)`
 to include the correct special tokens once.
 
+With `return_tensors="pt", return_dict=True`, select `["input_ids"][0]`
+for the single prompt tensor. Indexing the container directly with `[0]`
+can return a tokenizer `Encoding`, which has no tensor `.to()` method.
+
 A chat template often improves answer style and EOS behavior, but it does
 not guarantee EOS. The new-token budget is always a separate stopping bound.
 `skip_special_tokens=True` hides EOS when decoding; the returned IDs still
