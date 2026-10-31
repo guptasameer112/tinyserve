@@ -69,6 +69,18 @@ The notebook saves the test summary, environment, prompt comparisons,
 greedy token IDs and error ranges to `results/B8_full_model.json`.
 Runtime verification awaits the user's Colab run.
 
+### Recorded Colab run (2026-10-31)
+
+All **143 tests passed**, none skipped. All 36 greedy steps (12 per prompt)
+matched HF exactly. Logits differences across prompts/steps ranged from
+`7.15e-6` to `1.67e-5`. Packed-vs-separate difference was `4.58e-5`, within
+tolerance, with equal token choices. Both models had 1,100,048,384 parameters.
+
+An earlier memory-constrained runtime repeatedly lost its kernel. Model
+loading succeeded on a fresh T4 runtime with 11.10 GiB free system RAM and
+an almost empty GPU. Resetting a notebook kernel alone is not the same as
+replacing the whole Colab runtime. Save results before deleting a runtime.
+
 ## Interview questions
 
 1. **Why is full-model parity necessary?** Correct isolated blocks do not

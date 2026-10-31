@@ -32,7 +32,14 @@ All 22 real TinyLlama MLPs matched HF exactly in FP32.
 [B7: decoder layer and residuals](notebooks/B7_decoder_layer.ipynb) passed
 all 94 B4-B7 tests in Colab. All 22 isolated layers matched HF within 9.54e-7.
 
-[B8: full model](notebooks/B8_full_model.ipynb) is ready for Colab validation:
-strict weight loading, accumulated logits parity and token-exact greedy
-comparisons across multiple prompts. It saves `results/B8_full_model.json`.
-Next after validation: C1 (sampling).
+[B8: full model](notebooks/B8_full_model.ipynb) passed 143 tests and all 36
+greedy parity steps in Colab. Full-model logits differed from HF by at most
+1.67e-5 across the tested prompts/steps.
+
+[C1: sampling](notebooks/C1_sampling.ipynb) is ready for Colab validation:
+greedy, temperature, top-k and top-p, checked against HF probability filters.
+It needs no model weights and saves `results/C1_sampling.json`.
+Next after validation: C2 (generation loop).
+
+Part G is included in the planned scope: Qwen2.5-0.5B, prompt-lookup
+speculative decoding, a KV visualizer and INT8 KV cache.

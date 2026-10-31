@@ -46,7 +46,7 @@ Clock, power and temperature details are a footnote ("the T4 varies run to run, 
 | **D. Batching and paging** | D1 Flattened batching and attention metadata. D2 Block table and slot mapping, paged cache, scrambled-block test. D3 Block manager (free list, ref counts) with property tests. D4 Scheduler (continuous batching, preemption). D5 Engine loop and memory budgeting | `engine/` | Core |
 | **E. Serving** | E1 Streaming OpenAI-compatible server (driven from the notebook). E2 Benchmark vs HF (throughput, TTFT, latency) | `server/`, `bench/` | Core |
 | **F. Performance** | F1 Hash-chained prefix cache. F2 Triton paged-attention decode kernel plus fuzz tests. F3 CUDA graphs. F4 Ablation table and MBU analysis | `kernels/`, `engine/` | Stretch |
-| **G. Extras** | Qwen2.5-0.5B support, prompt-lookup speculative decoding, KV visualizer, INT8 KV cache | | Optional |
+| **G. Extras** | G1 Qwen2.5-0.5B support. G2 Prompt-lookup speculative decoding. G3 KV visualizer. G4 INT8 KV cache | | Planned |
 | **H. Packaging** | README, blog post, PDF, CI | | Core |
 
 Parts A to E and H make a project that can be explained end to end. Part F is what makes it stand out for inference roles.
@@ -62,9 +62,10 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 ## Progress tracker
 - [x] Repo created on GitHub
 - [x] A1 A2 A3
-- [ ] B1 (done) B2 (done) B3 B4 (done) B5 (done) B6 (done) B7 (done: B4-B7 94 tests passed in Colab) B8 (created; Colab validation pending)
-- [ ] C1 C2 C3 C4
+- [ ] B1 (done) B2 (done) B3 B4 (done) B5 (done) B6 (done) B7 (done) B8 (done: 143 tests and 36 greedy parity steps passed in Colab)
+- [ ] C1 (created; Colab validation pending) C2 C3 C4
 - [ ] D1 D2 D3 D4 D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4
+- [ ] G1 G2 G3 G4
 - [ ] H
