@@ -187,3 +187,48 @@ def compare_decoder_layers(model, input_ids):
     if not rows:
         raise ValueError("no HF decoder layers were captured")
     return rows
+
+
+@torch.no_grad()
+def compare_full_model(ours, reference, input_ids):
+    """Check accumulated FP32 logits and argmax at every position; no cache."""
+    if (ours.training or reference.training or next(ours.parameters()).dtype != torch.float32
+            or next(reference.parameters()).dtype != torch.float32):
+        raise ValueError("full-model parity requires FP32 eval models")
+    if reference.config._attn_implementation != "eager":
+        raise ValueError("full-model parity requires HF eager attention")
+    positions = torch.arange(input_ids.numel(), device=input_ids.device)
+    output = ours(input_ids, positions, AttentionMetadata(positions))
+    expected = reference(input_ids[None], use_cache=False).logits[0].float()
+    # Full-stack rounding accumulates over 22 layers; keep the bound explicit.
+    torch.testing.assert_close(output, expected, rtol=1e-5, atol=1e-4)
+    if not torch.equal(output.argmax(dim=-1), expected.argmax(dim=-1)):
+        raise AssertionError("FP32 argmax token parity failed")
+    top_scores = expected[-1].topk(2).values
+    return {
+        "tokens": input_ids.numel(),
+        "max_abs_diff": (output - expected).abs().max().item(),
+        "argmax_equal": True,
+        "next_token_id": output[-1].argmax().item(),
+        "hf_top_two_margin": (top_scores[0] - top_scores[1]).item(),
+    }
+
+
+@torch.no_grad()
+def compare_greedy_steps(ours, reference, input_ids, max_new_tokens=12):
+    """Verification loop, not the public generator (C2). Check both models at every step."""
+    if not isinstance(max_new_tokens, int) or isinstance(max_new_tokens, bool) or max_new_tokens <= 0:
+        raise ValueError("max_new_tokens must be a positive integer")
+    ids = input_ids.clone()
+    eos = reference.config.eos_token_id
+    eos_ids = (eos,) if isinstance(eos, int) else tuple(eos or ())
+    rows = []
+    for step in range(max_new_tokens):
+        result = compare_full_model(ours, reference, ids)
+        result["step"] = step
+        rows.append(result)
+        token = result["next_token_id"]
+        ids = torch.cat((ids, ids.new_tensor([token])))
+        if token in eos_ids:
+            break
+    return ids, rows

@@ -64,6 +64,13 @@ The notebook runs B4-B7 tests in Colab before demos and saves test output,
 environment info and per-layer differences to `results/B7_decoder_layer.json`.
 Runtime validation is pending the user's Colab run.
 
+### Recorded Colab run (2026-10-31)
+
+All **94 B4-B7 tests passed**, none skipped. Identity, explicit wiring and
+prefix-causality differences were zero. Packed-vs-separate difference was
+`1.19e-7`. Real isolated layer differences ranged from `3.73e-9` to
+`9.54e-7`, within the FP32 assertions. Results used commit `451a831`.
+
 ## Interview questions
 
 1. **What is a residual connection?** Add a branch's output to its input
