@@ -6,6 +6,8 @@ from tinyserve.models.rope import apply_rope, get_rope_theta, rope_cos_sin
 from tinyserve.models.attention import causal_mask
 from tinyserve.models.gqa import grouped_query_attention
 from tinyserve.models.mlp import MLP
+from tinyserve.models.llama import DecoderLayer
+from tinyserve.models.attention import AttentionMetadata
 from tinyserve.weights import head_dim
 
 
@@ -16,7 +18,9 @@ def capture_module_io(model, input_ids, module_type):
     for name, module in model.named_modules():
         if isinstance(module, module_type):
             def hook(_module, args, output, name=name):
-                records.append((name, args[0].detach(), output.detach()))
+                # Older HF decoder layers return a tuple with hidden states first.
+                hidden_output = output[0] if isinstance(output, tuple) else output
+                records.append((name, args[0].detach(), hidden_output.detach()))
 
             handles.append(module.register_forward_hook(hook))
     try:
@@ -152,4 +156,34 @@ def compare_mlp(model, input_ids):
         })
     if not rows:
         raise ValueError("no Hugging Face LlamaMLP modules were captured")
+    return rows
+
+
+@torch.no_grad()
+def compare_decoder_layers(model, input_ids):
+    """Compare each isolated decoder layer on its real HF input, with identical weights."""
+    from transformers.models.llama.modeling_llama import LlamaDecoderLayer
+
+    if model.training or next(model.parameters()).dtype != torch.float32:
+        raise ValueError("decoder parity requires an FP32 model in eval mode")
+    if model.config._attn_implementation != "eager":
+        raise ValueError("decoder parity requires HF eager attention")
+    modules = dict(model.named_modules())
+    metadata = AttentionMetadata(torch.arange(input_ids.numel(), device=input_ids.device))
+    rows = []
+    for name, layer_input, reference_output in capture_module_io(model, input_ids, LlamaDecoderLayer):
+        ours = DecoderLayer(model.config, device=layer_input.device, dtype=layer_input.dtype)
+        ours.load_state_dict(modules[name].state_dict(), strict=True)
+        output = ours(layer_input[0], metadata)
+        reference = reference_output[0]
+        torch.testing.assert_close(output, reference, rtol=1e-5, atol=1e-5)
+        rows.append({
+            "name": name,
+            "shape": list(output.shape),
+            "max_abs_diff": (output - reference).abs().max().item(),
+            "input_max_abs": layer_input.abs().max().item(),
+            "output_max_abs": output.abs().max().item(),
+        })
+    if not rows:
+        raise ValueError("no HF decoder layers were captured")
     return rows

@@ -26,7 +26,10 @@ example, checks real TinyLlama attention in FP32, and saves
 expansion and uses it in the real-model probe. Its Colab run passed all 58
 B4/B5 tests, with real HF differences at most 4.47e-8.
 
-[B6: MLP / SwiGLU](notebooks/B6_mlp.ipynb) is ready for Colab validation.
-It checks hand math, token independence, FP16 vs FP32, and all 22 real
-TinyLlama MLPs, then saves `results/B6_mlp.json`.
-Next after validation: B7 (decoder layer and residuals).
+[B6: MLP / SwiGLU](notebooks/B6_mlp.ipynb) passed all 74 B4-B6 tests in Colab.
+All 22 real TinyLlama MLPs matched HF exactly in FP32.
+
+[B7: decoder layer and residuals](notebooks/B7_decoder_layer.ipynb) is ready
+for Colab validation. It connects RMSNorm, attention/RoPE/GQA and MLP into
+one flattened-token layer, compares all 22 isolated real HF layers, and saves
+`results/B7_decoder_layer.json`. Next after validation: B8 (full model).

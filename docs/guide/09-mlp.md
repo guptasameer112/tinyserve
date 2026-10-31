@@ -79,6 +79,13 @@ Runtime validation is pending the Colab run. The notebook saves test output,
 environment metadata and the range of differences across all tested layers
 to `results/B6_mlp.json`. This is a correctness lesson, not a speed benchmark.
 
+### Recorded Colab run (2026-10-31)
+
+All **74 B4-B6 tests passed**, none skipped. All 22 real MLP outputs matched
+HF exactly in FP32. Changing the final synthetic token changed earlier
+outputs by zero; the small FP16 comparison differed by at most `0.000224844`.
+These results come from the saved B6 notebook at commit `cc01a3f`.
+
 ## Interview questions
 
 1. **What is SwiGLU?** `down(silu(gate(x)) * up(x))`, with separate learned

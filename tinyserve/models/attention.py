@@ -5,8 +5,20 @@ B5 will add GQA. An explicit boolean mask can isolate packed sequences or
 describe cached attention without changing the attention math.
 """
 import math
+from dataclasses import dataclass
+from typing import Optional
 
 import torch
+
+
+@dataclass
+class AttentionMetadata:
+    """No-cache token layout: local positions and optional packed request IDs."""
+    positions: torch.Tensor
+    sequence_ids: Optional[torch.Tensor] = None
+
+    def allowed_mask(self):
+        return causal_mask(self.positions, self.sequence_ids)
 
 
 def causal_mask(positions, sequence_ids=None):
