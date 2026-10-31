@@ -63,7 +63,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] Repo created on GitHub
 - [x] A1 A2 A3
 - [ ] B1 (done) B2 (done) B3 B4 (done) B5 (done) B6 (done) B7 (done) B8 (done: 143 tests and 36 greedy parity steps passed in Colab)
-- [ ] C1 (created; Colab validation pending) C2 C3 C4
+- [ ] C1 (done: 42 tests passed in Colab) C2 (created; Colab validation pending) C3 C4
 - [ ] D1 D2 D3 D4 D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4

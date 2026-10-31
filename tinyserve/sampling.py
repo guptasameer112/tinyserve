@@ -5,6 +5,17 @@ from numbers import Integral, Real
 import torch
 
 
+def validate_sampling_options(temperature, top_k, top_p):
+    """Shared option checks, including generation requests that ask for zero tokens."""
+    if (isinstance(temperature, bool) or not isinstance(temperature, Real)
+            or not math.isfinite(temperature) or temperature < 0):
+        raise ValueError("temperature must be a finite nonnegative number")
+    if isinstance(top_k, bool) or not isinstance(top_k, Integral) or top_k < 0:
+        raise ValueError("top_k must be a nonnegative integer")
+    if isinstance(top_p, bool) or not isinstance(top_p, Real) or not math.isfinite(top_p) or not 0 < top_p <= 1:
+        raise ValueError("top_p must be finite and in (0, 1]")
+
+
 def sampling_probs(logits, temperature=1.0, top_k=0, top_p=1.0):
     """(vocab,) logits -> probabilities, using FP32 for FP16/BF16 inputs.
 
@@ -17,13 +28,7 @@ def sampling_probs(logits, temperature=1.0, top_k=0, top_p=1.0):
         raise ValueError("logits must be a nonempty floating-point (vocab,) tensor")
     if bool(torch.isnan(logits).any()) or bool(torch.isposinf(logits).any()) or not bool(torch.isfinite(logits).any()):
         raise ValueError("logits must have at least one finite score and no NaN or positive infinity")
-    if (isinstance(temperature, bool) or not isinstance(temperature, Real)
-            or not math.isfinite(temperature) or temperature < 0):
-        raise ValueError("temperature must be a finite nonnegative number")
-    if isinstance(top_k, bool) or not isinstance(top_k, Integral) or top_k < 0:
-        raise ValueError("top_k must be a nonnegative integer")
-    if isinstance(top_p, bool) or not isinstance(top_p, Real) or not math.isfinite(top_p) or not 0 < top_p <= 1:
-        raise ValueError("top_p must be finite and in (0, 1]")
+    validate_sampling_options(temperature, top_k, top_p)
 
     scores = logits.float() if logits.dtype in (torch.float16, torch.bfloat16) else logits.clone()
     if temperature == 0:

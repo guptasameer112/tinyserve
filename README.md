@@ -36,10 +36,13 @@ all 94 B4-B7 tests in Colab. All 22 isolated layers matched HF within 9.54e-7.
 greedy parity steps in Colab. Full-model logits differed from HF by at most
 1.67e-5 across the tested prompts/steps.
 
-[C1: sampling](notebooks/C1_sampling.ipynb) is ready for Colab validation:
-greedy, temperature, top-k and top-p, checked against HF probability filters.
-It needs no model weights and saves `results/C1_sampling.json`.
-Next after validation: C2 (generation loop).
+[C1: sampling](notebooks/C1_sampling.ipynb) passed all 42 tests in Colab,
+including HF probability-filter parity and seeded replay.
+
+[C2: generation loop](notebooks/C2_generation.ipynb) is ready for Colab
+validation: growing prefixes, sampling, EOS and strict context limits.
+It compares greedy outputs with HF and saves `results/C2_generation.json`.
+Next after validation: C3 (contiguous KV cache).
 
 Part G is included in the planned scope: Qwen2.5-0.5B, prompt-lookup
 speculative decoding, a KV visualizer and INT8 KV cache.

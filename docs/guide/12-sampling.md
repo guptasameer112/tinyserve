@@ -66,6 +66,13 @@ frequency ranges across three independent seeded trials, plus pytest output
 and environment information, in `results/C1_sampling.json`.
 Runtime validation awaits the user's Colab run.
 
+### Recorded Colab run (2026-10-31)
+
+All **42 tests passed**, none skipped. Same-seed replay matched exactly.
+Across three 4000-draw trials, observed ranges were Paris 58.98-59.95%,
+London 24.13-26.18%, Berlin 9.73-10.75%, Rome 5.10-5.18%, consistent with
+the synthetic target distribution and the statistical tolerance.
+
 ## Interview questions
 
 1. **Temperature versus top-k/top-p?** Temperature reshapes probabilities;
