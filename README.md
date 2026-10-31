@@ -14,4 +14,10 @@ See [MASTERPLAN.md](MASTERPLAN.md) for the roadmap and process rules.
 
 ## Status
 
-Repo skeleton only. Next: Lesson A1 (tokens, tensors, shapes, logits).
+Foundations A1-A3 and lessons B1-B2 are complete. B3's recorded RoPE comparisons
+match Hugging Face. [B4: attention](notebooks/B4_attention.ipynb) is ready for
+validation in Colab; run it top to bottom before marking B4 complete.
+
+The B4 notebook runs its tests, explains scores/masking/softmax with a hand
+example, checks real TinyLlama attention in FP32, and saves
+`results/B4_attention.json`. Next after validation: B5 (GQA).

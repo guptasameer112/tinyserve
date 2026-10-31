@@ -3,6 +3,8 @@ import torch
 
 from tinyserve.models.norm import RMSNorm
 from tinyserve.models.rope import apply_rope, get_rope_theta, rope_cos_sin
+from tinyserve.models.attention import causal_mask, reference_attention
+from tinyserve.weights import head_dim
 
 
 @torch.no_grad()
@@ -83,3 +85,48 @@ def diagonal_spread(matrix):
     return max(
         (matrix.diagonal(offset).max() - matrix.diagonal(offset).min()).item() for offset in range(-size + 1, size)
     )
+
+
+@torch.no_grad()
+def compare_attention_layers(model, input_ids, layers=(0, 10, 21)):
+    """Compare B4's attention core with real HF inputs to o_proj, before output projection.
+
+    Use an FP32 eval model with eager attention. HF's repeat_kv handles the
+    4-to-32 head expansion for this probe only; implementing GQA is B5.
+    """
+    from transformers.models.llama.modeling_llama import repeat_kv
+
+    if model.training or next(model.parameters()).dtype != torch.float32:
+        raise ValueError("attention parity requires an FP32 model in eval mode")
+    if model.config._attn_implementation != "eager":
+        raise ValueError("attention parity requires Hugging Face eager attention")
+    config = model.config
+    tokens = input_ids.numel()
+    dimension = head_dim(config)
+    positions = torch.arange(tokens, device=input_ids.device)
+    mask = causal_mask(positions)
+    cos, sin = rope_cos_sin(positions, dimension, get_rope_theta(config), torch.float32)
+    records = {name: (module_input, output) for name, module_input, output
+               in capture_module_io(model, input_ids, torch.nn.Linear)}
+    rows = []
+    for layer in layers:
+        prefix = "model.layers.%d.self_attn." % layer
+        query = records[prefix + "q_proj"][1][0].reshape(tokens, config.num_attention_heads, dimension)
+        key = records[prefix + "k_proj"][1][0].reshape(tokens, config.num_key_value_heads, dimension)
+        value = records[prefix + "v_proj"][1][0].reshape(tokens, config.num_key_value_heads, dimension)
+        query, key = apply_rope(query, cos, sin), apply_rope(key, cos, sin)
+        repeats = config.num_attention_heads // config.num_key_value_heads
+        key = repeat_kv(key.transpose(0, 1)[None], repeats)[0].transpose(0, 1)
+        value = repeat_kv(value.transpose(0, 1)[None], repeats)[0].transpose(0, 1)
+        output, probabilities = reference_attention(query, key, value, mask)
+        output = output.reshape(tokens, config.hidden_size)
+        reference = records[prefix + "o_proj"][0][0]
+        torch.testing.assert_close(output, reference, rtol=1e-5, atol=1e-5)
+        rows.append({
+            "layer": layer,
+            "max_abs_diff": (output - reference).abs().max().item(),
+            "row_sum_max_error": (probabilities.sum(dim=-1) - 1).abs().max().item(),
+            "future_weight_max": probabilities.masked_select(~mask[None]).max().item() if tokens > 1 else 0.0,
+            "shape": list(output.shape),
+        })
+    return rows

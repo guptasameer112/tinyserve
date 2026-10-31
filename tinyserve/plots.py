@@ -1,9 +1,27 @@
-"""Diagrams as code (matplotlib): roofline (Lesson A2), RoPE rotation frequencies (Lesson B3)."""
+"""Diagrams as code: roofline (A2), RoPE frequencies (B3), attention weights (B4)."""
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
+
+
+def plot_attention(weights, labels, path):
+    """Plot one head's (N, N) attention weights. Rows query, columns key."""
+    fig, ax = plt.subplots(figsize=(6, 5))
+    image = ax.imshow(weights.detach().float().cpu().numpy(), vmin=0, vmax=1, cmap="Blues")
+    ax.set_xticks(range(len(labels)))
+    ax.set_yticks(range(len(labels)))
+    ax.set_xticklabels(labels, rotation=45, ha="right")
+    ax.set_yticklabels(labels)
+    ax.set_xlabel("key token (looked at)")
+    ax.set_ylabel("query token (asking)")
+    ax.set_title("Causal attention: future weights are zero")
+    fig.colorbar(image, ax=ax, label="attention weight")
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path
 
 
 def plot_rope(inv_freq, num_positions, path):
