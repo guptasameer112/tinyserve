@@ -89,6 +89,17 @@ checks the real model, draws a heatmap, and writes environment information
 and measured differences to `results/B4_attention.json`. No results or
 test counts are claimed until that run succeeds.
 
+### Recorded Colab run (2026-10-31)
+
+The saved B4 notebook contains **30 passed, none skipped** on a T4.
+The hand outputs were `[10, 17.5]`; future weights, changed-prefix difference
+and packed-vs-separate difference were all zero. FP16 vs FP32 differed by
+at most `0.000468612`. Real HF layer differences ranged from `9.31e-10`
+to `4.47e-8`, inside the FP32 tolerance.
+
+B5 subsequently replaces the probe's borrowed HF head expansion with our
+own GQA. The B5 notebook reruns B4 tests to check that integration.
+
 ## Interview questions
 
 1. **Why scale attention scores?** Dot-product variance grows with head

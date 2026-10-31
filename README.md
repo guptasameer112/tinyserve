@@ -15,9 +15,14 @@ See [MASTERPLAN.md](MASTERPLAN.md) for the roadmap and process rules.
 ## Status
 
 Foundations A1-A3 and lessons B1-B2 are complete. B3's recorded RoPE comparisons
-match Hugging Face. [B4: attention](notebooks/B4_attention.ipynb) is ready for
-validation in Colab; run it top to bottom before marking B4 complete.
+match Hugging Face. [B4: attention](notebooks/B4_attention.ipynb) passed all 30
+tests in Colab and matched real HF attention (worst FP32 difference 4.47e-8).
 
 The B4 notebook runs its tests, explains scores/masking/softmax with a hand
 example, checks real TinyLlama attention in FP32, and saves
-`results/B4_attention.json`. Next after validation: B5 (GQA).
+`results/B4_attention.json`.
+
+[B5: GQA](notebooks/B5_gqa.ipynb) implements our own consecutive KV-head
+expansion and uses it in the real-model probe. Run it top to bottom in Colab;
+it runs B4/B5 tests together and saves `results/B5_gqa.json`.
+Next after validation: B6 (MLP).
