@@ -43,6 +43,10 @@ The sampler defaults to greedy. Temperature, top-k, top-p and a device-matched
 generator enable reproducible sampling, with C1's conventions. The shared
 option validator also runs for zero-token requests.
 
+For CUDA sampling, use `torch.Generator(device=input_ids.device)` to select
+the prompt's exact GPU. An unindexed `"cuda"` generator is also accepted when
+the current CUDA device matches the prompt; a different GPU is rejected.
+
 ## Raw text versus a chat template
 
 Raw text asks the model to continue a document. A chat template formats

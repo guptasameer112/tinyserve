@@ -31,7 +31,12 @@ def generate(model, input_ids, max_new_tokens=20, temperature=0.0, top_k=0, top_
     if input_ids.numel() + max_new_tokens > model.config.max_position_embeddings:
         raise ValueError("prompt plus max_new_tokens exceeds the model context limit")
     if generator is not None:
-        if not isinstance(generator, torch.Generator) or generator.device != input_ids.device:
+        if not isinstance(generator, torch.Generator):
+            raise ValueError("generator must be a torch.Generator on the input_ids device")
+        generator_device = generator.device
+        if generator_device.type == "cuda" and generator_device.index is None:
+            generator_device = torch.device("cuda", torch.cuda.current_device())
+        if generator_device != input_ids.device:
             raise ValueError("generator must be a torch.Generator on the input_ids device")
     eos = model.config.eos_token_id
     if eos is None:

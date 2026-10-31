@@ -138,6 +138,13 @@ def test_training_mode_raises():
         generate(model, torch.tensor([1]))
 
 
+def test_invalid_generator_type_raises_before_forward():
+    model = ScriptedModel()
+    with pytest.raises(ValueError, match="generator"):
+        generate(model, torch.tensor([1]), max_new_tokens=1, generator=17)
+    assert model.calls == []
+
+
 def test_wrong_logits_shape_raises():
     class WrongShape(ScriptedModel):
         def forward(self, ids, positions, metadata):
@@ -183,3 +190,26 @@ def test_device_dtype_and_generator_validation():
     assert output.dtype == prompt.dtype and output.device == prompt.device
     with pytest.raises(ValueError, match="generator"):
         generate(model, prompt, max_new_tokens=1, generator=torch.Generator())
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA required")
+@pytest.mark.parametrize("explicit_index", [False, True])
+def test_cuda_seeded_generation_matches_manual_sampling(explicit_index):
+    model = ConstantModel(eos=None).cuda()
+    prompt = torch.tensor([1], device="cuda")
+    device = prompt.device if explicit_index else "cuda"
+    actual = generate(model, prompt, max_new_tokens=8, temperature=0.8, top_k=4, top_p=0.9,
+                      generator=torch.Generator(device=device).manual_seed(17))
+    manual_generator = torch.Generator(device=prompt.device).manual_seed(17)
+    scores = model.embedding.weight.new_tensor([0.0, 1.0, 2.0, 3.0, 0.0, 0.0, 0.0, 0.0])
+    expected = [sample_token(scores, 0.8, 4, 0.9, manual_generator) for _ in range(8)]
+    assert actual.tolist() == [1] + expected
+
+
+@pytest.mark.skipif(torch.cuda.device_count() < 2, reason="Two CUDA devices required")
+def test_generator_on_other_cuda_device_raises_before_forward():
+    model = ScriptedModel().to("cuda:0")
+    prompt = torch.tensor([1], device="cuda:0")
+    with pytest.raises(ValueError, match="generator"):
+        generate(model, prompt, max_new_tokens=1, generator=torch.Generator(device="cuda:1"))
+    assert model.calls == []
