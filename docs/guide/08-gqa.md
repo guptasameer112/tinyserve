@@ -75,6 +75,15 @@ eightfold: all 32 queries still compare with the visible keys.
 The notebook runs B4 and B5 tests together to protect the shared probe.
 Runtime results are pending your Colab run; no pass count is claimed here.
 
+### Recorded Colab run (2026-10-31)
+
+B4/B5 together passed **58 tests, none skipped** on a T4.
+The consecutive head mapping matched; shared-KV hand outputs were
+`18.80797` and `11.19203`. Future weights were zero.
+FP16 vs FP32 maximum difference was `0.000967979`, inside the combined
+relative/absolute assertion. Real HF FP32 differences ranged from
+`9.31e-10` to `4.47e-8`.
+
 ## Interview questions
 
 1. **How do MHA, GQA and MQA differ?** They differ in how many query heads

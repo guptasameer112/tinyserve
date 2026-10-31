@@ -5,6 +5,7 @@ from tinyserve.models.norm import RMSNorm
 from tinyserve.models.rope import apply_rope, get_rope_theta, rope_cos_sin
 from tinyserve.models.attention import causal_mask
 from tinyserve.models.gqa import grouped_query_attention
+from tinyserve.models.mlp import MLP
 from tinyserve.weights import head_dim
 
 
@@ -121,4 +122,34 @@ def compare_attention_layers(model, input_ids, layers=(0, 10, 21)):
             "future_weight_max": probabilities.masked_select(~mask[None]).max().item() if tokens > 1 else 0.0,
             "shape": list(output.shape),
         })
+    return rows
+
+
+@torch.no_grad()
+def compare_mlp(model, input_ids):
+    """Feed every real HF MLP input to our module with the same weights, in FP32."""
+    from transformers.models.llama.modeling_llama import LlamaMLP
+
+    if model.training or next(model.parameters()).dtype != torch.float32:
+        raise ValueError("MLP parity requires an FP32 model in eval mode")
+    if model.config.hidden_act != "silu" or getattr(model.config, "mlp_bias", False):
+        raise ValueError("our MLP supports bias-free SiLU Llama models only")
+    modules = dict(model.named_modules())
+    rows = []
+    for name, module_input, reference_output in capture_module_io(model, input_ids, LlamaMLP):
+        ours = MLP(model.config.hidden_size, model.config.intermediate_size,
+                   device=module_input.device, dtype=module_input.dtype)
+        ours.load_state_dict(modules[name].state_dict(), strict=True)
+        output = ours(module_input)
+        torch.testing.assert_close(output, reference_output, rtol=1e-5, atol=1e-5)
+        rows.append({
+            "name": name,
+            "input_shape": list(module_input.shape),
+            "output_shape": list(output.shape),
+            "max_abs_diff": (output - reference_output).abs().max().item(),
+            "input_max_abs": module_input.abs().max().item(),
+            "output_max_abs": output.abs().max().item(),
+        })
+    if not rows:
+        raise ValueError("no Hugging Face LlamaMLP modules were captured")
     return rows
