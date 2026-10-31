@@ -39,10 +39,12 @@ greedy parity steps in Colab. Full-model logits differed from HF by at most
 [C1: sampling](notebooks/C1_sampling.ipynb) passed all 42 tests in Colab,
 including HF probability-filter parity and seeded replay.
 
-[C2: generation loop](notebooks/C2_generation.ipynb) is ready for Colab
-validation: growing prefixes, sampling, EOS and strict context limits.
-It compares greedy outputs with HF and saves `results/C2_generation.json`.
-Next after validation: C3 (contiguous KV cache).
+[C2: generation loop](notebooks/C2_generation.ipynb) passed 96 B8/C1/C2 tests
+in Colab; one two-GPU test was skipped on the single T4. Raw and chat greedy
+outputs matched HF token-for-token, seeded sampling replay matched, and
+zero-budget and strict context checks passed. Results are saved in
+`results/C2_generation.json`.
+Next: C3 (contiguous KV cache).
 
 Part G is included in the planned scope: Qwen2.5-0.5B, prompt-lookup
 speculative decoding, a KV visualizer and INT8 KV cache.

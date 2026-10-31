@@ -82,7 +82,21 @@ T4 runtime, not several old model kernels. Sampling demos free the HF copy
 after the greedy comparisons. There are no cache or speed claims yet.
 
 Results, token IDs, stopping observations, test output and environment info
-are saved in `results/C2_generation.json`. Runtime validation awaits Colab.
+are saved in `results/C2_generation.json`.
+
+### Colab validation (2026-10-31)
+
+On a Tesla T4 with PyTorch 2.11.0+cu130 and Transformers 5.21.0:
+
+- 96 B8/C1/C2 tests passed; the two-GPU generator rejection test was skipped.
+- Both real FP32 greedy sequences matched HF token-for-token.
+- Raw continuation used all 12 new tokens and stopped at the budget.
+- Chat generation stopped on EOS after 8 new tokens, including EOS.
+- Sampled generation with seed 17 replayed exactly and stopped on EOS.
+- Zero budget returned the prompt; an oversized context raised as required.
+
+These checks validate the tested no-cache behavior, not cache performance.
+The next lesson is C3: contiguous KV cache.
 
 ## Interview questions
 
