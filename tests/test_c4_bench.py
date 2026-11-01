@@ -1,4 +1,5 @@
 """C4 benchmark accounting and failure behavior; run these tests in Colab."""
+import time
 from types import SimpleNamespace
 
 import pytest
@@ -44,7 +45,7 @@ def test_exact_accounting_order_ranges_and_eos_restoration(monkeypatch):
     model = StubModel()
     calls = install_fake_generation(monkeypatch, model)
     clock = iter([0, 4, 4, 6, 6, 8, 8, 14, 14, 22, 22, 24])
-    monkeypatch.setattr(benchmark.time, "perf_counter", lambda: next(clock))
+    monkeypatch.setattr(benchmark, "time", SimpleNamespace(perf_counter=lambda: next(clock)))
     monkeypatch.setattr(benchmark, "kv_cache_bytes_per_token", lambda config, size: 16)
     ids = torch.tensor([1, 7])
     result = benchmark.run_case(model, ids, new_tokens=4, trials=3)
@@ -77,7 +78,7 @@ def test_wrong_output_count_raises_and_restores_eos(monkeypatch):
     model = StubModel()
     install_fake_generation(monkeypatch, model, short=True)
     clock = iter([0, 1])
-    monkeypatch.setattr(benchmark.time, "perf_counter", lambda: next(clock))
+    monkeypatch.setattr(benchmark, "time", SimpleNamespace(perf_counter=lambda: next(clock)))
     with pytest.raises(RuntimeError, match="token count"):
         benchmark.run_case(model, torch.tensor([1]), new_tokens=2, trials=1)
     assert model.config.eos_token_id == 2
@@ -88,7 +89,7 @@ def test_slow_cache_and_token_drift_are_reported_without_a_success_threshold(mon
     install_fake_generation(monkeypatch, model, drift=True)
     monkeypatch.setattr(benchmark, "kv_cache_bytes_per_token", lambda config, size: 16)
     clock = iter([0, 1, 1, 3])
-    monkeypatch.setattr(benchmark.time, "perf_counter", lambda: next(clock))
+    monkeypatch.setattr(benchmark, "time", SimpleNamespace(perf_counter=lambda: next(clock)))
     result = benchmark.run_case(model, torch.tensor([1]), new_tokens=2, trials=1)
     assert result["speedup"]["median"] == 0.5
     assert not result["token_ids_equal_in_all_trials"]
@@ -101,7 +102,7 @@ def test_invalid_timing_raises_without_clamping(monkeypatch, elapsed):
     model = StubModel()
     install_fake_generation(monkeypatch, model)
     clock = iter([0, elapsed])
-    monkeypatch.setattr(benchmark.time, "perf_counter", lambda: next(clock))
+    monkeypatch.setattr(benchmark, "time", SimpleNamespace(perf_counter=lambda: next(clock)))
     with pytest.raises(RuntimeError, match="finite and positive"):
         benchmark.run_case(model, torch.tensor([1]), new_tokens=2, trials=1)
     assert model.config.eos_token_id == 2
@@ -200,9 +201,12 @@ def test_plot_cache_curve_and_axis_validation(monkeypatch, tmp_path):
     install_fake_generation(monkeypatch, model)
     monkeypatch.setattr(benchmark, "kv_cache_bytes_per_token", lambda config, size: 16)
     clock = iter(range(8))
-    monkeypatch.setattr(benchmark.time, "perf_counter", lambda: next(clock))
+    original_perf_counter = time.perf_counter
+    monkeypatch.setattr(benchmark, "time", SimpleNamespace(perf_counter=lambda: next(clock)))
+    assert time.perf_counter is original_perf_counter
     rows = [benchmark.run_case(model, torch.tensor([1]), new_tokens=2, trials=1),
             benchmark.run_case(model, torch.tensor([1, 7]), new_tokens=2, trials=1)]
+    assert list(clock) == []
     path = tmp_path / "curve.png"
     assert plot_cache_curve(rows, path) == path and path.stat().st_size > 0
     with pytest.raises(ValueError, match="axis"):

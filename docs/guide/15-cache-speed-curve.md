@@ -140,6 +140,8 @@ Tests cover exact timing arithmetic with a controlled clock, alternating
 order, fixed budgets, original EOS restoration on success/failure, invalid
 requests/timings, a tiny real-model run, CUDA memory accounting and plots.
 They run in Colab, not locally.
+Controlled test clocks replace only the benchmark module's local `time`
+binding, not the shared standard-library clock used by plotting libraries.
 
 The notebook checkpoints each completed point as `status="partial"`, then
 marks the final JSON complete only after all points and plots succeed.
