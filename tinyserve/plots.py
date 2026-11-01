@@ -1,4 +1,4 @@
-"""Diagrams as code: roofline (A2), RoPE frequencies (B3), attention weights (B4)."""
+"""Diagrams as code: roofline, RoPE, attention weights and cache speed curves."""
 import matplotlib
 
 matplotlib.use("Agg")
@@ -64,6 +64,43 @@ def plot_roofline(peak_flops, peak_bandwidth, points, path, title="Roofline", bu
     ax.set_title(title)
     ax.legend(loc="lower right")
     ax.grid(True, which="both", alpha=0.3)
+    fig.tight_layout()
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path
+
+
+def plot_cache_curve(rows, path, x_key="prompt_tokens"):
+    """C4: end-to-end generation latency and paired speedup, with min/max ranges."""
+    labels = {"prompt_tokens": "prompt tokens", "new_tokens": "new tokens"}
+    if x_key not in labels or not rows:
+        raise ValueError("cache curve needs nonempty rows and a prompt_tokens/new_tokens axis")
+    fixed_key = "new_tokens" if x_key == "prompt_tokens" else "prompt_tokens"
+    if len({row[fixed_key] for row in rows}) != 1:
+        raise ValueError("cache curve must keep the other token count fixed")
+    rows = sorted(rows, key=lambda row: row[x_key])
+    x_values = [row[x_key] for row in rows]
+    fig, (latency, speedup) = plt.subplots(1, 2, figsize=(11, 4))
+    for mode, label in (("no_cache", "no cache"), ("cached", "contiguous cache")):
+        stats = [row[mode]["total_ms"] for row in rows]
+        line, = latency.plot(x_values, [stat["median"] for stat in stats], marker="o", label=label)
+        latency.fill_between(x_values, [stat["min"] for stat in stats], [stat["max"] for stat in stats],
+                             color=line.get_color(), alpha=0.15)
+    stats = [row["speedup"] for row in rows]
+    speedup.plot(x_values, [stat["median"] for stat in stats], marker="o", color="tab:green")
+    speedup.fill_between(x_values, [stat["min"] for stat in stats], [stat["max"] for stat in stats],
+                         color="tab:green", alpha=0.15)
+    speedup.axhline(1, color="gray", linestyle="--", label="equal time")
+    latency.set_ylabel("total generation time (ms)")
+    speedup.set_ylabel("no-cache time / cached time")
+    latency.set_title("Median and trial min/max")
+    speedup.set_title("Paired speedup; above 1 favors cache")
+    latency.legend()
+    speedup.legend()
+    for axis in (latency, speedup):
+        axis.set_xlabel(labels[x_key])
+        axis.grid(True, alpha=0.3)
+    fig.suptitle("%s fixed at %s; single-request generation" % (labels[fixed_key], rows[0][fixed_key]))
     fig.tight_layout()
     fig.savefig(path, dpi=150)
     plt.close(fig)

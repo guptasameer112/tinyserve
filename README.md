@@ -54,7 +54,15 @@ Reset, seeded replay, zero budget and strict context checks passed.
 `generate(..., use_cache=True)` enables it; the default remains no-cache.
 The user-provided result is archived in [C3_kv_cache.json](results/C3_kv_cache.json).
 Local checks are static only; tests and model demos run in Colab.
-Next: C4 (no-cache vs cached speed curve). No cache speed claim is made yet.
+[C4: cache speed curve](notebooks/C4_cache_curve.ipynb) is ready for a fresh
+Colab T4 run. It compares fixed-length FP16 generation across prompt and
+generation lengths, with warmup, synchronized wall-clock timings, alternating
+trial order, raw results, min/median/max plots and memory accounting.
+EOS stopping is disabled only inside the benchmark and restored afterward.
+**C4 runtime validation and measured speedups are pending.**
+See the [C4 guide](docs/guide/15-cache-speed-curve.md) for timing boundaries
+and why cache can lose for a single generated token.
+Next after C4 validation: D1 (flattened batching and attention metadata).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.

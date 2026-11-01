@@ -40,3 +40,11 @@ It does not claim that the repository notebook contains the complete
 successful run's outputs. Preserve the successful Colab notebook separately.
 
 Save both the JSON and notebook with outputs before replacing a Colab runtime.
+
+## C4 status
+
+[C4_cache_curve.ipynb](../notebooks/C4_cache_curve.ipynb) is ready for the
+user's fresh Colab T4 run. Its runtime tests and measured curves are pending.
+It saves `C4_cache_curve.json` after each point with `status="partial"` and
+marks it complete only after both sweeps and plots succeed. No placeholder
+benchmark result or performance claim is committed.
