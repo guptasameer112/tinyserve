@@ -75,7 +75,8 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] C2 (96 tests passed, 1 two-GPU test skipped; greedy HF parity and seeded replay passed in Colab)
 - [x] C3 (139 B8/C1/C2/C3 tests passed, 1 two-GPU test skipped; 20 greedy parity steps, reset, seeded replay and boundary checks passed in Colab on 2026-11-01)
 - [x] C4 (101 C2/C3/C4 tests passed, 1 two-GPU test skipped; eight unique FP16 cases completed on 2026-11-01; median paired speedup 1.50x at P=256/N=32 and 2.95x at P=512/N=32)
-- [ ] D1 D2 D3 D4 D5
+- [ ] D1 (pack/split helpers, isolation/parity tests, notebook and guide ready; runtime validation pending Colab)
+- [ ] D2 D3 D4 D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
@@ -83,10 +84,13 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 
 Recorded B3-C2 JSON results are archived in `results/` from the original
 saved notebook outputs, with their original timestamps and environment metadata.
-Guide chapters now cover every lesson A1-C4. C3's user-provided Colab JSON is
+Guide chapters now cover every lesson A1-D1. C3's user-provided Colab JSON is
 archived in `results/C3_kv_cache.json` with its original timestamp and environment.
 Local checks remain static only; they do not count as passing runtime tests.
 C4 keeps equal fixed-length workloads by temporarily disabling EOS stopping
 inside the benchmark and restoring it afterward. The user's complete measured
 result is archived in `results/C4_cache_curve.json`; short prompts were near
-break-even and longer prompts benefited in this run. D1 is next.
+break-even and longer prompts benefited in this run.
+D1 establishes no-cache packed prefill ownership and output routing with
+the existing model interface. Packed contiguous-cache generation remains
+unsupported; D2 introduces paged storage after D1 validation.

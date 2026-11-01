@@ -276,3 +276,42 @@ def compare_cached_steps(ours, reference, input_ids, max_new_tokens=12):
         if token in eos_ids:
             break
     return ids, rows
+
+
+@torch.no_grad()
+def compare_packed_prompts(ours, reference, prompts):
+    """D1: check every packed FP32 logits row against separate ours/HF requests."""
+    from tinyserve.batching import pack_prompts, split_packed
+
+    if (ours.training or reference.training or next(ours.parameters()).dtype != torch.float32
+            or next(reference.parameters()).dtype != torch.float32):
+        raise ValueError("packed parity requires FP32 eval models")
+    if reference.config._attn_implementation != "eager":
+        raise ValueError("packed parity requires HF eager attention")
+    flat_ids, metadata, lengths = pack_prompts(prompts)
+    if any(length > ours.config.max_position_embeddings for length in lengths):
+        raise ValueError("each prompt must fit the model context limit")
+    packed = ours(flat_ids, metadata.positions, metadata)
+    chunks = split_packed(packed, lengths)
+    rows = []
+    for index, (prompt, chunk) in enumerate(zip(prompts, chunks)):
+        positions = torch.arange(prompt.numel(), device=prompt.device, dtype=prompt.dtype)
+        separate = ours(prompt, positions, AttentionMetadata(positions))
+        hf_logits = reference(prompt[None], use_cache=False).logits[0].float()
+        torch.testing.assert_close(chunk, separate, rtol=1e-5, atol=1e-4)
+        torch.testing.assert_close(chunk, hf_logits, rtol=1e-5, atol=1e-4)
+        if (not torch.equal(chunk.argmax(-1), separate.argmax(-1))
+                or not torch.equal(chunk.argmax(-1), hf_logits.argmax(-1))):
+            raise AssertionError("packed FP32 argmax token parity failed")
+        rows.append({
+            "request_index": index, "tokens": prompt.numel(),
+            "packed_vs_separate_max_abs_diff": (chunk - separate).abs().max().item(),
+            "packed_vs_hf_max_abs_diff": (chunk - hf_logits).abs().max().item(),
+            "all_row_argmax_equal": True, "next_token_id": chunk[-1].argmax().item(),
+        })
+    return {
+        "request_lengths": list(lengths), "flat_token_ids": flat_ids.tolist(),
+        "positions": metadata.positions.tolist(), "sequence_ids": metadata.sequence_ids.tolist(),
+        "total_tokens": flat_ids.numel(), "padded_token_slots": len(lengths) * max(lengths),
+        "requests": rows,
+    }

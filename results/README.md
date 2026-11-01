@@ -55,3 +55,11 @@ raw records without running the benchmark locally.
 The JSON reports both plot paths. Their PNG contents were not supplied in
 the pasted result and are not archived here. Retain the Colab PNGs and the
 successful notebook with outputs separately.
+
+## D1 status
+
+[D1_flattened_batching.ipynb](../notebooks/D1_flattened_batching.ipynb) is ready
+for the user's fresh Colab T4 run. Runtime validation is pending.
+Its final save cell creates `D1_flattened_batching.json`, with pack/split
+layout, request-isolation evidence, separate/HF parity and test output.
+No placeholder success result or batching performance claim is committed.

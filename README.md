@@ -65,7 +65,14 @@ Results are archived in [C4_cache_curve.json](results/C4_cache_curve.json).
 These are single-request reference-engine measurements, not serving throughput.
 See the [C4 guide](docs/guide/15-cache-speed-curve.md) for timing boundaries
 and why cache can lose for a single generated token.
-Next: D1 (flattened batching and attention metadata).
+[D1: flattened batching](notebooks/D1_flattened_batching.ipynb) is ready for
+a fresh Colab T4 run. It packs variable-length prompts without padding,
+reuses existing position/request metadata, splits logits back to requests,
+and checks separate/HF parity and cross-request isolation.
+This is no-cache packed prefill, not cached batched generation or scheduling.
+**D1 runtime validation is pending; no batching speedup is claimed.**
+See the [D1 guide](docs/guide/16-flattened-batching.md).
+Next after D1 validation: D2 (block tables, slot mapping and paged cache).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.
