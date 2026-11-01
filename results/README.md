@@ -56,6 +56,14 @@ The JSON reports both plot paths. Their PNG contents were not supplied in
 the pasted result and are not archived here. Retain the Colab PNGs and the
 successful notebook with outputs separately.
 
+## D2 status
+
+[D2_paged_cache.ipynb](../notebooks/D2_paged_cache.ipynb) is ready for a fresh
+Colab T4 run. Runtime validation is pending. Its final save cell creates
+`D2_paged_cache.json`, with ordered/scrambled table addressing, mixed cached
+batches, no-cache/HF parity, reset/boundary evidence and test output.
+No placeholder success result or paged-attention performance claim is committed.
+
 ## D1 status
 
 [D1_flattened_batching.json](D1_flattened_batching.json) was archived from the

@@ -315,3 +315,65 @@ def compare_packed_prompts(ours, reference, prompts):
         "total_tokens": flat_ids.numel(), "padded_token_slots": len(lengths) * max(lengths),
         "requests": rows,
     }
+
+
+@torch.no_grad()
+def compare_paged_batch(ours, reference, cache, requests):
+    """D2 verification: append unprocessed suffixes of active full request prefixes.
+
+    The caller must preserve each committed prefix. Inactive requests are omitted.
+    Compare every new logits row with separate no-cache ours/HF forwards.
+    """
+    if (ours.training or reference.training or next(ours.parameters()).dtype != torch.float32
+            or next(reference.parameters()).dtype != torch.float32):
+        raise ValueError("paged parity requires FP32 eval models")
+    if reference.config._attn_implementation != "eager":
+        raise ValueError("paged parity requires HF eager attention")
+    if not isinstance(requests, dict) or not requests:
+        raise ValueError("requests must be a nonempty request-ID to full-prefix dictionary")
+    from tinyserve.batching import pack_prompts, split_packed
+
+    chunks, positions, sequence_ids, starts = [], [], [], {}
+    for request_id, ids in requests.items():
+        if (isinstance(request_id, bool) or not isinstance(request_id, int)
+                or request_id not in cache.lengths):
+            raise ValueError("unknown request ID")
+        if (not isinstance(ids, torch.Tensor) or ids.ndim != 1
+                or ids.dtype not in (torch.int32, torch.int64)):
+            raise ValueError("request prefixes must be integer (tokens,) tensors")
+        start = cache.lengths[request_id]
+        if ids.numel() <= start:
+            raise ValueError("each active request must contribute an unprocessed suffix")
+        starts[request_id] = start
+        chunks.append(ids[start:])
+        positions.append(torch.arange(start, ids.numel(), device=ids.device, dtype=ids.dtype))
+        sequence_ids.append(ids.new_full((ids.numel() - start,), request_id))
+    flat_ids, _, lengths = pack_prompts(chunks)
+    flat_positions = torch.cat(positions)
+    flat_sequences = torch.cat(sequence_ids)
+    slots = cache.slot_mapping(flat_positions, flat_sequences)
+    metadata = AttentionMetadata(flat_positions, flat_sequences, paged_cache=cache)
+    output = ours(flat_ids, flat_positions, metadata)
+    outputs = split_packed(output, lengths)
+    rows = []
+    for (request_id, ids), chunk in zip(requests.items(), outputs):
+        start = starts[request_id]
+        full_positions = torch.arange(ids.numel(), device=ids.device, dtype=ids.dtype)
+        expected = ours(ids, full_positions, AttentionMetadata(full_positions))[start:]
+        hf_logits = reference(ids[None], use_cache=False).logits[0, start:].float()
+        torch.testing.assert_close(chunk, expected, rtol=1e-5, atol=1e-4)
+        torch.testing.assert_close(chunk, hf_logits, rtol=1e-5, atol=1e-4)
+        if (not torch.equal(chunk.argmax(-1), expected.argmax(-1))
+                or not torch.equal(chunk.argmax(-1), hf_logits.argmax(-1))):
+            raise AssertionError("paged FP32 argmax parity failed")
+        rows.append({
+            "request_id": request_id, "start_position": start, "new_tokens": chunk.shape[0],
+            "committed_length": cache.lengths[request_id],
+            "paged_vs_no_cache_max_abs_diff": (chunk - expected).abs().max().item(),
+            "paged_vs_hf_max_abs_diff": (chunk - hf_logits).abs().max().item(),
+            "all_row_argmax_equal": True, "next_token_id": chunk[-1].argmax().item(),
+        })
+    return {
+        "flat_token_ids": flat_ids.tolist(), "positions": flat_positions.tolist(),
+        "sequence_ids": flat_sequences.tolist(), "slot_mapping": slots.tolist(), "requests": rows,
+    }

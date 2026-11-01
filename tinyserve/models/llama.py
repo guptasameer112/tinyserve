@@ -1,4 +1,4 @@
-"""B7/B8/C3: a flattened-token Llama model with optional contiguous KV cache."""
+"""Flattened-token Llama with reference, contiguous-cache and paged-gather attention."""
 import torch
 from torch import nn
 
@@ -7,6 +7,7 @@ from tinyserve.models.gqa import grouped_query_attention
 from tinyserve.models.mlp import MLP
 from tinyserve.models.norm import RMSNorm
 from tinyserve.models.rope import apply_rope, get_rope_theta, rope_cos_sin
+from tinyserve.paged_cache import PagedKVCache
 from tinyserve.weights import head_dim
 
 
@@ -30,16 +31,20 @@ class SelfAttention(nn.Module):
         self.v_proj = nn.Linear(hidden, self.kv_heads * self.head_dim, bias=False, device=device, dtype=dtype)
         self.o_proj = nn.Linear(hidden, hidden, bias=False, device=device, dtype=dtype)
 
-    def forward(self, hidden_states, positions, allowed_mask, cache=None, layer_index=0):
+    def forward(self, hidden_states, positions, allowed_mask, cache=None, layer_index=0,
+                paged_cache=None, sequence_ids=None):
         tokens = hidden_states.shape[0]
         query = self.q_proj(hidden_states).reshape(tokens, self.query_heads, self.head_dim)
         key = self.k_proj(hidden_states).reshape(tokens, self.kv_heads, self.head_dim)
         value = self.v_proj(hidden_states).reshape(tokens, self.kv_heads, self.head_dim)
         cos, sin = rope_cos_sin(positions, self.head_dim, self.theta, query.dtype)
         query, key = apply_rope(query, cos, sin), apply_rope(key, cos, sin)
-        if cache is not None:
-            key, value = cache.write(layer_index, key, value)
-        output, _ = grouped_query_attention(query, key, value, allowed_mask)
+        if paged_cache is not None:
+            output = paged_cache.attend(layer_index, query, key, value, positions, sequence_ids)
+        else:
+            if cache is not None:
+                key, value = cache.write(layer_index, key, value)
+            output, _ = grouped_query_attention(query, key, value, allowed_mask)
         return self.o_proj(output.reshape(tokens, self.query_heads * self.head_dim))
 
 
@@ -65,9 +70,10 @@ class DecoderLayer(nn.Module):
             raise ValueError("hidden_states must have shape (tokens, hidden_size)")
         if metadata.positions.shape != (hidden_states.shape[0],) or metadata.positions.device != hidden_states.device:
             raise ValueError("positions must match the hidden-state token count and device")
-        mask = metadata.allowed_mask()
+        mask = metadata.allowed_mask() if metadata.paged_cache is None else None
         hidden_states = hidden_states + self.self_attn(
             self.input_layernorm(hidden_states), metadata.positions, mask, metadata.cache, self.layer_index,
+            metadata.paged_cache, metadata.sequence_ids,
         )
         return hidden_states + self.mlp(self.post_attention_layernorm(hidden_states))
 
@@ -141,12 +147,22 @@ class LlamaForCausalLM(nn.Module):
     def new_kv_cache(self, capacity):
         return KVCache(self, capacity)
 
+    def new_paged_cache(self, num_blocks, block_size, block_tables):
+        return PagedKVCache(self, num_blocks, block_size, block_tables)
+
     def forward(self, input_ids, positions, attention_metadata):
         cache = attention_metadata.cache
+        paged_cache = attention_metadata.paged_cache
+        if cache is not None and paged_cache is not None:
+            raise ValueError("choose either contiguous or paged cache, not both")
         if cache is not None:
             cache.validate_request(self, positions, attention_metadata.sequence_ids)
+        if paged_cache is not None:
+            paged_cache.validate_request(self, positions, attention_metadata.sequence_ids)
         # Return FP32 scores; this does not undo rounding inside an FP16 model.
         logits = self.lm_head(self.model(input_ids, positions, attention_metadata)).float()
         if cache is not None:
             cache.length += input_ids.numel()
+        if paged_cache is not None:
+            paged_cache.commit(attention_metadata.sequence_ids)
         return logits

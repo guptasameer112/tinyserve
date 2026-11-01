@@ -75,7 +75,16 @@ This is no-cache packed prefill, not cached batched generation or scheduling.
 Results are archived in [D1_flattened_batching.json](results/D1_flattened_batching.json).
 No batching speedup is claimed.
 See the [D1 guide](docs/guide/16-flattened-batching.md).
-Next: D2 (block tables, slot mapping and paged cache).
+[D2: paged KV cache](notebooks/D2_paged_cache.ipynb) is ready for a fresh
+Colab T4 run. It adds a shared block pool, immutable disjoint block tables,
+physical slot mapping and per-request lengths through a PyTorch gather
+attention path. The lesson tests scrambled blocks and mixed prefill/decode
+against separate no-cache/HF references, plus reset and failure/retry.
+Existing no-cache and contiguous-cache paths remain supported.
+**D2 runtime validation is pending.** Allocation, sharing, scheduling and
+performance kernels are deliberately deferred.
+See the [D2 guide](docs/guide/17-paged-kv-cache.md).
+Next after D2 validation: D3 (block manager).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.

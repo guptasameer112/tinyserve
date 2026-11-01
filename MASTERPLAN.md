@@ -76,7 +76,8 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] C3 (139 B8/C1/C2/C3 tests passed, 1 two-GPU test skipped; 20 greedy parity steps, reset, seeded replay and boundary checks passed in Colab on 2026-11-01)
 - [x] C4 (101 C2/C3/C4 tests passed, 1 two-GPU test skipped; eight unique FP16 cases completed on 2026-11-01; median paired speedup 1.50x at P=256/N=32 and 2.95x at P=512/N=32)
 - [x] D1 (140 B4/B8/C3/D1 tests passed, no skips; packed/HF argmax parity, routing, isolation and reordering checks passed in Colab on 2026-11-01)
-- [ ] D2 D3 D4 D5
+- [ ] D2 (paged pool, disjoint block tables, slot mapping, tests, notebook and guide ready; runtime validation pending Colab)
+- [ ] D3 D4 D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
@@ -84,7 +85,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 
 Recorded B3-C2 JSON results are archived in `results/` from the original
 saved notebook outputs, with their original timestamps and environment metadata.
-Guide chapters now cover every lesson A1-D1. C3's user-provided Colab JSON is
+Guide chapters now cover every lesson A1-D2. C3's user-provided Colab JSON is
 archived in `results/C3_kv_cache.json` with its original timestamp and environment.
 Local checks remain static only; they do not count as passing runtime tests.
 C4 keeps equal fixed-length workloads by temporarily disabling EOS stopping
@@ -94,4 +95,7 @@ break-even and longer prompts benefited in this run.
 D1 establishes no-cache packed prefill ownership and output routing with
 the existing model interface. Packed contiguous-cache generation remains
 unsupported. D1's recorded result is archived in `results/D1_flattened_batching.json`.
-D2 introduces paged storage next.
+D2's manual disjoint tables and PyTorch gather backend support independent
+cached request lengths and mixed prefill/decode, without a model-interface
+rewrite. Runtime validation is pending; allocation and block sharing are
+deferred to later block-manager work.

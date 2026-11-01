@@ -12,16 +12,20 @@ import torch
 
 if TYPE_CHECKING:
     from tinyserve.cache import KVCache
+    from tinyserve.paged_cache import PagedKVCache
 
 
 @dataclass
 class AttentionMetadata:
-    """Token layout: positions, optional packed request IDs, or a C3 cache."""
+    """Token layout: positions/request IDs and optional contiguous or paged cache."""
     positions: torch.Tensor
     sequence_ids: Optional[torch.Tensor] = None
     cache: Optional["KVCache"] = None
+    paged_cache: Optional["PagedKVCache"] = None
 
     def allowed_mask(self):
+        if self.paged_cache is not None:
+            raise ValueError("paged attention builds a separate prefix mask for each request")
         if self.cache is not None:
             if self.sequence_ids is not None:
                 raise ValueError("contiguous cache supports one request, not packed sequence_ids")
