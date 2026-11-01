@@ -29,8 +29,14 @@ counts that can be added together.
 
 ## C3 status
 
-[C3_kv_cache.ipynb](../notebooks/C3_kv_cache.ipynb) is ready for the user's
-fresh Colab T4 run. Runtime validation is pending. Its final save cell will
-create `C3_kv_cache.json`; no placeholder success result is committed.
+[C3_kv_cache.json](C3_kv_cache.json) was archived from the user's pasted
+Colab output on November 1, 2026. It preserves the original timestamp,
+T4 environment and source commit `7b3969f`.
+
+The result records 139 passed B8/C1/C2/C3 tests, one two-GPU test skipped,
+20 greedy parity steps and successful reset, replay and boundary checks.
+This is runtime evidence supplied by the user, not a local test run.
+It does not claim that the repository notebook contains the complete
+successful run's outputs. Preserve the successful Colab notebook separately.
 
 Save both the JSON and notebook with outputs before replacing a Colab runtime.

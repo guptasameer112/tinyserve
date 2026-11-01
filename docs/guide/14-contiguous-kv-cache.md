@@ -122,9 +122,36 @@ Changing GEMM row counts can change rounding; token parity is required
 separately. FP16 uses `rtol=atol=1e-2` on a small controlled model, with
 no token-exact FP16 claim.
 
-**Runtime validation is pending the user's Colab run.** Local checks are
-static only. Save notebook outputs and `results/C3_kv_cache.json`.
-No speed claim is made until C4 measures the no-cache/cached curve.
+Local checks are static only. Save notebook outputs and the JSON before
+replacing a Colab runtime. No speed claim is made until C4 measures the
+no-cache/cached curve.
+
+### Recorded Colab run (2026-11-01)
+
+The user-provided [C3_kv_cache.json](../../results/C3_kv_cache.json) records
+a Tesla T4 run at commit `7b3969f`, with PyTorch `2.11.0+cu130` and
+Transformers `5.21.0`.
+
+- **139 B8/C1/C2/C3 tests passed; one test skipped**, because it requires
+  two CUDA devices. The pytest return code is zero and stderr is empty.
+- All 20 demonstrated greedy steps matched HF: 12 raw and eight chat.
+  Full generated sequences also matched HF's cached generator.
+- The raw prompt prefills six tokens, then forwards one token per step.
+  It generates 12 tokens and ends with cache length 17 versus 18 returned IDs.
+- The chat prompt prefills 41 tokens and generates eight, including EOS.
+  It ends with cache length 48 versus 49 returned IDs.
+- Cached/no-cache maximum logit differences range from zero to `2.10e-5`.
+  Cached/HF maximum differences range from `7.63e-6` to `3.80e-5`.
+  All recorded argmax checks passed.
+- The FP32 demo reserves eight slots: `360,448` bytes total and `45,056`
+  bytes per token (44 KiB). Its committed prefix contains six tokens.
+- Reset reuses storage and gives zero logit difference in the demonstrated
+  comparison. Zero budget, strict context errors and position errors pass.
+- Seed-17 cached sampling replays exactly.
+
+The JSON was archived from the user's pasted result, preserving its original
+timestamp and environment. It validates the recorded tests and demos, not
+unmeasured performance or every possible input.
 
 ## Interview questions
 

@@ -46,13 +46,15 @@ in Colab; one two-GPU test was skipped on the single T4. Raw and chat greedy
 outputs matched HF token-for-token, seeded sampling replay matched, and
 zero-budget and strict context checks passed. Results are saved in
 `results/C2_generation.json`.
-[C3: contiguous KV cache](notebooks/C3_kv_cache.ipynb) is ready for a fresh
-Colab T4 run. It adds append-only K/V storage, one-token decode, cached/no-cache
-and HF parity checks, reset/boundary tests, and a memory walkthrough.
+[C3: contiguous KV cache](notebooks/C3_kv_cache.ipynb) passed 139 B8/C1/C2/C3
+tests in Colab on November 1, 2026; one two-GPU test was skipped.
+All 20 demonstrated greedy steps matched HF. Cached/no-cache logits differed
+by at most 2.10e-5; cached/HF logits differed by at most 3.80e-5.
+Reset, seeded replay, zero budget and strict context checks passed.
 `generate(..., use_cache=True)` enables it; the default remains no-cache.
-**C3 runtime validation is pending.** Local checks are static only; tests
-and model demos run in Colab.
-Next after C3 validation: C4 (no-cache vs cached speed curve).
+The user-provided result is archived in [C3_kv_cache.json](results/C3_kv_cache.json).
+Local checks are static only; tests and model demos run in Colab.
+Next: C4 (no-cache vs cached speed curve). No cache speed claim is made yet.
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.

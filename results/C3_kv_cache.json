@@ -1,0 +1,507 @@
+{
+  "name": "C3_kv_cache",
+  "timestamp_utc": "2026-11-01T08:12:02Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "git_sha": "7b3969f",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.21.0"
+  },
+  "data": {
+    "dtype": "float32",
+    "use_cache": true,
+    "single_request": true,
+    "greedy_comparison": [
+      {
+        "prompt_type": "raw",
+        "prompt_tokens": 6,
+        "budget": 12,
+        "token_ids": [
+          1,
+          450,
+          7483,
+          310,
+          3444,
+          338,
+          3681,
+          29889,
+          13,
+          13,
+          29906,
+          29889,
+          350,
+          29889,
+          450,
+          7483,
+          310,
+          9556
+        ],
+        "continuation": "Paris.\n\n2. B. The capital of Germany",
+        "new_tokens": 12,
+        "hf_cached_token_equal": true,
+        "steps": [
+          {
+            "step": 0,
+            "forward_tokens": 6,
+            "cache_length": 6,
+            "positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "cached_vs_no_cache_max_abs_diff": 0.0,
+            "cached_vs_hf_max_abs_diff": 9.5367431640625e-06,
+            "argmax_equal": true,
+            "next_token_id": 3681
+          },
+          {
+            "step": 1,
+            "forward_tokens": 1,
+            "cache_length": 7,
+            "positions": [
+              6
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.049041748046875e-05,
+            "cached_vs_hf_max_abs_diff": 1.0013580322265625e-05,
+            "argmax_equal": true,
+            "next_token_id": 29889
+          },
+          {
+            "step": 2,
+            "forward_tokens": 1,
+            "cache_length": 8,
+            "positions": [
+              7
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.33514404296875e-05,
+            "cached_vs_hf_max_abs_diff": 1.2874603271484375e-05,
+            "argmax_equal": true,
+            "next_token_id": 13
+          },
+          {
+            "step": 3,
+            "forward_tokens": 1,
+            "cache_length": 9,
+            "positions": [
+              8
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.430511474609375e-05,
+            "cached_vs_hf_max_abs_diff": 1.5735626220703125e-05,
+            "argmax_equal": true,
+            "next_token_id": 13
+          },
+          {
+            "step": 4,
+            "forward_tokens": 1,
+            "cache_length": 10,
+            "positions": [
+              9
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.71661376953125e-05,
+            "cached_vs_hf_max_abs_diff": 1.33514404296875e-05,
+            "argmax_equal": true,
+            "next_token_id": 29906
+          },
+          {
+            "step": 5,
+            "forward_tokens": 1,
+            "cache_length": 11,
+            "positions": [
+              10
+            ],
+            "cached_vs_no_cache_max_abs_diff": 7.62939453125e-06,
+            "cached_vs_hf_max_abs_diff": 9.5367431640625e-06,
+            "argmax_equal": true,
+            "next_token_id": 29889
+          },
+          {
+            "step": 6,
+            "forward_tokens": 1,
+            "cache_length": 12,
+            "positions": [
+              11
+            ],
+            "cached_vs_no_cache_max_abs_diff": 7.62939453125e-06,
+            "cached_vs_hf_max_abs_diff": 9.5367431640625e-06,
+            "argmax_equal": true,
+            "next_token_id": 350
+          },
+          {
+            "step": 7,
+            "forward_tokens": 1,
+            "cache_length": 13,
+            "positions": [
+              12
+            ],
+            "cached_vs_no_cache_max_abs_diff": 9.059906005859375e-06,
+            "cached_vs_hf_max_abs_diff": 7.62939453125e-06,
+            "argmax_equal": true,
+            "next_token_id": 29889
+          },
+          {
+            "step": 8,
+            "forward_tokens": 1,
+            "cache_length": 14,
+            "positions": [
+              13
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.0967254638671875e-05,
+            "cached_vs_hf_max_abs_diff": 1.1444091796875e-05,
+            "argmax_equal": true,
+            "next_token_id": 450
+          },
+          {
+            "step": 9,
+            "forward_tokens": 1,
+            "cache_length": 15,
+            "positions": [
+              14
+            ],
+            "cached_vs_no_cache_max_abs_diff": 8.821487426757812e-06,
+            "cached_vs_hf_max_abs_diff": 9.059906005859375e-06,
+            "argmax_equal": true,
+            "next_token_id": 7483
+          },
+          {
+            "step": 10,
+            "forward_tokens": 1,
+            "cache_length": 16,
+            "positions": [
+              15
+            ],
+            "cached_vs_no_cache_max_abs_diff": 8.58306884765625e-06,
+            "cached_vs_hf_max_abs_diff": 9.059906005859375e-06,
+            "argmax_equal": true,
+            "next_token_id": 310
+          },
+          {
+            "step": 11,
+            "forward_tokens": 1,
+            "cache_length": 17,
+            "positions": [
+              16
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.049041748046875e-05,
+            "cached_vs_hf_max_abs_diff": 1.239776611328125e-05,
+            "argmax_equal": true,
+            "next_token_id": 9556
+          }
+        ]
+      },
+      {
+        "prompt_type": "chat",
+        "prompt_tokens": 41,
+        "budget": 24,
+        "token_ids": [
+          529,
+          29989,
+          5205,
+          29989,
+          29958,
+          13,
+          3492,
+          526,
+          263,
+          8444,
+          20255,
+          29889,
+          2,
+          13,
+          29966,
+          29989,
+          1792,
+          29989,
+          29958,
+          13,
+          5618,
+          338,
+          278,
+          7483,
+          310,
+          3444,
+          29973,
+          673,
+          297,
+          697,
+          10541,
+          29889,
+          2,
+          13,
+          29966,
+          29989,
+          465,
+          22137,
+          29989,
+          29958,
+          13,
+          1576,
+          7483,
+          310,
+          3444,
+          338,
+          3681,
+          29889,
+          2
+        ],
+        "continuation": "The capital of France is Paris.",
+        "new_tokens": 8,
+        "hf_cached_token_equal": true,
+        "steps": [
+          {
+            "step": 0,
+            "forward_tokens": 41,
+            "cache_length": 41,
+            "positions": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              27,
+              28,
+              29,
+              30,
+              31,
+              32,
+              33,
+              34,
+              35,
+              36,
+              37,
+              38,
+              39,
+              40
+            ],
+            "cached_vs_no_cache_max_abs_diff": 0.0,
+            "cached_vs_hf_max_abs_diff": 3.802776336669922e-05,
+            "argmax_equal": true,
+            "next_token_id": 1576
+          },
+          {
+            "step": 1,
+            "forward_tokens": 1,
+            "cache_length": 42,
+            "positions": [
+              41
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.621246337890625e-05,
+            "cached_vs_hf_max_abs_diff": 1.71661376953125e-05,
+            "argmax_equal": true,
+            "next_token_id": 7483
+          },
+          {
+            "step": 2,
+            "forward_tokens": 1,
+            "cache_length": 43,
+            "positions": [
+              42
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.811981201171875e-05,
+            "cached_vs_hf_max_abs_diff": 1.8596649169921875e-05,
+            "argmax_equal": true,
+            "next_token_id": 310
+          },
+          {
+            "step": 3,
+            "forward_tokens": 1,
+            "cache_length": 44,
+            "positions": [
+              43
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.9073486328125e-05,
+            "cached_vs_hf_max_abs_diff": 1.6689300537109375e-05,
+            "argmax_equal": true,
+            "next_token_id": 3444
+          },
+          {
+            "step": 4,
+            "forward_tokens": 1,
+            "cache_length": 45,
+            "positions": [
+              44
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.52587890625e-05,
+            "cached_vs_hf_max_abs_diff": 1.9073486328125e-05,
+            "argmax_equal": true,
+            "next_token_id": 338
+          },
+          {
+            "step": 5,
+            "forward_tokens": 1,
+            "cache_length": 46,
+            "positions": [
+              45
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.9073486328125e-05,
+            "cached_vs_hf_max_abs_diff": 1.9073486328125e-05,
+            "argmax_equal": true,
+            "next_token_id": 3681
+          },
+          {
+            "step": 6,
+            "forward_tokens": 1,
+            "cache_length": 47,
+            "positions": [
+              46
+            ],
+            "cached_vs_no_cache_max_abs_diff": 2.09808349609375e-05,
+            "cached_vs_hf_max_abs_diff": 1.9073486328125e-05,
+            "argmax_equal": true,
+            "next_token_id": 29889
+          },
+          {
+            "step": 7,
+            "forward_tokens": 1,
+            "cache_length": 48,
+            "positions": [
+              47
+            ],
+            "cached_vs_no_cache_max_abs_diff": 1.3828277587890625e-05,
+            "cached_vs_hf_max_abs_diff": 2.288818359375e-05,
+            "argmax_equal": true,
+            "next_token_id": 2
+          }
+        ]
+      }
+    ],
+    "cache_memory": {
+      "shape_per_tensor": [
+        22,
+        8,
+        4,
+        64
+      ],
+      "capacity": 8,
+      "committed_length": 6,
+      "allocated_bytes": 360448,
+      "bytes_per_token": 45056,
+      "chunk_mask": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "cached_vs_no_cache_diff_range": {
+      "min": 0.0,
+      "max": 2.09808349609375e-05
+    },
+    "cached_vs_hf_diff_range": {
+      "min": 7.62939453125e-06,
+      "max": 3.802776336669922e-05
+    },
+    "position_error": "cached positions must append consecutively from cache.length",
+    "oversized_context_error": "prompt plus max_new_tokens exceeds the model context limit",
+    "reset_max_abs_diff": 0.0,
+    "reset_reused_storage": true,
+    "zero_budget_returns_prompt": true,
+    "sampled_generation": {
+      "temperature": 0.8,
+      "top_k": 40,
+      "top_p": 0.9,
+      "seed": 17,
+      "token_ids": [
+        529,
+        29989,
+        5205,
+        29989,
+        29958,
+        13,
+        3492,
+        526,
+        263,
+        8444,
+        20255,
+        29889,
+        2,
+        13,
+        29966,
+        29989,
+        1792,
+        29989,
+        29958,
+        13,
+        5618,
+        338,
+        278,
+        7483,
+        310,
+        3444,
+        29973,
+        673,
+        297,
+        697,
+        10541,
+        29889,
+        2,
+        13,
+        29966,
+        29989,
+        465,
+        22137,
+        29989,
+        29958,
+        13,
+        1576,
+        7483,
+        310,
+        3444,
+        338,
+        3681,
+        29889,
+        2
+      ],
+      "continuation": "The capital of France is Paris.",
+      "same_seed_replay_equal": true
+    },
+    "pytest": {
+      "returncode": 0,
+      "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/bin/python3\ncachedir: .pytest_cache\nrootdir: /content/tinyserve\nconfigfile: pyproject.toml\nplugins: typeguard-4.6.0, langsmith-0.14.13, anyio-4.15.1, platformdirs-4.13.6\ncollecting ... collected 140 items\n\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[4] PASSED        [  0%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[2] PASSED        [  1%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[1] PASSED        [  2%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[False] PASSED [  2%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[True] PASSED [  3%]\ntests/test_b8_model.py::test_wrong_and_missing_weights_raise PASSED      [  4%]\ntests/test_b8_model.py::test_embedding_final_norm_and_lm_head_wiring PASSED [  5%]\ntests/test_b8_model.py::test_full_model_causality PASSED                 [  5%]\ntests/test_b8_model.py::test_packed_full_model_matches_separate_requests PASSED [  6%]\ntests/test_b8_model.py::test_explicit_positions_match_hf PASSED          [  7%]\ntests/test_b8_model.py::test_token_exact_greedy_matches_hf_generate PASSED [  7%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids0] PASSED        [  8%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids1] PASSED        [  9%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids2] PASSED        [ 10%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids3] PASSED        [ 10%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids4] PASSED        [ 11%]\ntests/test_b8_model.py::test_mismatched_metadata_positions_raise PASSED  [ 12%]\ntests/test_b8_model.py::test_negative_positions_raise PASSED             [ 12%]\ntests/test_b8_model.py::test_unsupported_rope_raises PASSED              [ 13%]\ntests/test_b8_model.py::test_fp16_full_model_vs_same_weights_in_fp32 PASSED [ 14%]\ntests/test_c1_sampling.py::test_plain_softmax_matches_hand_probabilities PASSED [ 15%]\ntests/test_c1_sampling.py::test_temperature_squares_probabilities_at_half_temperature PASSED [ 15%]\ntests/test_c1_sampling.py::test_higher_temperature_flattens_distribution PASSED [ 16%]\ntests/test_c1_sampling.py::test_greedy_is_one_hot_lowest_index_on_tie_and_does_not_consume_rng PASSED [ 17%]\ntests/test_c1_sampling.py::test_top_k_two PASSED                         [ 17%]\ntests/test_c1_sampling.py::test_top_k_keeps_threshold_ties PASSED        [ 18%]\ntests/test_c1_sampling.py::test_top_k_larger_than_vocab_is_unfiltered PASSED [ 19%]\ntests/test_c1_sampling.py::test_top_p_keeps_crossing_token_and_normalizes PASSED [ 20%]\ntests/test_c1_sampling.py::test_top_p_tiny_keeps_best_token PASSED       [ 20%]\ntests/test_c1_sampling.py::test_top_p_exact_boundary_uses_hf_ascending_tail_convention PASSED [ 21%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[1.0-0-1.0] PASSED [ 22%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[0.5-0-1.0] PASSED [ 22%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[2.0-2-1.0] PASSED [ 23%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[1.0-0-0.8] PASSED [ 24%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[0.7-3-0.8] PASSED [ 25%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[1.0-100-0.01] PASSED [ 25%]\ntests/test_c1_sampling.py::test_filters_do_not_modify_input PASSED       [ 26%]\ntests/test_c1_sampling.py::test_negative_infinity_is_a_valid_pre_masked_token PASSED [ 27%]\ntests/test_c1_sampling.py::test_float64_matches_explicit_formula PASSED  [ 27%]\ntests/test_c1_sampling.py::test_low_precision_scores_upcast_before_softmax[dtype0] PASSED [ 28%]\ntests/test_c1_sampling.py::test_low_precision_scores_upcast_before_softmax[dtype1] PASSED [ 29%]\ntests/test_c1_sampling.py::test_seeded_sampling_is_reproducible_and_filtered_tokens_never_appear PASSED [ 30%]\ntests/test_c1_sampling.py::test_empirical_multinomial_frequencies_match_probabilities PASSED [ 30%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options0] PASSED [ 31%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options1] PASSED [ 32%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options2] PASSED [ 32%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options3] PASSED [ 33%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options4] PASSED [ 34%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options5] PASSED [ 35%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options6] PASSED [ 35%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options7] PASSED [ 36%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options8] PASSED [ 37%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options9] PASSED [ 37%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options10] PASSED [ 38%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores0] PASSED     [ 39%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores1] PASSED     [ 40%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores2] PASSED     [ 40%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores3] PASSED     [ 41%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores4] PASSED     [ 42%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores5] PASSED     [ 42%]\ntests/test_c1_sampling.py::test_temperature_scaling_overflow_is_reported PASSED [ 43%]\ntests/test_c1_sampling.py::test_cuda_sampling_uses_device_generator PASSED [ 44%]\ntests/test_c2_generation.py::test_recomputes_growing_prefix_and_includes_eos PASSED [ 45%]\ntests/test_c2_generation.py::test_new_token_limit_not_total_length PASSED [ 45%]\ntests/test_c2_generation.py::test_immediate_eos PASSED                   [ 46%]\ntests/test_c2_generation.py::test_prompt_eos_does_not_stop_a_new_turn PASSED [ 47%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos0] PASSED       [ 47%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos1] PASSED       [ 48%]\ntests/test_c2_generation.py::test_zero_new_tokens_returns_independent_copy_without_forward PASSED [ 49%]\ntests/test_c2_generation.py::test_exact_context_budget_allowed PASSED    [ 50%]\ntests/test_c2_generation.py::test_oversized_request_raises_before_forward_even_if_eos_would_be_early PASSED [ 50%]\ntests/test_c2_generation.py::test_seeded_sampling_matches_manual_sampler_sequence PASSED [ 51%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[-1] PASSED [ 52%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[True] PASSED [ 52%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[2.5] PASSED [ 53%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options0] PASSED [ 54%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options1] PASSED [ 55%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options2] PASSED [ 55%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt0] PASSED  [ 56%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt1] PASSED  [ 57%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt2] PASSED  [ 57%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt3] PASSED  [ 58%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt4] PASSED  [ 59%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[True] PASSED [ 60%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[2] PASSED [ 60%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[-1] PASSED [ 61%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos3] PASSED [ 62%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos4] PASSED [ 62%]\ntests/test_c2_generation.py::test_training_mode_raises PASSED            [ 63%]\ntests/test_c2_generation.py::test_invalid_generator_type_raises_before_forward PASSED [ 64%]\ntests/test_c2_generation.py::test_wrong_logits_shape_raises PASSED       [ 65%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[False] PASSED [ 65%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[True] PASSED [ 66%]\ntests/test_c2_generation.py::test_device_dtype_and_generator_validation PASSED [ 67%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[False] PASSED [ 67%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[True] PASSED [ 68%]\ntests/test_c2_generation.py::test_generator_on_other_cuda_device_raises_before_forward SKIPPED [ 69%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-4] PASSED [ 70%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-2] PASSED [ 70%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-1] PASSED [ 71%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-4] PASSED [ 72%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-2] PASSED [ 72%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-1] PASSED [ 73%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-4] PASSED [ 74%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-2] PASSED [ 75%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-1] PASSED [ 75%]\ntests/test_c3_cache.py::test_storage_uses_kv_heads_and_exact_memory_cost PASSED [ 76%]\ntests/test_c3_cache.py::test_keys_are_rotated_once_and_values_are_not_rotated PASSED [ 77%]\ntests/test_c3_cache.py::test_old_entries_are_unchanged_and_unused_storage_is_invisible PASSED [ 77%]\ntests/test_c3_cache.py::test_reset_reuses_storage_without_leaking_previous_request PASSED [ 78%]\ntests/test_c3_cache.py::test_prefill_and_chunk_masks_use_absolute_positions PASSED [ 79%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[0] PASSED           [ 80%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[-1] PASSED          [ 80%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[33] PASSED          [ 81%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[True] PASSED        [ 82%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[1.5] PASSED         [ 82%]\ntests/test_c3_cache.py::test_exact_capacity_then_overflow_preserves_committed_prefix PASSED [ 83%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions0] PASSED [ 84%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions1] PASSED [ 85%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions2] PASSED [ 85%]\ntests/test_c3_cache.py::test_decode_cannot_restart_positions_at_zero PASSED [ 86%]\ntests/test_c3_cache.py::test_packed_cached_requests_are_rejected_but_no_cache_still_works PASSED [ 87%]\ntests/test_c3_cache.py::test_cache_rejects_other_model_and_changed_dtype PASSED [ 87%]\ntests/test_c3_cache.py::test_cached_forward_requires_eval_and_no_grad PASSED [ 88%]\ntests/test_c3_cache.py::test_failed_later_layer_does_not_commit_and_can_retry PASSED [ 89%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[layer] PASSED    [ 90%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[shape] PASSED    [ 90%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[dtype] PASSED    [ 91%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[overflow] PASSED [ 92%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[False] PASSED [ 92%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[True] PASSED [ 93%]\ntests/test_c3_cache.py::test_lesson_probe_checks_each_step_and_reports_actual_forward_shapes PASSED [ 94%]\ntests/test_c3_cache.py::test_generation_prefills_once_then_only_forwards_new_token PASSED [ 95%]\ntests/test_c3_cache.py::test_zero_budget_and_context_errors_do_not_allocate_cache PASSED [ 95%]\ntests/test_c3_cache.py::test_exact_context_budget_and_repeated_calls PASSED [ 96%]\ntests/test_c3_cache.py::test_seeded_cached_sampling_replays PASSED       [ 97%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[1] PASSED       [ 97%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[None] PASSED    [ 98%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[yes] PASSED     [ 99%]\ntests/test_c3_cache.py::test_cuda_fp16_cache_against_same_rounded_weights_in_fp32 PASSED [100%]\n\n=========================== short test summary info ============================\nSKIPPED [1] tests/test_c2_generation.py:209: Two CUDA devices required\n======================= 139 passed, 1 skipped in 22.14s ========================\n",
+      "stderr": ""
+    }
+  }
+}
