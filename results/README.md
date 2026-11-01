@@ -43,8 +43,15 @@ Save both the JSON and notebook with outputs before replacing a Colab runtime.
 
 ## C4 status
 
-[C4_cache_curve.ipynb](../notebooks/C4_cache_curve.ipynb) is ready for the
-user's fresh Colab T4 run. Its runtime tests and measured curves are pending.
-It saves `C4_cache_curve.json` after each point with `status="partial"` and
-marks it complete only after both sweeps and plots succeed. No placeholder
-benchmark result or performance claim is committed.
+[C4_cache_curve.json](C4_cache_curve.json) was archived from the user's complete
+Colab result on November 1, 2026, preserving timestamp, T4 environment and
+source commit `e50ae86`. It records 101 passed tests and one skipped test,
+eight unique measured cases, and three paired trials per case.
+
+Trial ordering, token counts, tokens/s, speedup ratios, summary ranges,
+theoretical KV bytes and the shared sweep point were checked against the
+raw records without running the benchmark locally.
+
+The JSON reports both plot paths. Their PNG contents were not supplied in
+the pasted result and are not archived here. Retain the Colab PNGs and the
+successful notebook with outputs separately.

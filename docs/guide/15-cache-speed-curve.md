@@ -148,8 +148,62 @@ marks the final JSON complete only after all points and plots succeed.
 An interrupted experiment is not a complete curve. Save the JSON, PNGs and
 notebook outputs before replacing the runtime.
 
-**Runtime validation and measured speedups are pending the user's Colab run.**
 Local checks are static only. Next: D1, flattened batching and attention metadata.
+
+### Recorded Colab run (2026-11-01)
+
+The user's [complete JSON](../../results/C4_cache_curve.json) records a
+Tesla T4 at commit `e50ae86`, with PyTorch `2.11.0+cu130` and Transformers
+`5.21.0`. **101 C2/C3/C4 tests passed; one two-GPU test skipped.**
+The earlier plotting-test clock failure was fixed before this run.
+
+All eight unique cases completed, with three paired trials per case.
+Every measured cached/no-cache generated sequence matched, an observation
+for these FP16 inputs rather than a universal FP16 parity guarantee.
+
+Prompt sweep, with 32 new tokens:
+
+| Prompt tokens | No-cache median ms | Cached median ms | Paired speedup min/median/max |
+|---|---:|---:|---|
+| 16 | 1,395.74 | 1,406.75 | 0.960 / 0.992 / 1.087 |
+| 64 | 1,236.41 | 1,287.06 | 0.821 / 0.973 / 0.986 |
+| 128 | 1,233.72 | 1,232.14 | 0.983 / 0.986 / 1.011 |
+| 256 | 1,865.54 | 1,242.44 | 1.495 / 1.496 / 1.514 |
+| 512 | 3,882.62 | 1,314.55 | 2.931 / 2.954 / 2.970 |
+
+At 512 prompt tokens, generated throughput increases from 8.24 to 24.34
+tokens/s. Median incremental allocated peak falls from 198.44 to 130.26 MiB,
+despite the additional reserved KV storage. This metric includes temporaries,
+not just KV bytes.
+
+Generation sweep, with 128 prompt tokens:
+
+| New tokens | No-cache median ms | Cached median ms | Paired speedup min/median/max |
+|---|---:|---:|---|
+| 1 | 38.48 | 40.82 | 0.927 / 0.935 / 0.970 |
+| 8 | 302.49 | 316.91 | 0.939 / 0.955 / 0.978 |
+| 16 | 765.86 | 741.25 | 0.883 / 1.001 / 1.038 |
+| 32 | 1,233.72 | 1,232.14 | 0.983 / 0.986 / 1.011 |
+
+The one-token result shows cache overhead without reuse. At this prompt
+length, the tested longer generations do not establish a consistent speed
+advantage. The 16-token case has substantial variation; three trials do
+not identify its cause.
+
+Short-prompt cache/no-cache times are near break-even, while every paired
+trial at 256 and 512 prompt tokens favors cache. The first measured prompt
+length with a clear advantage is 256; the exact crossover is not established.
+Do not infer that the smaller 64/128-token timings relative to 16 tokens
+prove those longer prompts are inherently faster.
+
+These curves are consistent with overhead and matrix efficiency masking
+cache savings for smaller workloads, and avoided recomputation becoming
+more important for longer prompts. No profiler was captured, so they do
+not prove a specific bottleneck or universal speedup.
+
+The original JSON payload and metadata were preserved. Raw accounting and
+summaries were checked statically. The JSON names two generated figures;
+their PNG contents were not supplied and remain in the user's Colab artifacts.
 
 ## Interview questions
 

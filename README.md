@@ -54,15 +54,18 @@ Reset, seeded replay, zero budget and strict context checks passed.
 `generate(..., use_cache=True)` enables it; the default remains no-cache.
 The user-provided result is archived in [C3_kv_cache.json](results/C3_kv_cache.json).
 Local checks are static only; tests and model demos run in Colab.
-[C4: cache speed curve](notebooks/C4_cache_curve.ipynb) is ready for a fresh
-Colab T4 run. It compares fixed-length FP16 generation across prompt and
-generation lengths, with warmup, synchronized wall-clock timings, alternating
-trial order, raw results, min/median/max plots and memory accounting.
+[C4: cache speed curve](notebooks/C4_cache_curve.ipynb) passed 101 C2/C3/C4
+tests in Colab on November 1, 2026; one two-GPU test was skipped.
+The eight unique FP16 cases completed, with three paired trials each.
+For 32 new tokens, median paired cache speedup was near break-even for
+16-128-token prompts, 1.50x at 256 tokens and 2.95x at 512 tokens.
+All measured cached/no-cache token sequences matched in this run.
 EOS stopping is disabled only inside the benchmark and restored afterward.
-**C4 runtime validation and measured speedups are pending.**
+Results are archived in [C4_cache_curve.json](results/C4_cache_curve.json).
+These are single-request reference-engine measurements, not serving throughput.
 See the [C4 guide](docs/guide/15-cache-speed-curve.md) for timing boundaries
 and why cache can lose for a single generated token.
-Next after C4 validation: D1 (flattened batching and attention metadata).
+Next: D1 (flattened batching and attention metadata).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.
