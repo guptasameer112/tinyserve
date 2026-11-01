@@ -75,7 +75,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] C2 (96 tests passed, 1 two-GPU test skipped; greedy HF parity and seeded replay passed in Colab)
 - [x] C3 (139 B8/C1/C2/C3 tests passed, 1 two-GPU test skipped; 20 greedy parity steps, reset, seeded replay and boundary checks passed in Colab on 2026-11-01)
 - [x] C4 (101 C2/C3/C4 tests passed, 1 two-GPU test skipped; eight unique FP16 cases completed on 2026-11-01; median paired speedup 1.50x at P=256/N=32 and 2.95x at P=512/N=32)
-- [ ] D1 (pack/split helpers, isolation/parity tests, notebook and guide ready; runtime validation pending Colab)
+- [x] D1 (140 B4/B8/C3/D1 tests passed, no skips; packed/HF argmax parity, routing, isolation and reordering checks passed in Colab on 2026-11-01)
 - [ ] D2 D3 D4 D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4
@@ -93,4 +93,5 @@ result is archived in `results/C4_cache_curve.json`; short prompts were near
 break-even and longer prompts benefited in this run.
 D1 establishes no-cache packed prefill ownership and output routing with
 the existing model interface. Packed contiguous-cache generation remains
-unsupported; D2 introduces paged storage after D1 validation.
+unsupported. D1's recorded result is archived in `results/D1_flattened_batching.json`.
+D2 introduces paged storage next.

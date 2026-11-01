@@ -1,0 +1,260 @@
+{
+  "name": "D1_flattened_batching",
+  "timestamp_utc": "2026-11-01T09:20:55Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "git_sha": "0044311",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.21.0"
+  },
+  "data": {
+    "dtype": "float32",
+    "use_cache": false,
+    "dense_reference_attention": true,
+    "hand_layout": {
+      "ids": [
+        1,
+        7,
+        9,
+        1,
+        12
+      ],
+      "positions": [
+        0,
+        1,
+        2,
+        0,
+        1
+      ],
+      "sequence_ids": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "lengths": [
+        3,
+        2
+      ],
+      "allowed_mask": [
+        [
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    "missing_request_ids_demo": {
+      "correct_outputs": [
+        1.0,
+        1.0,
+        10.0
+      ],
+      "without_request_ids": [
+        5.5,
+        4.0,
+        5.5
+      ]
+    },
+    "packed_parity": {
+      "request_lengths": [
+        6,
+        6,
+        9
+      ],
+      "flat_token_ids": [
+        1,
+        450,
+        7483,
+        310,
+        3444,
+        338,
+        1,
+        450,
+        7483,
+        310,
+        9556,
+        338,
+        1,
+        319,
+        21577,
+        4086,
+        1904,
+        508,
+        1371,
+        2305,
+        491
+      ],
+      "positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "sequence_ids": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "total_tokens": 21,
+      "padded_token_slots": 27,
+      "requests": [
+        {
+          "request_index": 0,
+          "tokens": 6,
+          "packed_vs_separate_max_abs_diff": 2.6941299438476562e-05,
+          "packed_vs_hf_max_abs_diff": 2.6941299438476562e-05,
+          "all_row_argmax_equal": true,
+          "next_token_id": 3681
+        },
+        {
+          "request_index": 1,
+          "tokens": 6,
+          "packed_vs_separate_max_abs_diff": 2.6941299438476562e-05,
+          "packed_vs_hf_max_abs_diff": 2.6941299438476562e-05,
+          "all_row_argmax_equal": true,
+          "next_token_id": 5115
+        },
+        {
+          "request_index": 2,
+          "tokens": 9,
+          "packed_vs_separate_max_abs_diff": 1.811981201171875e-05,
+          "packed_vs_hf_max_abs_diff": 1.811981201171875e-05,
+          "all_row_argmax_equal": true,
+          "next_token_id": 13138
+        }
+      ]
+    },
+    "next_token_predictions": [
+      {
+        "request_index": 0,
+        "prompt": "The capital of France is",
+        "next_token_id": 3681,
+        "next_token_text": "Paris",
+        "logits_shape": [
+          6,
+          32000
+        ]
+      },
+      {
+        "request_index": 1,
+        "prompt": "The capital of Germany is",
+        "next_token_id": 5115,
+        "next_token_text": "Berlin",
+        "logits_shape": [
+          6,
+          32000
+        ]
+      },
+      {
+        "request_index": 2,
+        "prompt": "A tiny language model can help people by",
+        "next_token_id": 13138,
+        "next_token_text": "providing",
+        "logits_shape": [
+          9,
+          32000
+        ]
+      }
+    ],
+    "packed_vs_separate_diff_range": {
+      "min": 1.811981201171875e-05,
+      "max": 2.6941299438476562e-05
+    },
+    "packed_vs_hf_diff_range": {
+      "min": 1.811981201171875e-05,
+      "max": 2.6941299438476562e-05
+    },
+    "cross_request_isolation_diffs": [
+      0.0,
+      0.0
+    ],
+    "request_reordering": {
+      "order": [
+        2,
+        0,
+        1
+      ],
+      "max_abs_diffs": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "packed_contiguous_cache_error": "contiguous cache supports one request, not packed sequence_ids",
+    "pytest": {
+      "returncode": 0,
+      "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/bin/python3\ncachedir: .pytest_cache\nrootdir: /content/tinyserve\nconfigfile: pyproject.toml\nplugins: anyio-4.15.1, platformdirs-4.13.6, langsmith-0.14.13, typeguard-4.6.0\ncollecting ... collected 140 items\n\ntests/test_b4_attention.py::test_hand_example PASSED                     [  0%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[1-1-1] PASSED [  1%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[5-2-4] PASSED [  2%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[9-4-64] PASSED [  2%]\ntests/test_b4_attention.py::test_matches_pytorch_multihead_attention PASSED [  3%]\ntests/test_b4_attention.py::test_matches_pytorch_sdpa PASSED             [  4%]\ntests/test_b4_attention.py::test_future_tokens_cannot_change_earlier_outputs PASSED [  5%]\ntests/test_b4_attention.py::test_packed_sequences_match_separate_runs PASSED [  5%]\ntests/test_b4_attention.py::test_one_decode_query_can_read_all_cached_keys PASSED [  6%]\ntests/test_b4_attention.py::test_rope_then_attention_matches_float64 PASSED [  7%]\ntests/test_b4_attention.py::test_low_precision_uses_fp32_math[dtype0] PASSED [  7%]\ntests/test_b4_attention.py::test_low_precision_uses_fp32_math[dtype1] PASSED [  8%]\ntests/test_b4_attention.py::test_large_fp16_scores_do_not_overflow PASSED [  9%]\ntests/test_b4_attention.py::test_mask_uses_positions_not_flattened_row_numbers PASSED [ 10%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[rank] PASSED [ 10%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[empty] PASSED [ 11%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[heads] PASSED [ 12%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[value_shape] PASSED [ 12%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[dtype] PASSED [ 13%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[mask_shape] PASSED [ 14%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[mask_dtype] PASSED [ 15%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[fully_masked] PASSED [ 15%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions0-None] PASSED [ 16%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions1-None] PASSED [ 17%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions2-None] PASSED [ 17%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions3-sequence_ids3] PASSED [ 18%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions4-sequence_ids4] PASSED [ 19%]\ntests/test_b4_attention.py::test_cuda_device_and_fp16_parity PASSED      [ 20%]\ntests/test_b4_attention.py::test_real_attention_probe_on_tiny_huggingface_model PASSED [ 20%]\ntests/test_b4_attention.py::test_attention_diagram PASSED                [ 21%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[4] PASSED        [ 22%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[2] PASSED        [ 22%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[1] PASSED        [ 23%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[False] PASSED [ 24%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[True] PASSED [ 25%]\ntests/test_b8_model.py::test_wrong_and_missing_weights_raise PASSED      [ 25%]\ntests/test_b8_model.py::test_embedding_final_norm_and_lm_head_wiring PASSED [ 26%]\ntests/test_b8_model.py::test_full_model_causality PASSED                 [ 27%]\ntests/test_b8_model.py::test_packed_full_model_matches_separate_requests PASSED [ 27%]\ntests/test_b8_model.py::test_explicit_positions_match_hf PASSED          [ 28%]\ntests/test_b8_model.py::test_token_exact_greedy_matches_hf_generate PASSED [ 29%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids0] PASSED        [ 30%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids1] PASSED        [ 30%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids2] PASSED        [ 31%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids3] PASSED        [ 32%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids4] PASSED        [ 32%]\ntests/test_b8_model.py::test_mismatched_metadata_positions_raise PASSED  [ 33%]\ntests/test_b8_model.py::test_negative_positions_raise PASSED             [ 34%]\ntests/test_b8_model.py::test_unsupported_rope_raises PASSED              [ 35%]\ntests/test_b8_model.py::test_fp16_full_model_vs_same_weights_in_fp32 PASSED [ 35%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-4] PASSED [ 36%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-2] PASSED [ 37%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-1] PASSED [ 37%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-4] PASSED [ 38%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-2] PASSED [ 39%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-1] PASSED [ 40%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-4] PASSED [ 40%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-2] PASSED [ 41%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-1] PASSED [ 42%]\ntests/test_c3_cache.py::test_storage_uses_kv_heads_and_exact_memory_cost PASSED [ 42%]\ntests/test_c3_cache.py::test_keys_are_rotated_once_and_values_are_not_rotated PASSED [ 43%]\ntests/test_c3_cache.py::test_old_entries_are_unchanged_and_unused_storage_is_invisible PASSED [ 44%]\ntests/test_c3_cache.py::test_reset_reuses_storage_without_leaking_previous_request PASSED [ 45%]\ntests/test_c3_cache.py::test_prefill_and_chunk_masks_use_absolute_positions PASSED [ 45%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[0] PASSED           [ 46%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[-1] PASSED          [ 47%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[33] PASSED          [ 47%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[True] PASSED        [ 48%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[1.5] PASSED         [ 49%]\ntests/test_c3_cache.py::test_exact_capacity_then_overflow_preserves_committed_prefix PASSED [ 50%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions0] PASSED [ 50%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions1] PASSED [ 51%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions2] PASSED [ 52%]\ntests/test_c3_cache.py::test_decode_cannot_restart_positions_at_zero PASSED [ 52%]\ntests/test_c3_cache.py::test_packed_cached_requests_are_rejected_but_no_cache_still_works PASSED [ 53%]\ntests/test_c3_cache.py::test_cache_rejects_other_model_and_changed_dtype PASSED [ 54%]\ntests/test_c3_cache.py::test_cached_forward_requires_eval_and_no_grad PASSED [ 55%]\ntests/test_c3_cache.py::test_failed_later_layer_does_not_commit_and_can_retry PASSED [ 55%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[layer] PASSED    [ 56%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[shape] PASSED    [ 57%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[dtype] PASSED    [ 57%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[overflow] PASSED [ 58%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[False] PASSED [ 59%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[True] PASSED [ 60%]\ntests/test_c3_cache.py::test_lesson_probe_checks_each_step_and_reports_actual_forward_shapes PASSED [ 60%]\ntests/test_c3_cache.py::test_generation_prefills_once_then_only_forwards_new_token PASSED [ 61%]\ntests/test_c3_cache.py::test_zero_budget_and_context_errors_do_not_allocate_cache PASSED [ 62%]\ntests/test_c3_cache.py::test_exact_context_budget_and_repeated_calls PASSED [ 62%]\ntests/test_c3_cache.py::test_seeded_cached_sampling_replays PASSED       [ 63%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[1] PASSED       [ 64%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[None] PASSED    [ 65%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[yes] PASSED     [ 65%]\ntests/test_c3_cache.py::test_cuda_fp16_cache_against_same_rounded_weights_in_fp32 PASSED [ 66%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype0] PASSED [ 67%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype1] PASSED [ 67%]\ntests/test_d1_batching.py::test_single_request_is_ordinary_causal_layout PASSED [ 68%]\ntests/test_d1_batching.py::test_hand_block_diagonal_mask PASSED          [ 69%]\ntests/test_d1_batching.py::test_position_resets_alone_do_not_isolate_requests PASSED [ 70%]\ntests/test_d1_batching.py::test_split_logits_routes_each_last_row_and_returns_views PASSED [ 70%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts0] PASSED   [ 71%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts1] PASSED   [ 72%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts2] PASSED   [ 72%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts3] PASSED   [ 73%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts4] PASSED   [ 74%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts5] PASSED   [ 75%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts6] PASSED   [ 75%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts7] PASSED   [ 76%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts8] PASSED   [ 77%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts9] PASSED   [ 77%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts10] PASSED  [ 78%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths0] PASSED [ 79%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths1] PASSED [ 80%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths2] PASSED [ 80%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths3] PASSED [ 81%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths4] PASSED [ 82%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths5] PASSED [ 82%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths6] PASSED [ 83%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths7] PASSED [ 84%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths8] PASSED [ 85%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[None] PASSED [ 85%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[tensor1] PASSED [ 86%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-4] PASSED [ 87%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-2] PASSED [ 87%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-1] PASSED [ 88%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-4] PASSED [ 89%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-2] PASSED [ 90%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-1] PASSED [ 90%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-4] PASSED [ 91%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-2] PASSED [ 92%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-1] PASSED [ 92%]\ntests/test_d1_batching.py::test_changing_one_request_cannot_change_any_other_request PASSED [ 93%]\ntests/test_d1_batching.py::test_future_change_stays_causal_inside_its_request PASSED [ 94%]\ntests/test_d1_batching.py::test_request_reordering_preserves_outputs_after_routing PASSED [ 95%]\ntests/test_d1_batching.py::test_contiguous_cache_still_rejects_packed_requests PASSED [ 95%]\ntests/test_d1_batching.py::test_probe_rejects_oversized_individual_request_not_total_packed_tokens PASSED [ 96%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[training] PASSED [ 97%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[float16] PASSED [ 97%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[hf_attention] PASSED [ 98%]\ntests/test_d1_batching.py::test_cuda_layout_and_mixed_devices_rejection PASSED [ 99%]\ntests/test_d1_batching.py::test_fp16_packed_logits_against_same_rounded_weights_in_fp32 PASSED [100%]\n\n============================= 140 passed in 16.01s =============================\n",
+      "stderr": ""
+    }
+  }
+}

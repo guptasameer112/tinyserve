@@ -149,9 +149,34 @@ for every row. Full-stack assertions use B8's `rtol=1e-5, atol=1e-4`.
 Argmax equality is required separately. A small CUDA FP16 test compares the
 same rounded weights in FP32 with `rtol=atol=1e-2`, without token-exact claims.
 
-**Runtime validation is pending the user's fresh Colab T4 run.**
 Local checks are static only. Save `D1_flattened_batching.json` and the
 notebook with outputs. This lesson makes no batching performance claim.
+
+### Recorded Colab run (2026-11-01)
+
+The user's [D1_flattened_batching.json](../../results/D1_flattened_batching.json)
+records a Tesla T4 at source commit `0044311`, with PyTorch `2.11.0+cu130`
+and Transformers `5.21.0`. All **140 B4/B8/C3/D1 tests passed**, none skipped.
+The pytest return code is zero and stderr is empty.
+
+- Request lengths `[6, 6, 9]` produce 21 packed token rows versus 27 padded
+  slots: six padding slots avoided, not a measured performance improvement.
+- Packed/separate and packed/HF maximum logit differences range from
+  `1.81e-5` to `2.69e-5`, within the full-stack tolerance.
+- Every recorded logits-row argmax agrees. The routed next tokens are
+  `Paris`, `Berlin` and `providing`, one for each respective prompt.
+- Changing the second prompt produces zero differences on both untouched
+  requests. Reordering requests as `[2, 0, 1]` also produces zero differences
+  after routing back to the originals in this run.
+- The synthetic ownership demo gives `[1, 1, 10]` with correct request IDs,
+  versus `[5.5, 4, 5.5]` without them. Reset positions alone are insufficient.
+- Packed C3 cache use raises
+  `contiguous cache supports one request, not packed sequence_ids`, as required.
+
+The original pasted JSON was archived without regenerating results or
+changing notebook outputs. These checks validate the demonstrated no-cache
+packing contract, not a scheduler, paged cache or arbitrary batch performance.
+Next: D2, block tables, slot mapping and paged cache.
 
 ## Interview questions
 

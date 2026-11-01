@@ -58,8 +58,13 @@ successful notebook with outputs separately.
 
 ## D1 status
 
-[D1_flattened_batching.ipynb](../notebooks/D1_flattened_batching.ipynb) is ready
-for the user's fresh Colab T4 run. Runtime validation is pending.
-Its final save cell creates `D1_flattened_batching.json`, with pack/split
-layout, request-isolation evidence, separate/HF parity and test output.
-No placeholder success result or batching performance claim is committed.
+[D1_flattened_batching.json](D1_flattened_batching.json) was archived from the
+user's Colab output on November 1, 2026. Original timestamp, T4 environment
+and source commit `0044311` are preserved.
+
+The record contains 140 passed tests with no skips, three-request packed
+parity, last-row routing, zero cross-request isolation differences and zero
+reordering differences. Layout, mask, numerical ranges and token routing
+were checked against its recorded fields without executing models locally.
+This is correctness evidence, not a batching performance claim. Retain the
+successful notebook with outputs separately.
