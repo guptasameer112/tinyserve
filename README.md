@@ -44,7 +44,13 @@ in Colab; one two-GPU test was skipped on the single T4. Raw and chat greedy
 outputs matched HF token-for-token, seeded sampling replay matched, and
 zero-budget and strict context checks passed. Results are saved in
 `results/C2_generation.json`.
-Next: C3 (contiguous KV cache).
+[C3: contiguous KV cache](notebooks/C3_kv_cache.ipynb) is ready for a fresh
+Colab T4 run. It adds append-only K/V storage, one-token decode, cached/no-cache
+and HF parity checks, reset/boundary tests, and a memory walkthrough.
+`generate(..., use_cache=True)` enables it; the default remains no-cache.
+**C3 runtime validation is pending.** Local checks are static only; tests
+and model demos run in Colab.
+Next after C3 validation: C4 (no-cache vs cached speed curve).
 
 Part G is included in the planned scope: Qwen2.5-0.5B, prompt-lookup
 speculative decoding, a KV visualizer and INT8 KV cache.

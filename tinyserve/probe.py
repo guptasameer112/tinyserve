@@ -232,3 +232,47 @@ def compare_greedy_steps(ours, reference, input_ids, max_new_tokens=12):
         if token in eos_ids:
             break
     return ids, rows
+
+
+@torch.no_grad()
+def compare_cached_steps(ours, reference, input_ids, max_new_tokens=12):
+    """C3: compare cached logits with our full prefix and HF at each greedy step."""
+    if (ours.training or reference.training or next(ours.parameters()).dtype != torch.float32
+            or next(reference.parameters()).dtype != torch.float32):
+        raise ValueError("cache parity requires FP32 eval models")
+    if reference.config._attn_implementation != "eager":
+        raise ValueError("cache parity requires HF eager attention")
+    if not isinstance(max_new_tokens, int) or isinstance(max_new_tokens, bool) or max_new_tokens <= 0:
+        raise ValueError("max_new_tokens must be a positive integer")
+    if input_ids.numel() + max_new_tokens > ours.config.max_position_embeddings:
+        raise ValueError("prompt plus max_new_tokens exceeds the model context limit")
+    ids = input_ids.clone()
+    cache = ours.new_kv_cache(ids.numel() + max_new_tokens)
+    eos = ours.config.eos_token_id
+    eos_ids = (eos,) if isinstance(eos, int) else tuple(eos or ())
+    rows = []
+    for step in range(max_new_tokens):
+        step_ids = ids if cache.length == 0 else ids[-1:]
+        start = cache.length
+        positions = torch.arange(start, start + step_ids.numel(), device=ids.device)
+        cached = ours(step_ids, positions, AttentionMetadata(positions, cache=cache))
+        full_positions = torch.arange(ids.numel(), device=ids.device)
+        no_cache = ours(ids, full_positions, AttentionMetadata(full_positions))[start:]
+        hf_logits = reference(ids[None], use_cache=False).logits[0, start:].float()
+        torch.testing.assert_close(cached, no_cache, rtol=1e-5, atol=1e-4)
+        torch.testing.assert_close(cached, hf_logits, rtol=1e-5, atol=1e-4)
+        if (not torch.equal(cached.argmax(-1), no_cache.argmax(-1))
+                or not torch.equal(cached.argmax(-1), hf_logits.argmax(-1))):
+            raise AssertionError("cached FP32 argmax token parity failed")
+        token = cached[-1].argmax().item()
+        rows.append({
+            "step": step, "forward_tokens": step_ids.numel(), "cache_length": cache.length,
+            "positions": positions.tolist(),
+            "cached_vs_no_cache_max_abs_diff": (cached - no_cache).abs().max().item(),
+            "cached_vs_hf_max_abs_diff": (cached - hf_logits).abs().max().item(),
+            "argmax_equal": True, "next_token_id": token,
+        })
+        ids = torch.cat((ids, ids.new_tensor([token])))
+        if token in eos_ids:
+            break
+    return ids, rows

@@ -1,7 +1,8 @@
-"""B7/B8: a no-cache Llama model on flattened tokens."""
+"""B7/B8/C3: a flattened-token Llama model with optional contiguous KV cache."""
 import torch
 from torch import nn
 
+from tinyserve.cache import KVCache
 from tinyserve.models.gqa import grouped_query_attention
 from tinyserve.models.mlp import MLP
 from tinyserve.models.norm import RMSNorm
@@ -29,13 +30,15 @@ class SelfAttention(nn.Module):
         self.v_proj = nn.Linear(hidden, self.kv_heads * self.head_dim, bias=False, device=device, dtype=dtype)
         self.o_proj = nn.Linear(hidden, hidden, bias=False, device=device, dtype=dtype)
 
-    def forward(self, hidden_states, positions, allowed_mask):
+    def forward(self, hidden_states, positions, allowed_mask, cache=None, layer_index=0):
         tokens = hidden_states.shape[0]
         query = self.q_proj(hidden_states).reshape(tokens, self.query_heads, self.head_dim)
         key = self.k_proj(hidden_states).reshape(tokens, self.kv_heads, self.head_dim)
         value = self.v_proj(hidden_states).reshape(tokens, self.kv_heads, self.head_dim)
         cos, sin = rope_cos_sin(positions, self.head_dim, self.theta, query.dtype)
         query, key = apply_rope(query, cos, sin), apply_rope(key, cos, sin)
+        if cache is not None:
+            key, value = cache.write(layer_index, key, value)
         output, _ = grouped_query_attention(query, key, value, allowed_mask)
         return self.o_proj(output.reshape(tokens, self.query_heads * self.head_dim))
 
@@ -44,10 +47,11 @@ class DecoderLayer(nn.Module):
     """Pre-norm decoder: x += attention(norm(x)); x += mlp(norm(x)).
 
     hidden_states (N, hidden), metadata AttentionMetadata -> (N, hidden).
-    No cache, dropout or final model norm. State keys match an HF decoder layer.
+    No dropout or final model norm. State keys match an HF decoder layer.
     """
-    def __init__(self, config, device=None, dtype=None):
+    def __init__(self, config, device=None, dtype=None, layer_index=0):
         super().__init__()
+        self.layer_index = layer_index
         if config.hidden_act != "silu" or getattr(config, "mlp_bias", False):
             raise ValueError("this decoder requires a bias-free SiLU MLP")
         self.self_attn = SelfAttention(config, device=device, dtype=dtype)
@@ -63,7 +67,7 @@ class DecoderLayer(nn.Module):
             raise ValueError("positions must match the hidden-state token count and device")
         mask = metadata.allowed_mask()
         hidden_states = hidden_states + self.self_attn(
-            self.input_layernorm(hidden_states), metadata.positions, mask,
+            self.input_layernorm(hidden_states), metadata.positions, mask, metadata.cache, self.layer_index,
         )
         return hidden_states + self.mlp(self.post_attention_layernorm(hidden_states))
 
@@ -77,7 +81,8 @@ class LlamaModel(nn.Module):
         self.embed_tokens = nn.Embedding(config.vocab_size, config.hidden_size,
                                         padding_idx=config.pad_token_id, device=device, dtype=dtype)
         self.layers = nn.ModuleList([
-            DecoderLayer(config, device=device, dtype=dtype) for _ in range(config.num_hidden_layers)
+            DecoderLayer(config, device=device, dtype=dtype, layer_index=index)
+            for index in range(config.num_hidden_layers)
         ])
         self.norm = RMSNorm(config.hidden_size, config.rms_norm_eps, device=device, dtype=dtype)
 
@@ -103,7 +108,7 @@ class LlamaModel(nn.Module):
 
 
 class LlamaForCausalLM(nn.Module):
-    """B8: full logits (N, vocab), no HF forward calls and no KV cache."""
+    """Full logits (new_tokens, vocab), no HF forward calls; optional C3 cache."""
     def __init__(self, config, device=None, dtype=None):
         super().__init__()
         if config.model_type != "llama":
@@ -133,6 +138,15 @@ class LlamaForCausalLM(nn.Module):
     def get_output_embeddings(self):
         return self.lm_head
 
+    def new_kv_cache(self, capacity):
+        return KVCache(self, capacity)
+
     def forward(self, input_ids, positions, attention_metadata):
+        cache = attention_metadata.cache
+        if cache is not None:
+            cache.validate_request(self, positions, attention_metadata.sequence_ids)
         # Return FP32 scores; this does not undo rounding inside an FP16 model.
-        return self.lm_head(self.model(input_ids, positions, attention_metadata)).float()
+        logits = self.lm_head(self.model(input_ids, positions, attention_metadata)).float()
+        if cache is not None:
+            cache.length += input_ids.numel()
+        return logits

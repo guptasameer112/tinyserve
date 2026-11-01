@@ -1,4 +1,4 @@
-"""C2: single-request generation with our flattened model; no KV cache yet."""
+"""C2/C3: single-request generation, optionally with a contiguous KV cache."""
 from numbers import Integral
 
 import torch
@@ -8,14 +8,19 @@ from tinyserve.sampling import sample_token, validate_sampling_options
 
 
 @torch.no_grad()
-def generate(model, input_ids, max_new_tokens=20, temperature=0.0, top_k=0, top_p=1.0, generator=None):
+def generate(model, input_ids, max_new_tokens=20, temperature=0.0, top_k=0, top_p=1.0, generator=None,
+             *, use_cache=False):
     """Return prompt + new token IDs (including generated EOS), without mutating input.
 
     Default is greedy. EOS comes from model.config (integer, list/tuple or None).
     A prompt EOS does not stop generation. Prompt + requested new tokens must
     fit max_position_embeddings; oversized requests raise, never truncate.
+    use_cache=True prefills once, then processes one new token per step.
+    The cache is fresh for each call. Default no-cache behavior is unchanged.
     """
     validate_sampling_options(temperature, top_k, top_p)
+    if not isinstance(use_cache, bool):
+        raise ValueError("use_cache must be a boolean")
     if isinstance(max_new_tokens, bool) or not isinstance(max_new_tokens, Integral) or max_new_tokens < 0:
         raise ValueError("max_new_tokens must be a nonnegative integer")
     if model.training:
@@ -52,10 +57,13 @@ def generate(model, input_ids, max_new_tokens=20, temperature=0.0, top_k=0, top_
         raise ValueError("EOS token IDs must be integers within the model vocabulary")
 
     ids = input_ids.clone()
+    cache = model.new_kv_cache(ids.numel() + max_new_tokens) if use_cache and max_new_tokens else None
     for _ in range(max_new_tokens):
-        positions = torch.arange(ids.numel(), device=ids.device)
-        logits = model(ids, positions, AttentionMetadata(positions))
-        if logits.ndim != 2 or logits.shape != (ids.numel(), vocab_size):
+        step_ids = ids if cache is None or cache.length == 0 else ids[-1:]
+        start = 0 if cache is None else cache.length
+        positions = torch.arange(start, start + step_ids.numel(), device=ids.device)
+        logits = model(step_ids, positions, AttentionMetadata(positions, cache=cache))
+        if logits.ndim != 2 or logits.shape != (step_ids.numel(), vocab_size):
             raise ValueError("model must return logits with shape (tokens, vocab)")
         token = sample_token(logits[-1], temperature, top_k, top_p, generator)
         ids = torch.cat((ids, ids.new_tensor([token])))

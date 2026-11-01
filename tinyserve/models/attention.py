@@ -6,18 +6,28 @@ describe cached attention without changing the attention math.
 """
 import math
 from dataclasses import dataclass
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 import torch
+
+if TYPE_CHECKING:
+    from tinyserve.cache import KVCache
 
 
 @dataclass
 class AttentionMetadata:
-    """No-cache token layout: local positions and optional packed request IDs."""
+    """Token layout: positions, optional packed request IDs, or a C3 cache."""
     positions: torch.Tensor
     sequence_ids: Optional[torch.Tensor] = None
+    cache: Optional["KVCache"] = None
 
     def allowed_mask(self):
+        if self.cache is not None:
+            if self.sequence_ids is not None:
+                raise ValueError("contiguous cache supports one request, not packed sequence_ids")
+            key_positions = torch.arange(self.cache.length + self.positions.numel(),
+                                         device=self.positions.device, dtype=self.positions.dtype)
+            return key_positions[None, :] <= self.positions[:, None]
         return causal_mask(self.positions, self.sequence_ids)
 
 
