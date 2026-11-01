@@ -62,7 +62,8 @@ not a universal error bound. B8 will test the complete stack separately.
 
 The notebook runs B4-B7 tests in Colab before demos and saves test output,
 environment info and per-layer differences to `results/B7_decoder_layer.json`.
-Runtime validation is pending the user's Colab run.
+The original payload is archived in
+[B7_decoder_layer.json](../../results/B7_decoder_layer.json).
 
 ### Recorded Colab run (2026-10-31)
 

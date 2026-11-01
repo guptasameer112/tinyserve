@@ -14,8 +14,10 @@ See [MASTERPLAN.md](MASTERPLAN.md) for the roadmap and process rules.
 
 ## Status
 
-Foundations A1-A3 and lessons B1-B2 are complete. B3's recorded RoPE comparisons
-match Hugging Face. [B4: attention](notebooks/B4_attention.ipynb) passed all 30
+Foundations A1-A3 and model lessons B1-B8 are complete.
+[B3: RoPE](notebooks/B3_rope.ipynb) records 16 passed tests and six exact
+Hugging Face comparisons; its [guide chapter](docs/guide/06-rope.md) is included.
+[B4: attention](notebooks/B4_attention.ipynb) passed all 30
 tests in Colab and matched real HF attention (worst FP32 difference 4.47e-8).
 
 The B4 notebook runs its tests, explains scores/masking/softmax with a hand
@@ -51,6 +53,10 @@ and HF parity checks, reset/boundary tests, and a memory walkthrough.
 **C3 runtime validation is pending.** Local checks are static only; tests
 and model demos run in Colab.
 Next after C3 validation: C4 (no-cache vs cached speed curve).
+
+Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
+from the saved notebook outputs with their original environment metadata.
+Existing notebook outputs are preserved.
 
 Part G is included in the planned scope: Qwen2.5-0.5B, prompt-lookup
 speculative decoding, a KV visualizer and INT8 KV cache.

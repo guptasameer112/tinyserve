@@ -73,7 +73,7 @@ eightfold: all 32 queries still compare with the visible keys.
   `rtol=atol=1e-5`. The probe now uses our GQA, not HF expansion.
 
 The notebook runs B4 and B5 tests together to protect the shared probe.
-Runtime results are pending your Colab run; no pass count is claimed here.
+Recorded results are archived in [B5_gqa.json](../../results/B5_gqa.json).
 
 ### Recorded Colab run (2026-10-31)
 

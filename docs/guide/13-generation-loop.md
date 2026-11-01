@@ -96,7 +96,8 @@ On a Tesla T4 with PyTorch 2.11.0+cu130 and Transformers 5.21.0:
 - Zero budget returned the prompt; an oversized context raised as required.
 
 These checks validate the tested no-cache behavior, not cache performance.
-The next lesson is C3: contiguous KV cache.
+The next lesson is [C3: contiguous KV cache](14-contiguous-kv-cache.md);
+its implementation is ready and runtime validation is pending.
 
 ## Interview questions
 

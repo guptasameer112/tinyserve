@@ -13,6 +13,14 @@ Model: TinyLlama-1.1B-Chat (22 layers, hidden 2048, 32 query heads, 4 KV heads, 
 concept (real numbers and shapes) -> spec -> you write the code -> test against a reference -> 3 interview questions -> guide chapter -> git commit.
 
 ## Process rules (lessons learned from the first attempt)
+### Execution environment: Colab only (all agents)
+- Write package code, tests, lesson notebooks and guide chapters locally. **Do not set up a local testing environment.**
+- **Do not install dependencies, create virtual environments, download model weights, run pytest, or execute notebook/model code locally.** Dependency installation belongs in the Colab setup cell.
+- Local validation is limited to static analysis: Python syntax, notebook JSON/code-cell syntax and Git whitespace checks. Missing local PyTorch or CUDA is expected, not a problem to fix.
+- The user runs tests and demos on a **fresh Colab T4** and shares outputs. Report runtime validation as pending until those results are available; static checks do not count as passing runtime tests.
+- Preserve saved notebook outputs and unrelated work. Commit and push completed lesson files so the user can open them in Colab; do not include unrelated changes without approval.
+
+### Lesson implementation
 - Code lives in repo files and is written **once**. Never a second `%%writefile` for the same file. Fix by editing that file.
 - Every notebook starts with one setup cell: clone or pull the repo, `%cd`, `sys.path`, install pytest.
 - Tests are files in `tests/`. Notebooks import and run them, then show a demo.
@@ -62,10 +70,18 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 ## Progress tracker
 - [x] Repo created on GitHub
 - [x] A1 A2 A3
-- [ ] B1 (done) B2 (done) B3 B4 (done) B5 (done) B6 (done) B7 (done) B8 (done: 143 tests and 36 greedy parity steps passed in Colab)
-- [ ] C1 (done: 42 tests passed in Colab) C2 (done: 96 tests passed, 1 two-GPU test skipped; greedy HF parity and seeded replay passed in Colab) C3 C4
+- [x] B1 B2 B3 B4 B5 B6 B7 B8 (B3: 16 tests and six exact HF RoPE comparisons; B8: 143 tests and 36 greedy parity steps passed in Colab)
+- [x] C1 (42 tests passed in Colab)
+- [x] C2 (96 tests passed, 1 two-GPU test skipped; greedy HF parity and seeded replay passed in Colab)
+- [ ] C3 (package, tests, notebook and guide ready; runtime validation pending a fresh Colab T4 run)
+- [ ] C4 (next after C3 validation: measured no-cache vs cached speed curve)
 - [ ] D1 D2 D3 D4 D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
 - [ ] H
+
+Recorded B3-C2 JSON results are archived in `results/` from the original
+saved notebook outputs, with their original timestamps and environment metadata.
+Guide chapters now cover every lesson A1-C3. C3 remains unvalidated at runtime;
+static checks do not count as passing tests.

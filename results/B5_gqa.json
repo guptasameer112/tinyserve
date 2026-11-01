@@ -1,0 +1,103 @@
+{
+  "name": "B5_gqa",
+  "timestamp_utc": "2026-10-31T05:08:39Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "git_sha": "58ba185",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.21.0"
+  },
+  "data": {
+    "query_heads": 32,
+    "kv_heads": 4,
+    "head_dim": 64,
+    "head_mapping": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "shared_kv_hand_outputs": [
+      18.80797004699707,
+      11.192028045654297
+    ],
+    "fp16_vs_fp32_max_abs_diff": 0.0009679794311523438,
+    "future_weight_max": 0.0,
+    "gqa_cache_bytes_per_token": 22528,
+    "mha_cache_bytes_per_token": 180224,
+    "real_model_dtype": "float32",
+    "real_model_backend": "eager",
+    "real_model_comparison": [
+      {
+        "layer": 0,
+        "max_abs_diff": 9.313225746154785e-10,
+        "row_sum_max_error": 1.1920928955078125e-07,
+        "future_weight_max": 0.0,
+        "shape": [
+          6,
+          2048
+        ]
+      },
+      {
+        "layer": 10,
+        "max_abs_diff": 2.9802322387695312e-08,
+        "row_sum_max_error": 1.1920928955078125e-07,
+        "future_weight_max": 0.0,
+        "shape": [
+          6,
+          2048
+        ]
+      },
+      {
+        "layer": 21,
+        "max_abs_diff": 4.470348358154297e-08,
+        "row_sum_max_error": 1.1920928955078125e-07,
+        "future_weight_max": 0.0,
+        "shape": [
+          6,
+          2048
+        ]
+      }
+    ],
+    "real_model_diff_range_across_layers": {
+      "min": 9.313225746154785e-10,
+      "max": 4.470348358154297e-08
+    },
+    "pytest": {
+      "returncode": 0,
+      "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/bin/python3\ncachedir: .pytest_cache\nrootdir: /content/tinyserve\nconfigfile: pyproject.toml\nplugins: typeguard-4.6.0, langsmith-0.14.13, anyio-4.15.1, platformdirs-4.13.6\ncollecting ... collected 58 items\n\ntests/test_b4_attention.py::test_hand_example PASSED                     [  1%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[1-1-1] PASSED [  3%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[5-2-4] PASSED [  5%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[9-4-64] PASSED [  6%]\ntests/test_b4_attention.py::test_matches_pytorch_multihead_attention PASSED [  8%]\ntests/test_b4_attention.py::test_matches_pytorch_sdpa PASSED             [ 10%]\ntests/test_b4_attention.py::test_future_tokens_cannot_change_earlier_outputs PASSED [ 12%]\ntests/test_b4_attention.py::test_packed_sequences_match_separate_runs PASSED [ 13%]\ntests/test_b4_attention.py::test_one_decode_query_can_read_all_cached_keys PASSED [ 15%]\ntests/test_b4_attention.py::test_rope_then_attention_matches_float64 PASSED [ 17%]\ntests/test_b4_attention.py::test_low_precision_uses_fp32_math[dtype0] PASSED [ 18%]\ntests/test_b4_attention.py::test_low_precision_uses_fp32_math[dtype1] PASSED [ 20%]\ntests/test_b4_attention.py::test_large_fp16_scores_do_not_overflow PASSED [ 22%]\ntests/test_b4_attention.py::test_mask_uses_positions_not_flattened_row_numbers PASSED [ 24%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[rank] PASSED [ 25%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[empty] PASSED [ 27%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[heads] PASSED [ 29%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[value_shape] PASSED [ 31%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[dtype] PASSED [ 32%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[mask_shape] PASSED [ 34%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[mask_dtype] PASSED [ 36%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[fully_masked] PASSED [ 37%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions0-None] PASSED [ 39%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions1-None] PASSED [ 41%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions2-None] PASSED [ 43%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions3-sequence_ids3] PASSED [ 44%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions4-sequence_ids4] PASSED [ 46%]\ntests/test_b4_attention.py::test_cuda_device_and_fp16_parity PASSED      [ 48%]\ntests/test_b4_attention.py::test_real_attention_probe_on_tiny_huggingface_model PASSED [ 50%]\ntests/test_b4_attention.py::test_attention_diagram PASSED                [ 51%]\ntests/test_b5_gqa.py::test_tinyllama_head_mapping_is_consecutive_not_cyclic PASSED [ 53%]\ntests/test_b5_gqa.py::test_expansion_matches_huggingface[4-4] PASSED     [ 55%]\ntests/test_b5_gqa.py::test_expansion_matches_huggingface[8-2] PASSED     [ 56%]\ntests/test_b5_gqa.py::test_expansion_matches_huggingface[32-4] PASSED    [ 58%]\ntests/test_b5_gqa.py::test_expansion_matches_huggingface[8-1] PASSED     [ 60%]\ntests/test_b5_gqa.py::test_equal_head_counts_return_original_tensor PASSED [ 62%]\ntests/test_b5_gqa.py::test_noncontiguous_tensor_preserves_values_dtype_and_device PASSED [ 63%]\ntests/test_b5_gqa.py::test_attention_matches_independent_per_head_float64[4-4] PASSED [ 65%]\ntests/test_b5_gqa.py::test_attention_matches_independent_per_head_float64[8-2] PASSED [ 67%]\ntests/test_b5_gqa.py::test_attention_matches_independent_per_head_float64[32-4] PASSED [ 68%]\ntests/test_b5_gqa.py::test_attention_matches_independent_per_head_float64[8-1] PASSED [ 70%]\ntests/test_b5_gqa.py::test_shared_kv_does_not_mean_shared_attention_weights PASSED [ 72%]\ntests/test_b5_gqa.py::test_changing_one_kv_head_only_changes_its_query_group PASSED [ 74%]\ntests/test_b5_gqa.py::test_packed_gqa_matches_separate_requests PASSED   [ 75%]\ntests/test_b5_gqa.py::test_decode_last_query_matches_full_prefill PASSED [ 77%]\ntests/test_b5_gqa.py::test_low_precision_matches_fp32[dtype0-0.0005] PASSED [ 79%]\ntests/test_b5_gqa.py::test_low_precision_matches_fp32[dtype1-0.004] PASSED [ 81%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor0-8] PASSED [ 82%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor1-2] PASSED [ 84%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor2-0] PASSED [ 86%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor3--1] PASSED [ 87%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor4-4.0] PASSED [ 89%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor5-True] PASSED [ 91%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor6-8] PASSED [ 93%]\ntests/test_b5_gqa.py::test_invalid_head_expansion_raises[tensor7-8] PASSED [ 94%]\ntests/test_b5_gqa.py::test_mismatched_original_kv_heads_raise_even_if_expansion_would_match PASSED [ 96%]\ntests/test_b5_gqa.py::test_cuda_fp16_expansion_and_attention PASSED      [ 98%]\ntests/test_b5_gqa.py::test_real_probe_with_our_gqa PASSED                [100%]\n\n============================== 58 passed in 8.19s ==============================\n",
+      "stderr": ""
+    }
+  }
+}

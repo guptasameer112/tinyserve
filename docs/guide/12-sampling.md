@@ -64,7 +64,7 @@ FP32 probability comparisons use absolute 1e-6.
 The notebook needs no model weights. It records probability tables and
 frequency ranges across three independent seeded trials, plus pytest output
 and environment information, in `results/C1_sampling.json`.
-Runtime validation awaits the user's Colab run.
+The original payload is archived in [C1_sampling.json](../../results/C1_sampling.json).
 
 ### Recorded Colab run (2026-10-31)
 

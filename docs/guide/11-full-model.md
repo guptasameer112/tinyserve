@@ -67,7 +67,7 @@ correctness-focused, not a speed comparison or a public generator.
 
 The notebook saves the test summary, environment, prompt comparisons,
 greedy token IDs and error ranges to `results/B8_full_model.json`.
-Runtime verification awaits the user's Colab run.
+The original payload is archived in [B8_full_model.json](../../results/B8_full_model.json).
 
 ### Recorded Colab run (2026-10-31)
 

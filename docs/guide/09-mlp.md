@@ -75,7 +75,7 @@ and absolute allowances. These are bounds for the controlled test inputs,
 not universal error guarantees. Real-model parity uses FP32 and tighter
 checks instead. Do not loosen a failed tolerance without inspecting why.
 
-Runtime validation is pending the Colab run. The notebook saves test output,
+The notebook saves test output,
 environment metadata and the range of differences across all tested layers
 to `results/B6_mlp.json`. This is a correctness lesson, not a speed benchmark.
 
@@ -85,6 +85,7 @@ All **74 B4-B6 tests passed**, none skipped. All 22 real MLP outputs matched
 HF exactly in FP32. Changing the final synthetic token changed earlier
 outputs by zero; the small FP16 comparison differed by at most `0.000224844`.
 These results come from the saved B6 notebook at commit `cc01a3f`.
+The original payload is archived in [B6_mlp.json](../../results/B6_mlp.json).
 
 ## Interview questions
 

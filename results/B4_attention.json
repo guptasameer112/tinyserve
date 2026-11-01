@@ -1,0 +1,67 @@
+{
+  "name": "B4_attention",
+  "timestamp_utc": "2026-10-31T04:47:03Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "git_sha": "cf2b74d",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.21.0"
+  },
+  "data": {
+    "head_dim": 64,
+    "hand_output": [
+      10.0,
+      17.5
+    ],
+    "future_weight_max": 0.0,
+    "prefix_max_abs_diff": 0.0,
+    "packed_max_abs_diff": 0.0,
+    "fp16_vs_fp32_max_abs_diff": 0.0004686117172241211,
+    "real_model_dtype": "float32",
+    "real_model_backend": "eager",
+    "real_model_comparison": [
+      {
+        "layer": 0,
+        "max_abs_diff": 9.313225746154785e-10,
+        "row_sum_max_error": 1.1920928955078125e-07,
+        "future_weight_max": 0.0,
+        "shape": [
+          6,
+          2048
+        ]
+      },
+      {
+        "layer": 10,
+        "max_abs_diff": 2.9802322387695312e-08,
+        "row_sum_max_error": 1.1920928955078125e-07,
+        "future_weight_max": 0.0,
+        "shape": [
+          6,
+          2048
+        ]
+      },
+      {
+        "layer": 21,
+        "max_abs_diff": 4.470348358154297e-08,
+        "row_sum_max_error": 1.1920928955078125e-07,
+        "future_weight_max": 0.0,
+        "shape": [
+          6,
+          2048
+        ]
+      }
+    ],
+    "real_model_diff_range_across_layers": {
+      "min": 9.313225746154785e-10,
+      "max": 4.470348358154297e-08
+    },
+    "pytest": {
+      "returncode": 0,
+      "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/bin/python3\ncachedir: .pytest_cache\nrootdir: /content/tinyserve\nconfigfile: pyproject.toml\nplugins: typeguard-4.6.0, langsmith-0.14.13, anyio-4.15.1, platformdirs-4.13.6\ncollecting ... collected 30 items\n\ntests/test_b4_attention.py::test_hand_example PASSED                     [  3%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[1-1-1] PASSED [  6%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[5-2-4] PASSED [ 10%]\ntests/test_b4_attention.py::test_fp32_matches_independent_float64[9-4-64] PASSED [ 13%]\ntests/test_b4_attention.py::test_matches_pytorch_multihead_attention PASSED [ 16%]\ntests/test_b4_attention.py::test_matches_pytorch_sdpa PASSED             [ 20%]\ntests/test_b4_attention.py::test_future_tokens_cannot_change_earlier_outputs PASSED [ 23%]\ntests/test_b4_attention.py::test_packed_sequences_match_separate_runs PASSED [ 26%]\ntests/test_b4_attention.py::test_one_decode_query_can_read_all_cached_keys PASSED [ 30%]\ntests/test_b4_attention.py::test_rope_then_attention_matches_float64 PASSED [ 33%]\ntests/test_b4_attention.py::test_low_precision_uses_fp32_math[dtype0] PASSED [ 36%]\ntests/test_b4_attention.py::test_low_precision_uses_fp32_math[dtype1] PASSED [ 40%]\ntests/test_b4_attention.py::test_large_fp16_scores_do_not_overflow PASSED [ 43%]\ntests/test_b4_attention.py::test_mask_uses_positions_not_flattened_row_numbers PASSED [ 46%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[rank] PASSED [ 50%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[empty] PASSED [ 53%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[heads] PASSED [ 56%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[value_shape] PASSED [ 60%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[dtype] PASSED [ 63%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[mask_shape] PASSED [ 66%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[mask_dtype] PASSED [ 70%]\ntests/test_b4_attention.py::test_invalid_attention_inputs_raise[fully_masked] PASSED [ 73%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions0-None] PASSED [ 76%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions1-None] PASSED [ 80%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions2-None] PASSED [ 83%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions3-sequence_ids3] PASSED [ 86%]\ntests/test_b4_attention.py::test_invalid_mask_inputs_raise[positions4-sequence_ids4] PASSED [ 90%]\ntests/test_b4_attention.py::test_cuda_device_and_fp16_parity PASSED      [ 93%]\ntests/test_b4_attention.py::test_real_attention_probe_on_tiny_huggingface_model PASSED [ 96%]\ntests/test_b4_attention.py::test_attention_diagram PASSED                [100%]\n\n============================== 30 passed in 8.19s ==============================\n",
+      "stderr": ""
+    }
+  }
+}
