@@ -1,17 +1,12 @@
-"""D2: explicit disjoint block tables and a readable PyTorch gather backend."""
+"""D2/D3: disjoint block tables, managed ownership and PyTorch gather attention."""
 from numbers import Integral
 from types import MappingProxyType
 
 import torch
 
 from tinyserve.models.gqa import grouped_query_attention
+from tinyserve.engine.block_manager import BlockAllocator, _positive_integer
 from tinyserve.weights import head_dim
-
-
-def _positive_integer(name, value):
-    if isinstance(value, bool) or not isinstance(value, Integral) or value <= 0:
-        raise ValueError("%s must be a positive integer" % name)
-    return int(value)
 
 
 class PagedKVCache:
@@ -41,8 +36,12 @@ class PagedKVCache:
                     raise ValueError("D2 block tables must be disjoint, without repeated blocks")
                 used.add(block)
             tables[int(request_id)] = tuple(int(block) for block in blocks)
+        self._initialize_storage(model, tables)
+
+    def _initialize_storage(self, model, tables):
         self.model = model
-        self.block_tables = MappingProxyType(tables)
+        self._tables = tables
+        self.block_tables = MappingProxyType(self._tables)
         self._lengths = {request_id: 0 for request_id in tables}
         weight = model.get_input_embeddings().weight
         config = model.config
@@ -156,3 +155,56 @@ class PagedKVCache:
         """Called by the model only after all layers and logits have succeeded."""
         for request_id in sequence_ids.unique().tolist():
             self._lengths[request_id] += int((sequence_ids == request_id).sum().item())
+
+
+class ManagedPagedKVCache(PagedKVCache):
+    """D3: grow and release disjoint request tables over one fixed D2 pool.
+
+    Reserve capacity explicitly before forwarding. Reservations do not commit
+    tokens; a failed forward keeps its reservation for retry. No prefix sharing.
+    """
+    def __init__(self, model, num_blocks, block_size):
+        self._allocator = BlockAllocator(num_blocks)
+        self.num_blocks = self._allocator.num_blocks
+        self.block_size = _positive_integer("block_size", block_size)
+        self._initialize_storage(model, {})
+
+    @property
+    def free_blocks(self):
+        return self._allocator.free_blocks
+
+    @property
+    def ref_counts(self):
+        return self._allocator.ref_counts
+
+    @property
+    def num_free_blocks(self):
+        return self._allocator.num_free_blocks
+
+    def reserve(self, request_id, total_tokens):
+        """Admit/grow one request to a total processed-token capacity, atomically."""
+        if (isinstance(request_id, bool) or not isinstance(request_id, Integral)
+                or request_id < 0):
+            raise ValueError("request IDs must be nonnegative integers")
+        request_id = int(request_id)
+        total_tokens = _positive_integer("total_tokens", total_tokens)
+        if total_tokens > self.model.config.max_position_embeddings:
+            raise ValueError("request exceeds the model context limit")
+        if total_tokens < self._lengths.get(request_id, 0):
+            raise ValueError("reservation cannot be shorter than the committed prefix")
+        current = self._tables.get(request_id, ())
+        required = (total_tokens + self.block_size - 1) // self.block_size
+        extra = required - len(current)
+        added = self._allocator.allocate(extra) if extra > 0 else ()
+        self._tables[request_id] = current + added
+        self._lengths.setdefault(request_id, 0)
+        return self._tables[request_id]
+
+    def release_request(self, request_id):
+        """Forget a request and return its blocks, without clearing tensor bytes."""
+        if (isinstance(request_id, bool) or not isinstance(request_id, Integral)
+                or request_id not in self._tables):
+            raise ValueError("unknown request ID")
+        for block in self._tables.pop(request_id):
+            self._allocator.release(block)
+        del self._lengths[request_id]

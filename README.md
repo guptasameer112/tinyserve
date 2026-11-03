@@ -83,10 +83,18 @@ Mixed prefill/decode, pause/resume and reordered batches advanced independent
 request lengths correctly. Reset reused storage with zero demonstrated difference.
 Existing no-cache and contiguous-cache paths remain supported.
 Results are archived in [D2_paged_cache.json](results/D2_paged_cache.json).
-Allocation, sharing, scheduling and
-performance kernels are deliberately deferred.
+The D2 interface still uses manually assigned blocks. Sharing, scheduling and
+performance kernels remain deferred.
 See the [D2 guide](docs/guide/17-paged-kv-cache.md).
-Next: D3 (block manager).
+
+[D3: block manager](notebooks/D3_block_manager.ipynb) is prepared for Colab
+validation. It adds a free-list allocator with reference counts and disjoint
+managed request tables with atomic reservation, growth and release.
+Reservations assign capacity; only successful forwards commit token lengths.
+Randomized property tests and model failure/reuse checks are included.
+No D3 runtime results are recorded yet. See the
+[D3 guide](docs/guide/18-block-manager.md).
+Next after D3 validation: D4 (scheduler).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.

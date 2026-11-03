@@ -4,6 +4,14 @@ These JSON files contain saved Colab observations, not fresh local runs.
 Each result includes the original UTC timestamp, GPU/library environment,
 git SHA and lesson data.
 
+## D3 status
+
+[D3_block_manager.ipynb](../notebooks/D3_block_manager.ipynb) is prepared
+to run allocator/property tests and a real-model ownership/reuse demo on Colab.
+Runtime validation is pending; no D3 JSON is archived yet. Save the generated
+`D3_block_manager.json` and successful notebook outputs before replacing
+the runtime. Static checks do not count as passing runtime tests.
+
 ## Recovered archive
 
 The following files were recovered from complete JSON text printed in the

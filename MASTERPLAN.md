@@ -77,7 +77,8 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] C4 (101 C2/C3/C4 tests passed, 1 two-GPU test skipped; eight unique FP16 cases completed on 2026-11-01; median paired speedup 1.50x at P=256/N=32 and 2.95x at P=512/N=32)
 - [x] D1 (140 B4/B8/C3/D1 tests passed, no skips; packed/HF argmax parity, routing, isolation and reordering checks passed in Colab on 2026-11-01)
 - [x] D2 (197 B8/C2/C3/D1/D2 tests passed, 1 two-GPU test skipped; ordered/scrambled parity, mixed prefill/decode, pause/resume and reset passed in Colab on 2026-11-03)
-- [ ] D3 D4 D5
+- [ ] D3 (implementation, property tests, notebook and guide prepared; Colab runtime validation pending)
+- [ ] D4 D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
@@ -85,7 +86,8 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 
 Recorded B3-C2 JSON results are archived in `results/` from the original
 saved notebook outputs, with their original timestamps and environment metadata.
-Guide chapters now cover every lesson A1-D2. C3's user-provided Colab JSON is
+Guide chapters now cover every lesson A1-D3; D3 runtime validation is pending.
+C3's user-provided Colab JSON is
 archived in `results/C3_kv_cache.json` with its original timestamp and environment.
 Local checks remain static only; they do not count as passing runtime tests.
 C4 keeps equal fixed-length workloads by temporarily disabling EOS stopping

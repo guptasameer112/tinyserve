@@ -7,7 +7,7 @@ from tinyserve.models.gqa import grouped_query_attention
 from tinyserve.models.mlp import MLP
 from tinyserve.models.norm import RMSNorm
 from tinyserve.models.rope import apply_rope, get_rope_theta, rope_cos_sin
-from tinyserve.paged_cache import PagedKVCache
+from tinyserve.paged_cache import ManagedPagedKVCache, PagedKVCache
 from tinyserve.weights import head_dim
 
 
@@ -149,6 +149,9 @@ class LlamaForCausalLM(nn.Module):
 
     def new_paged_cache(self, num_blocks, block_size, block_tables):
         return PagedKVCache(self, num_blocks, block_size, block_tables)
+
+    def new_managed_paged_cache(self, num_blocks, block_size):
+        return ManagedPagedKVCache(self, num_blocks, block_size)
 
     def forward(self, input_ids, positions, attention_metadata):
         cache = attention_metadata.cache
