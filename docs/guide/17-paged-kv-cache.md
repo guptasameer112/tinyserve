@@ -160,9 +160,41 @@ atol=1e-4`, with independent all-row argmax checks. A small CUDA FP16 test
 uses the same rounded weights in FP32 with `rtol=atol=1e-2`; it does not
 require token-exact FP16 parity.
 
-**Runtime validation is pending the user's fresh Colab T4 run.**
 Local checks are static only. Save `D2_paged_cache.json` and notebook outputs.
-Next after validation: D3, block manager free list and reference counts.
+Next: D3, block manager free list and reference counts.
+
+### Recorded Colab run (2026-11-03)
+
+The user's [D2_paged_cache.json](../../results/D2_paged_cache.json) records
+a Tesla T4 at commit `5f14f9c`, with PyTorch `2.11.0+cu130` and Transformers
+`5.22.0`. **197 B8/C2/C3/D1/D2 tests passed; one C2 test requiring two
+CUDA devices was skipped.** Pytest returned zero with empty stderr.
+
+Both ordered and scrambled pools passed the following stages:
+
+| Stage | Active work | Committed lengths afterward: 0, 1, 2 |
+|---|---|---|
+| Initial prefill | Six prompt tokens each for requests 0 and 1 | 6, 6, 0 |
+| Mixed | One decode token for 0, nine prompt tokens for 2; pause 1 | 7, 6, 9 |
+| Reordered decode | One token each, in request order 2, 1, 0 | 8, 7, 10 |
+
+Across 14 request comparisons (seven per physical layout), all tested logits
+rows matched the no-cache/HF argmax choices. Paged/no-cache maximum differences
+range from zero to `4.58e-5`; paged/HF differences range from `8.58e-6` to
+`4.58e-5`, within the stated FP32 tolerance.
+
+The seven-block, four-slot FP32 pool costs `1,261,568` bytes per layout.
+The hand mapping gives physical slots `[8, 9, 2, 3, 10, 11, 4, 5, 0, 1]`
+for the demonstrated two-block-table layout.
+
+Overlapping block ownership and restarting a committed request's positions
+raise the expected errors. Reset reuses pool storage and gives zero logits
+difference against no-cache in the demonstrated comparison.
+
+The original pasted JSON and environment metadata were preserved. Static
+record checks verified slots, lengths, ranges and byte accounting; no local
+runtime tests were run. These observations validate the tested gather path,
+not allocation, shared blocks, scheduling or a performance kernel.
 
 ## Interview questions
 

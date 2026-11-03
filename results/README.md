@@ -58,11 +58,16 @@ successful notebook with outputs separately.
 
 ## D2 status
 
-[D2_paged_cache.ipynb](../notebooks/D2_paged_cache.ipynb) is ready for a fresh
-Colab T4 run. Runtime validation is pending. Its final save cell creates
-`D2_paged_cache.json`, with ordered/scrambled table addressing, mixed cached
-batches, no-cache/HF parity, reset/boundary evidence and test output.
-No placeholder success result or paged-attention performance claim is committed.
+[D2_paged_cache.json](D2_paged_cache.json) was archived from the user's Colab
+output on November 3, 2026. It preserves the original timestamp, T4 environment,
+Transformers `5.22.0` and source commit `5f14f9c`.
+
+The record contains 197 passed tests and one skipped two-GPU test, with
+ordered/scrambled parity, mixed cached batches, pause/resume and reset evidence.
+Physical slot mappings, per-request stage lengths, numerical ranges and pool
+bytes were checked against recorded fields without model execution locally.
+Retain the successful notebook with outputs separately. This is correctness
+evidence, not a paged-attention performance claim.
 
 ## D1 status
 

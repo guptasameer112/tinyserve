@@ -1,0 +1,569 @@
+{
+  "name": "D2_paged_cache",
+  "timestamp_utc": "2026-11-03T12:41:58Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "git_sha": "5f14f9c",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.22.0"
+  },
+  "data": {
+    "dtype": "float32",
+    "backend": "pytorch_paged_gather",
+    "manual_disjoint_blocks": true,
+    "hand_addressing": {
+      "block_size": 2,
+      "tables": {
+        "7": [
+          4,
+          1,
+          5
+        ],
+        "9": [
+          2,
+          0
+        ]
+      },
+      "positions": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        0,
+        1,
+        2,
+        3
+      ],
+      "request_ids": [
+        7,
+        7,
+        7,
+        7,
+        7,
+        7,
+        9,
+        9,
+        9,
+        9
+      ],
+      "slots": [
+        8,
+        9,
+        2,
+        3,
+        10,
+        11,
+        4,
+        5,
+        0,
+        1
+      ],
+      "pool_shape": [
+        22,
+        6,
+        2,
+        4,
+        64
+      ],
+      "allocated_bytes": 540672
+    },
+    "block_size": 4,
+    "num_blocks": 7,
+    "ordered_tables": {
+      "0": [
+        0,
+        1
+      ],
+      "1": [
+        2,
+        3
+      ],
+      "2": [
+        4,
+        5,
+        6
+      ]
+    },
+    "scrambled_tables": {
+      "0": [
+        6,
+        5
+      ],
+      "1": [
+        4,
+        3
+      ],
+      "2": [
+        2,
+        1,
+        0
+      ]
+    },
+    "pool_allocated_bytes": 1261568,
+    "stages": [
+      {
+        "label": "initial prefill",
+        "ordered": {
+          "flat_token_ids": [
+            1,
+            450,
+            7483,
+            310,
+            3444,
+            338,
+            1,
+            450,
+            7483,
+            310,
+            9556,
+            338
+          ],
+          "positions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "sequence_ids": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slot_mapping": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "requests": [
+            {
+              "request_id": 0,
+              "start_position": 0,
+              "new_tokens": 6,
+              "committed_length": 6,
+              "paged_vs_no_cache_max_abs_diff": 4.57763671875e-05,
+              "paged_vs_hf_max_abs_diff": 4.57763671875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 3681
+            },
+            {
+              "request_id": 1,
+              "start_position": 0,
+              "new_tokens": 6,
+              "committed_length": 6,
+              "paged_vs_no_cache_max_abs_diff": 4.57763671875e-05,
+              "paged_vs_hf_max_abs_diff": 4.57763671875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 5115
+            }
+          ]
+        },
+        "scrambled": {
+          "flat_token_ids": [
+            1,
+            450,
+            7483,
+            310,
+            3444,
+            338,
+            1,
+            450,
+            7483,
+            310,
+            9556,
+            338
+          ],
+          "positions": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "sequence_ids": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "slot_mapping": [
+            24,
+            25,
+            26,
+            27,
+            20,
+            21,
+            16,
+            17,
+            18,
+            19,
+            12,
+            13
+          ],
+          "requests": [
+            {
+              "request_id": 0,
+              "start_position": 0,
+              "new_tokens": 6,
+              "committed_length": 6,
+              "paged_vs_no_cache_max_abs_diff": 4.57763671875e-05,
+              "paged_vs_hf_max_abs_diff": 4.57763671875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 3681
+            },
+            {
+              "request_id": 1,
+              "start_position": 0,
+              "new_tokens": 6,
+              "committed_length": 6,
+              "paged_vs_no_cache_max_abs_diff": 4.57763671875e-05,
+              "paged_vs_hf_max_abs_diff": 4.57763671875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 5115
+            }
+          ]
+        },
+        "all_request_lengths": {
+          "0": 6,
+          "1": 6,
+          "2": 0
+        }
+      },
+      {
+        "label": "decode 0 + prefill 2; pause 1",
+        "ordered": {
+          "flat_token_ids": [
+            3681,
+            1,
+            319,
+            21577,
+            4086,
+            1904,
+            508,
+            1371,
+            2305,
+            491
+          ],
+          "positions": [
+            6,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "sequence_ids": [
+            0,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "slot_mapping": [
+            6,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24
+          ],
+          "requests": [
+            {
+              "request_id": 0,
+              "start_position": 6,
+              "new_tokens": 1,
+              "committed_length": 7,
+              "paged_vs_no_cache_max_abs_diff": 1.049041748046875e-05,
+              "paged_vs_hf_max_abs_diff": 8.58306884765625e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 29889
+            },
+            {
+              "request_id": 2,
+              "start_position": 0,
+              "new_tokens": 9,
+              "committed_length": 9,
+              "paged_vs_no_cache_max_abs_diff": 0.0,
+              "paged_vs_hf_max_abs_diff": 1.049041748046875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 13138
+            }
+          ]
+        },
+        "scrambled": {
+          "flat_token_ids": [
+            3681,
+            1,
+            319,
+            21577,
+            4086,
+            1904,
+            508,
+            1371,
+            2305,
+            491
+          ],
+          "positions": [
+            6,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "sequence_ids": [
+            0,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "slot_mapping": [
+            22,
+            8,
+            9,
+            10,
+            11,
+            4,
+            5,
+            6,
+            7,
+            0
+          ],
+          "requests": [
+            {
+              "request_id": 0,
+              "start_position": 6,
+              "new_tokens": 1,
+              "committed_length": 7,
+              "paged_vs_no_cache_max_abs_diff": 1.049041748046875e-05,
+              "paged_vs_hf_max_abs_diff": 8.58306884765625e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 29889
+            },
+            {
+              "request_id": 2,
+              "start_position": 0,
+              "new_tokens": 9,
+              "committed_length": 9,
+              "paged_vs_no_cache_max_abs_diff": 0.0,
+              "paged_vs_hf_max_abs_diff": 1.049041748046875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 13138
+            }
+          ]
+        },
+        "all_request_lengths": {
+          "0": 7,
+          "1": 6,
+          "2": 9
+        }
+      },
+      {
+        "label": "decode all; reordered 2,1,0",
+        "ordered": {
+          "flat_token_ids": [
+            13138,
+            5115,
+            29889
+          ],
+          "positions": [
+            9,
+            6,
+            7
+          ],
+          "sequence_ids": [
+            2,
+            1,
+            0
+          ],
+          "slot_mapping": [
+            25,
+            14,
+            7
+          ],
+          "requests": [
+            {
+              "request_id": 2,
+              "start_position": 9,
+              "new_tokens": 1,
+              "committed_length": 10,
+              "paged_vs_no_cache_max_abs_diff": 9.5367431640625e-06,
+              "paged_vs_hf_max_abs_diff": 9.059906005859375e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 963
+            },
+            {
+              "request_id": 1,
+              "start_position": 6,
+              "new_tokens": 1,
+              "committed_length": 7,
+              "paged_vs_no_cache_max_abs_diff": 1.049041748046875e-05,
+              "paged_vs_hf_max_abs_diff": 1.049041748046875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 29889
+            },
+            {
+              "request_id": 0,
+              "start_position": 7,
+              "new_tokens": 1,
+              "committed_length": 8,
+              "paged_vs_no_cache_max_abs_diff": 1.1444091796875e-05,
+              "paged_vs_hf_max_abs_diff": 1.1444091796875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 13
+            }
+          ]
+        },
+        "scrambled": {
+          "flat_token_ids": [
+            13138,
+            5115,
+            29889
+          ],
+          "positions": [
+            9,
+            6,
+            7
+          ],
+          "sequence_ids": [
+            2,
+            1,
+            0
+          ],
+          "slot_mapping": [
+            1,
+            14,
+            23
+          ],
+          "requests": [
+            {
+              "request_id": 2,
+              "start_position": 9,
+              "new_tokens": 1,
+              "committed_length": 10,
+              "paged_vs_no_cache_max_abs_diff": 9.5367431640625e-06,
+              "paged_vs_hf_max_abs_diff": 9.059906005859375e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 963
+            },
+            {
+              "request_id": 1,
+              "start_position": 6,
+              "new_tokens": 1,
+              "committed_length": 7,
+              "paged_vs_no_cache_max_abs_diff": 1.049041748046875e-05,
+              "paged_vs_hf_max_abs_diff": 1.049041748046875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 29889
+            },
+            {
+              "request_id": 0,
+              "start_position": 7,
+              "new_tokens": 1,
+              "committed_length": 8,
+              "paged_vs_no_cache_max_abs_diff": 1.1444091796875e-05,
+              "paged_vs_hf_max_abs_diff": 1.1444091796875e-05,
+              "all_row_argmax_equal": true,
+              "next_token_id": 13
+            }
+          ]
+        },
+        "all_request_lengths": {
+          "0": 8,
+          "1": 7,
+          "2": 10
+        }
+      }
+    ],
+    "final_lengths_before_reset": {
+      "0": 8,
+      "1": 7,
+      "2": 10
+    },
+    "paged_vs_no_cache_diff_range": {
+      "min": 0.0,
+      "max": 4.57763671875e-05
+    },
+    "paged_vs_hf_diff_range": {
+      "min": 8.58306884765625e-06,
+      "max": 4.57763671875e-05
+    },
+    "overlap_error": "D2 block tables must be disjoint, without repeated blocks",
+    "invalid_append_error": "paged positions must append consecutively from each request length",
+    "reset_reused_pool_storage": true,
+    "reset_max_abs_diff": 0.0,
+    "pytest": {
+      "returncode": 0,
+      "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/bin/python3\ncachedir: .pytest_cache\nrootdir: /content/tinyserve\nconfigfile: pyproject.toml\nplugins: typeguard-4.6.0, anyio-4.15.1, platformdirs-4.14.0, langsmith-0.14.15\ncollecting ... collected 198 items\n\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[4] PASSED        [  0%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[2] PASSED        [  1%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[1] PASSED        [  1%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[False] PASSED [  2%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[True] PASSED [  2%]\ntests/test_b8_model.py::test_wrong_and_missing_weights_raise PASSED      [  3%]\ntests/test_b8_model.py::test_embedding_final_norm_and_lm_head_wiring PASSED [  3%]\ntests/test_b8_model.py::test_full_model_causality PASSED                 [  4%]\ntests/test_b8_model.py::test_packed_full_model_matches_separate_requests PASSED [  4%]\ntests/test_b8_model.py::test_explicit_positions_match_hf PASSED          [  5%]\ntests/test_b8_model.py::test_token_exact_greedy_matches_hf_generate PASSED [  5%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids0] PASSED        [  6%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids1] PASSED        [  6%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids2] PASSED        [  7%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids3] PASSED        [  7%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids4] PASSED        [  8%]\ntests/test_b8_model.py::test_mismatched_metadata_positions_raise PASSED  [  8%]\ntests/test_b8_model.py::test_negative_positions_raise PASSED             [  9%]\ntests/test_b8_model.py::test_unsupported_rope_raises PASSED              [  9%]\ntests/test_b8_model.py::test_fp16_full_model_vs_same_weights_in_fp32 PASSED [ 10%]\ntests/test_c2_generation.py::test_recomputes_growing_prefix_and_includes_eos PASSED [ 10%]\ntests/test_c2_generation.py::test_new_token_limit_not_total_length PASSED [ 11%]\ntests/test_c2_generation.py::test_immediate_eos PASSED                   [ 11%]\ntests/test_c2_generation.py::test_prompt_eos_does_not_stop_a_new_turn PASSED [ 12%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos0] PASSED       [ 12%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos1] PASSED       [ 13%]\ntests/test_c2_generation.py::test_zero_new_tokens_returns_independent_copy_without_forward PASSED [ 13%]\ntests/test_c2_generation.py::test_exact_context_budget_allowed PASSED    [ 14%]\ntests/test_c2_generation.py::test_oversized_request_raises_before_forward_even_if_eos_would_be_early PASSED [ 14%]\ntests/test_c2_generation.py::test_seeded_sampling_matches_manual_sampler_sequence PASSED [ 15%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[-1] PASSED [ 15%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[True] PASSED [ 16%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[2.5] PASSED [ 16%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options0] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options1] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options2] PASSED [ 18%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt0] PASSED  [ 18%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt1] PASSED  [ 19%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt2] PASSED  [ 19%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt3] PASSED  [ 20%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt4] PASSED  [ 20%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[True] PASSED [ 21%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[2] PASSED [ 21%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[-1] PASSED [ 22%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos3] PASSED [ 22%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos4] PASSED [ 23%]\ntests/test_c2_generation.py::test_training_mode_raises PASSED            [ 23%]\ntests/test_c2_generation.py::test_invalid_generator_type_raises_before_forward PASSED [ 24%]\ntests/test_c2_generation.py::test_wrong_logits_shape_raises PASSED       [ 24%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[False] PASSED [ 25%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[True] PASSED [ 25%]\ntests/test_c2_generation.py::test_device_dtype_and_generator_validation PASSED [ 26%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[False] PASSED [ 26%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[True] PASSED [ 27%]\ntests/test_c2_generation.py::test_generator_on_other_cuda_device_raises_before_forward SKIPPED [ 27%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-4] PASSED [ 28%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-2] PASSED [ 28%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-1] PASSED [ 29%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-4] PASSED [ 29%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-2] PASSED [ 30%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-1] PASSED [ 30%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-4] PASSED [ 31%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-2] PASSED [ 31%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-1] PASSED [ 32%]\ntests/test_c3_cache.py::test_storage_uses_kv_heads_and_exact_memory_cost PASSED [ 32%]\ntests/test_c3_cache.py::test_keys_are_rotated_once_and_values_are_not_rotated PASSED [ 33%]\ntests/test_c3_cache.py::test_old_entries_are_unchanged_and_unused_storage_is_invisible PASSED [ 33%]\ntests/test_c3_cache.py::test_reset_reuses_storage_without_leaking_previous_request PASSED [ 34%]\ntests/test_c3_cache.py::test_prefill_and_chunk_masks_use_absolute_positions PASSED [ 34%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[0] PASSED           [ 35%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[-1] PASSED          [ 35%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[33] PASSED          [ 36%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[True] PASSED        [ 36%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[1.5] PASSED         [ 37%]\ntests/test_c3_cache.py::test_exact_capacity_then_overflow_preserves_committed_prefix PASSED [ 37%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions0] PASSED [ 38%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions1] PASSED [ 38%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions2] PASSED [ 39%]\ntests/test_c3_cache.py::test_decode_cannot_restart_positions_at_zero PASSED [ 39%]\ntests/test_c3_cache.py::test_packed_cached_requests_are_rejected_but_no_cache_still_works PASSED [ 40%]\ntests/test_c3_cache.py::test_cache_rejects_other_model_and_changed_dtype PASSED [ 40%]\ntests/test_c3_cache.py::test_cached_forward_requires_eval_and_no_grad PASSED [ 41%]\ntests/test_c3_cache.py::test_failed_later_layer_does_not_commit_and_can_retry PASSED [ 41%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[layer] PASSED    [ 42%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[shape] PASSED    [ 42%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[dtype] PASSED    [ 43%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[overflow] PASSED [ 43%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[False] PASSED [ 44%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[True] PASSED [ 44%]\ntests/test_c3_cache.py::test_lesson_probe_checks_each_step_and_reports_actual_forward_shapes PASSED [ 45%]\ntests/test_c3_cache.py::test_generation_prefills_once_then_only_forwards_new_token PASSED [ 45%]\ntests/test_c3_cache.py::test_zero_budget_and_context_errors_do_not_allocate_cache PASSED [ 46%]\ntests/test_c3_cache.py::test_exact_context_budget_and_repeated_calls PASSED [ 46%]\ntests/test_c3_cache.py::test_seeded_cached_sampling_replays PASSED       [ 47%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[1] PASSED       [ 47%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[None] PASSED    [ 48%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[yes] PASSED     [ 48%]\ntests/test_c3_cache.py::test_cuda_fp16_cache_against_same_rounded_weights_in_fp32 PASSED [ 49%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype0] PASSED [ 50%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype1] PASSED [ 50%]\ntests/test_d1_batching.py::test_single_request_is_ordinary_causal_layout PASSED [ 51%]\ntests/test_d1_batching.py::test_hand_block_diagonal_mask PASSED          [ 51%]\ntests/test_d1_batching.py::test_position_resets_alone_do_not_isolate_requests PASSED [ 52%]\ntests/test_d1_batching.py::test_split_logits_routes_each_last_row_and_returns_views PASSED [ 52%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts0] PASSED   [ 53%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts1] PASSED   [ 53%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts2] PASSED   [ 54%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts3] PASSED   [ 54%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts4] PASSED   [ 55%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts5] PASSED   [ 55%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts6] PASSED   [ 56%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts7] PASSED   [ 56%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts8] PASSED   [ 57%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts9] PASSED   [ 57%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts10] PASSED  [ 58%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths0] PASSED [ 58%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths1] PASSED [ 59%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths2] PASSED [ 59%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths3] PASSED [ 60%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths4] PASSED [ 60%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths5] PASSED [ 61%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths6] PASSED [ 61%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths7] PASSED [ 62%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths8] PASSED [ 62%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[None] PASSED [ 63%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[tensor1] PASSED [ 63%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-4] PASSED [ 64%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-2] PASSED [ 64%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-1] PASSED [ 65%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-4] PASSED [ 65%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-2] PASSED [ 66%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-1] PASSED [ 66%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-4] PASSED [ 67%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-2] PASSED [ 67%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-1] PASSED [ 68%]\ntests/test_d1_batching.py::test_changing_one_request_cannot_change_any_other_request PASSED [ 68%]\ntests/test_d1_batching.py::test_future_change_stays_causal_inside_its_request PASSED [ 69%]\ntests/test_d1_batching.py::test_request_reordering_preserves_outputs_after_routing PASSED [ 69%]\ntests/test_d1_batching.py::test_contiguous_cache_still_rejects_packed_requests PASSED [ 70%]\ntests/test_d1_batching.py::test_probe_rejects_oversized_individual_request_not_total_packed_tokens PASSED [ 70%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[training] PASSED [ 71%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[float16] PASSED [ 71%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[hf_attention] PASSED [ 72%]\ntests/test_d1_batching.py::test_cuda_layout_and_mixed_devices_rejection PASSED [ 72%]\ntests/test_d1_batching.py::test_fp16_packed_logits_against_same_rounded_weights_in_fp32 PASSED [ 73%]\ntests/test_d2_paged_cache.py::test_hand_slot_mapping_and_pool_cost PASSED [ 73%]\ntests/test_d2_paged_cache.py::test_tables_and_committed_lengths_cannot_be_changed_by_callers PASSED [ 74%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[0-2-tables0] PASSED [ 74%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-0-tables1] PASSED [ 75%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[True-2-tables2] PASSED [ 75%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-1.5-tables3] PASSED [ 76%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables4] PASSED [ 76%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables5] PASSED [ 77%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables6] PASSED [ 77%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables7] PASSED [ 78%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables8] PASSED [ 78%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables9] PASSED [ 79%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables10] PASSED [ 79%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables11] PASSED [ 80%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables12] PASSED [ 80%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables13] PASSED [ 81%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions0-owners0] PASSED [ 81%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions1-owners1] PASSED [ 82%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions2-owners2] PASSED [ 82%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions3-owners3] PASSED [ 83%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions4-None] PASSED [ 83%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions5-owners5] PASSED [ 84%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions6-owners6] PASSED [ 84%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions7-owners7] PASSED [ 85%]\ntests/test_d2_paged_cache.py::test_gather_uses_logical_order_and_hides_unwritten_slots PASSED [ 85%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-1] PASSED [ 86%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-2] PASSED [ 86%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-3] PASSED [ 87%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-4] PASSED [ 87%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-1] PASSED [ 88%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-2] PASSED [ 88%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-3] PASSED [ 89%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-4] PASSED [ 89%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-1] PASSED [ 90%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-2] PASSED [ 90%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-3] PASSED [ 91%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-4] PASSED [ 91%]\ntests/test_d2_paged_cache.py::test_mixed_decode_new_prefill_and_paused_request PASSED [ 92%]\ntests/test_d2_paged_cache.py::test_interleaved_input_order_is_scattered_back_correctly PASSED [ 92%]\ntests/test_d2_paged_cache.py::test_other_request_storage_cannot_affect_active_decode PASSED [ 93%]\ntests/test_d2_paged_cache.py::test_failed_later_layer_preserves_all_lengths_and_can_retry PASSED [ 93%]\ntests/test_d2_paged_cache.py::test_reset_one_request_reuses_blocks_and_leaves_other_length PASSED [ 94%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions0] PASSED [ 94%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions1] PASSED [ 95%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions2] PASSED [ 95%]\ntests/test_d2_paged_cache.py::test_pool_capacity_and_model_context_are_separate_limits PASSED [ 96%]\ntests/test_d2_paged_cache.py::test_cache_model_dtype_eval_grad_and_backend_boundaries PASSED [ 96%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[layer] PASSED [ 97%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[key_shape] PASSED [ 97%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[key_dtype] PASSED [ 98%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[query_heads] PASSED [ 98%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[query_dtype] PASSED [ 99%]\ntests/test_d2_paged_cache.py::test_cuda_fp16_paged_against_same_rounded_weights_in_fp32 PASSED [100%]\n\n=========================== short test summary info ============================\nSKIPPED [1] tests/test_c2_generation.py:209: Two CUDA devices required\n======================= 197 passed, 1 skipped in 19.69s ========================\n",
+      "stderr": ""
+    }
+  }
+}
