@@ -1,1 +1,1 @@
-"""Engine building blocks; scheduling and the engine loop come later."""
+"""Block ownership and scheduling; the automatic engine loop comes in D5."""

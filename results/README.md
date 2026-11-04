@@ -4,6 +4,16 @@ These JSON files contain saved Colab observations, not fresh local runs.
 Each result includes the original UTC timestamp, GPU/library environment,
 git SHA and lesson data.
 
+## D4 status
+
+[D4_scheduler.ipynb](../notebooks/D4_scheduler.ipynb) is prepared for a fresh
+Colab T4. It runs scheduler/regression tests, then records continuous arrival
+and release-and-recompute preemption timelines against FP32 ours/HF references.
+Runtime validation is pending; no D4 JSON is archived yet. The notebook requires
+both complete scenarios and explicit replay records before saving
+`D4_scheduler.json`. Preserve the successful notebook outputs separately.
+This does not complete D3's outstanding real-model failure/retry evidence.
+
 ## D3 status
 
 [D3_block_manager.ipynb](../notebooks/D3_block_manager.ipynb) is prepared

@@ -94,7 +94,17 @@ Reservations assign capacity; only successful forwards commit token lengths.
 Randomized property tests and model failure/reuse checks are included.
 No D3 runtime results are recorded yet. See the
 [D3 guide](docs/guide/18-block-manager.md).
-Next after D3 validation: D4 (scheduler).
+
+[D4: scheduler](notebooks/D4_scheduler.ipynb) is prepared for Colab validation
+while D3's complete real-model failure/retry record remains pending.
+The lesson uses FCFS priority, bounded token batches, chunked prefill and
+one-token decode appends. Under block pressure it releases a newer request's
+K/V and later recomputes its prefix from retained token IDs.
+Worked timelines show a new arrival joining active work and a three-block
+pool forcing preemption. Tests and the
+[D4 guide](docs/guide/19-continuous-batching.md) accompany the notebook.
+There is no serving-throughput claim; the automatic engine loop remains D5.
+Next after validation: D5 (engine loop and memory budgeting).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.
