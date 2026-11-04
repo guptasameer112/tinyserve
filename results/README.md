@@ -6,13 +6,24 @@ git SHA and lesson data.
 
 ## D4 status
 
-[D4_scheduler.ipynb](../notebooks/D4_scheduler.ipynb) is prepared for a fresh
-Colab T4. It runs scheduler/regression tests, then records continuous arrival
-and release-and-recompute preemption timelines against FP32 ours/HF references.
-Runtime validation is pending; no D4 JSON is archived yet. The notebook requires
-both complete scenarios and explicit replay records before saving
-`D4_scheduler.json`. Preserve the successful notebook outputs separately.
-D3's complete result is archived below; it does not count as D4 validation.
+[D4_scheduler.json](D4_scheduler.json) was archived from the user's complete
+Colab output on November 4, 2026. It preserves timestamp
+`2026-11-04T12:54:48Z`, source commit `47ea839`, T4 environment and test output.
+The run records 304 passed B8/C2/C3/D1/D2/D3/D4 tests and one skipped two-GPU test.
+
+Both scenarios contain their complete timelines: three continuous-batching
+steps and eight preemption/recomputation steps. The latter records request 1
+being preempted at logical progress two, rebuilding its two-token prefix, and
+resuming decode. Its ten logical token positions require twelve model rows,
+including two replay rows. Both pools finish with every block free.
+
+Seventeen request comparisons cover 22 new/replayed logits rows, all with
+matching no-cache/HF argmax choices. Numerical ranges, token budgets, retained
+token histories, slot mappings, ownership snapshots and pool bytes were checked
+against recorded fields without local model execution. The archived payload
+equals the supplied JSON, with no regenerated timestamps or environment data.
+Retain the successful [D4 notebook](../notebooks/D4_scheduler.ipynb) with outputs
+separately; no notebook outputs were fabricated.
 
 ## D3 status
 

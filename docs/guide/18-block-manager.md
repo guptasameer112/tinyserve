@@ -167,7 +167,8 @@ Request 2 reused physical blocks `[3, 1]`. The four-block, two-slot FP32
 pool occupied `360,448` bytes (352 KiB), with unchanged K/V storage addresses.
 The final snapshot contains no requests, four free blocks and zero references.
 This validates the demonstrated ownership lifecycle; it is not a throughput
-or GPU allocation reduction measurement. D4 remains separately pending.
+or GPU allocation reduction measurement. D4's separate validated run is
+archived in [D4_scheduler.json](../../results/D4_scheduler.json).
 
 ## Three interview questions
 

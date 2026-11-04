@@ -189,10 +189,9 @@ ours/HF references, inject a later-layer failure, and retry. The notebook
 repeats both worked timelines with real FP32 TinyLlama. Every new or replayed
 logits row uses `rtol=1e-5, atol=1e-4` plus exact argmax checks.
 
-Local checks are static only. D4 runtime validation is pending on a fresh
-Colab T4. D3's complete real-model failure/retry evidence is now archived in
-[D3_block_manager.json](../../results/D3_block_manager.json); it does not
-count as D4 validation.
+Local checks are static only. D3's complete real-model failure/retry evidence
+is archived separately in
+[D3_block_manager.json](../../results/D3_block_manager.json).
 The notebook saves `D4_scheduler.json` with environment details, test output,
 both complete timelines, preemption/recomputation records and numerical ranges.
 It checks required scenario records before saving rather than relying only
@@ -200,6 +199,41 @@ on success flags. Preserve the successful notebook with outputs as well.
 
 No throughput improvement, latency bound or GPU allocation reduction is claimed.
 The cache pool remains fixed and attention still uses readable PyTorch gathers.
+
+### Recorded Colab run (2026-11-04)
+
+The user's [D4_scheduler.json](../../results/D4_scheduler.json) records
+timestamp `2026-11-04T12:54:48Z`, commit `47ea839`, a Tesla T4, Python
+`3.13.16`, PyTorch `2.11.0+cu130` and Transformers `5.22.0`.
+**304 B8/C2/C3/D1/D2/D3/D4 tests passed; one C2 test requiring two GPUs
+was skipped.** Pytest returned zero with empty stderr. Both CPU and CUDA
+scheduled-model preemption/failure/retry tests passed in this run.
+This is user-supplied runtime evidence, not a local test execution.
+
+Both real-model timelines match the worked examples above:
+
+| Scenario | Blocks, B=2 | Batch budget | Steps | Logical token positions | Model rows | Replay rows |
+|---|---:|---:|---:|---:|---:|---:|
+| Continuous batching | 5 | 4 | 3 | 10 | 10 | 0 |
+| Preemption/recomputation | 3 | 3 | 8 | 10 | 12 | 2 |
+
+In the first scenario, request 2 joins step 1 while request 0 is still running.
+In the second, step 3 preempts request 1 with logical progress two and no
+resident cache. Step 4 rebuilds positions 0 and 1: resident length returns
+to two, while logical progress remains two. Step 5 then decodes position 2.
+Request 1 has exactly one recorded preemption. All requests finish and both
+final snapshots contain empty block tables and fully free pools.
+
+Seventeen request comparisons cover 22 new/replayed logits rows. All recorded
+argmax choices match no-cache ours/HF references. Paged/no-cache maximum
+absolute differences range from zero to `2.50e-5`; paged/HF differences range
+from `3.81e-6` to `2.50e-5`, within the stated FP32 tolerances.
+
+The five-block pool occupies `450,560` bytes (440 KiB); the three-block pool
+occupies `270,336` bytes (264 KiB). These are fixed allocations for different
+scenarios, not a measured reduction from releasing a request. Extra replay
+rows demonstrate a recomputation cost, not a timing or throughput result.
+Preserve the successful notebook outputs separately from the archived JSON.
 
 ## Three interview questions
 

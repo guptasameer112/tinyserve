@@ -78,7 +78,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] D1 (140 B4/B8/C3/D1 tests passed, no skips; packed/HF argmax parity, routing, isolation and reordering checks passed in Colab on 2026-11-01)
 - [x] D2 (197 B8/C2/C3/D1/D2 tests passed, 1 two-GPU test skipped; ordered/scrambled parity, mixed prefill/decode, pause/resume and reset passed in Colab on 2026-11-03)
 - [x] D3 (253 B8/C2/C3/D1/D2/D3 tests passed, 1 two-GPU test skipped; atomic exhaustion, real-model failure/retry, growth, reuse and reset passed in Colab on 2026-11-04)
-- [ ] D4 (FCFS scheduler, recomputation preemption, tests, descriptive notebook and guide prepared; Colab runtime validation pending)
+- [x] D4 (304 B8/C2/C3/D1/D2/D3/D4 tests passed, 1 two-GPU test skipped; continuous arrivals, chunked mixed batches, preemption/recomputation and final release passed in Colab on 2026-11-04)
 - [ ] D5
 - [ ] E1 E2
 - [ ] F1 F2 F3 F4
@@ -87,7 +87,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 
 Recorded B3-C2 JSON results are archived in `results/` from the original
 saved notebook outputs, with their original timestamps and environment metadata.
-Guide chapters now cover every lesson A1-D4; D4 runtime validation is pending.
+Guide chapters now cover every lesson A1-D4.
 C3's user-provided Colab JSON is
 archived in `results/C3_kv_cache.json` with its original timestamp and environment.
 Local checks remain static only; they do not count as passing runtime tests.
@@ -101,8 +101,10 @@ unsupported. D1's recorded result is archived in `results/D1_flattened_batching.
 D2's manual disjoint tables and PyTorch gather backend support independent
 cached request lengths and mixed prefill/decode, without a model-interface
 rewrite. The user's validated run is archived in `results/D2_paged_cache.json`.
-D3 adds managed block allocation, and D4 prepares continuous batching with
+D3 adds managed block allocation, and D4 adds continuous batching with
 release-and-recompute preemption. D3's complete user-provided Colab run is
 archived in `results/D3_block_manager.json`, including the failure snapshot and
-successful boundary-crossing retry. D4 validation remains separately pending.
+successful boundary-crossing retry. D4's complete run is archived in
+`results/D4_scheduler.json`: both worked timelines passed, including one
+preemption and a two-token prefix replay. Next: D5, engine loop and memory budgeting.
 Shared-prefix blocks and copy-on-write remain deferred.

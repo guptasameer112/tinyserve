@@ -97,16 +97,18 @@ maximum HF difference 6.68e-6. All four blocks were free at the end.
 Results are archived in [D3_block_manager.json](results/D3_block_manager.json).
 See the [D3 guide](docs/guide/18-block-manager.md).
 
-[D4: scheduler](notebooks/D4_scheduler.ipynb) is prepared for Colab validation.
-D3 is validated separately; no D4 runtime result is recorded yet.
-The lesson uses FCFS priority, bounded token batches, chunked prefill and
-one-token decode appends. Under block pressure it releases a newer request's
-K/V and later recomputes its prefix from retained token IDs.
-Worked timelines show a new arrival joining active work and a three-block
-pool forcing preemption. Tests and the
-[D4 guide](docs/guide/19-continuous-batching.md) accompany the notebook.
-There is no serving-throughput claim; the automatic engine loop remains D5.
-Next after validation: D5 (engine loop and memory budgeting).
+[D4: scheduler](notebooks/D4_scheduler.ipynb) passed 304
+B8/C2/C3/D1/D2/D3/D4 tests in Colab on November 4, 2026; one two-GPU test
+was skipped. The continuous-batching timeline admitted a new request before
+an older one finished and completed in three steps. The small-pool timeline
+completed in eight steps with one preemption and two replayed prefix tokens:
+ten logical token positions required twelve model rows.
+Across both scenarios, all 22 new/replayed logits rows matched no-cache/HF
+argmax choices, with maximum difference 2.50e-5. All blocks were free at the end.
+Results are archived in [D4_scheduler.json](results/D4_scheduler.json).
+See the [D4 guide](docs/guide/19-continuous-batching.md).
+These are correctness checks, not serving-throughput measurements.
+Next: D5 (engine loop and memory budgeting).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.
