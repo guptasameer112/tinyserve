@@ -87,16 +87,18 @@ The D2 interface still uses manually assigned blocks. Sharing, scheduling and
 performance kernels remain deferred.
 See the [D2 guide](docs/guide/17-paged-kv-cache.md).
 
-[D3: block manager](notebooks/D3_block_manager.ipynb) is prepared for Colab
-validation. It adds a free-list allocator with reference counts and disjoint
-managed request tables with atomic reservation, growth and release.
-Reservations assign capacity; only successful forwards commit token lengths.
-Randomized property tests and model failure/reuse checks are included.
-No D3 runtime results are recorded yet. See the
-[D3 guide](docs/guide/18-block-manager.md).
+[D3: block manager](notebooks/D3_block_manager.ipynb) passed 253
+B8/C2/C3/D1/D2/D3 tests in Colab on November 4, 2026; one two-GPU test
+was skipped. The complete run includes atomic exhaustion, growth,
+injected later-layer failure, successful retry, block reuse and reset.
+The failed forward kept request 0 at length three; retry committed length five.
+All fourteen tested logits rows matched no-cache/HF argmax choices, with
+maximum HF difference 6.68e-6. All four blocks were free at the end.
+Results are archived in [D3_block_manager.json](results/D3_block_manager.json).
+See the [D3 guide](docs/guide/18-block-manager.md).
 
-[D4: scheduler](notebooks/D4_scheduler.ipynb) is prepared for Colab validation
-while D3's complete real-model failure/retry record remains pending.
+[D4: scheduler](notebooks/D4_scheduler.ipynb) is prepared for Colab validation.
+D3 is validated separately; no D4 runtime result is recorded yet.
 The lesson uses FCFS priority, bounded token batches, chunked prefill and
 one-token decode appends. Under block pressure it releases a newer request's
 K/V and later recomputes its prefix from retained token IDs.

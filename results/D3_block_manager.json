@@ -1,0 +1,564 @@
+{
+  "name": "D3_block_manager",
+  "timestamp_utc": "2026-11-04T05:02:37Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "git_sha": "e176350",
+    "gpu": "Tesla T4",
+    "torch": "2.11.0+cu130",
+    "cuda": "13.0",
+    "transformers": "5.22.0"
+  },
+  "data": {
+    "dtype": "float32",
+    "backend": "pytorch_paged_gather",
+    "managed_disjoint_blocks": true,
+    "block_size": 2,
+    "num_blocks": 4,
+    "pool_shape": [
+      22,
+      4,
+      2,
+      4,
+      64
+    ],
+    "pool_allocated_bytes": 360448,
+    "allocator_trace": [
+      {
+        "label": "start",
+        "free_blocks": [
+          0,
+          1,
+          2
+        ],
+        "ref_counts": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "label": "allocate two",
+        "free_blocks": [
+          2
+        ],
+        "ref_counts": [
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "retain zero",
+        "free_blocks": [
+          2
+        ],
+        "ref_counts": [
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "release one lease",
+        "free_blocks": [
+          2
+        ],
+        "ref_counts": [
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "release final lease",
+        "free_blocks": [
+          0,
+          2
+        ],
+        "ref_counts": [
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "reuse zero",
+        "free_blocks": [
+          2
+        ],
+        "ref_counts": [
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "all released",
+        "free_blocks": [
+          1,
+          0,
+          2
+        ],
+        "ref_counts": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "pool_trace": [
+      {
+        "label": "reserved, not committed",
+        "tables": {
+          "0": [
+            0,
+            1
+          ],
+          "1": [
+            2
+          ]
+        },
+        "lengths": {
+          "0": 0,
+          "1": 0
+        },
+        "free_blocks": [
+          3
+        ],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "initial prefill",
+        "tables": {
+          "0": [
+            0,
+            1
+          ],
+          "1": [
+            2
+          ]
+        },
+        "lengths": {
+          "0": 3,
+          "1": 2
+        },
+        "free_blocks": [
+          3
+        ],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "grown across boundary, still length three",
+        "tables": {
+          "0": [
+            0,
+            1,
+            3
+          ],
+          "1": [
+            2
+          ]
+        },
+        "lengths": {
+          "0": 3,
+          "1": 2
+        },
+        "free_blocks": [],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "label": "failure preserved ownership and committed prefixes",
+        "tables": {
+          "0": [
+            0,
+            1,
+            3
+          ],
+          "1": [
+            2
+          ]
+        },
+        "lengths": {
+          "0": 3,
+          "1": 2
+        },
+        "free_blocks": [],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "label": "retry boundary-crossing append",
+        "tables": {
+          "0": [
+            0,
+            1,
+            3
+          ],
+          "1": [
+            2
+          ]
+        },
+        "lengths": {
+          "0": 5,
+          "1": 2
+        },
+        "free_blocks": [],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "label": "request zero released",
+        "tables": {
+          "1": [
+            2
+          ]
+        },
+        "lengths": {
+          "1": 2
+        },
+        "free_blocks": [
+          3,
+          1,
+          0
+        ],
+        "ref_counts": [
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "label": "reused blocks and grew remaining request",
+        "tables": {
+          "1": [
+            2,
+            0
+          ],
+          "2": [
+            3,
+            1
+          ]
+        },
+        "lengths": {
+          "1": 2,
+          "2": 0
+        },
+        "free_blocks": [],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "label": "mixed new prefill and resumed append",
+        "tables": {
+          "1": [
+            2,
+            0
+          ],
+          "2": [
+            3,
+            1
+          ]
+        },
+        "lengths": {
+          "1": 3,
+          "2": 4
+        },
+        "free_blocks": [],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "label": "reset without release",
+        "tables": {
+          "1": [
+            2,
+            0
+          ],
+          "2": [
+            3,
+            1
+          ]
+        },
+        "lengths": {
+          "1": 3,
+          "2": 2
+        },
+        "free_blocks": [],
+        "ref_counts": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "label": "all requests released",
+        "tables": {},
+        "lengths": {},
+        "free_blocks": [
+          1,
+          3,
+          0,
+          2
+        ],
+        "ref_counts": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "label": "initial prefill",
+        "comparison": {
+          "flat_token_ids": [
+            1,
+            450,
+            7483,
+            1,
+            450
+          ],
+          "positions": [
+            0,
+            1,
+            2,
+            0,
+            1
+          ],
+          "sequence_ids": [
+            0,
+            0,
+            0,
+            1,
+            1
+          ],
+          "slot_mapping": [
+            0,
+            1,
+            2,
+            4,
+            5
+          ],
+          "requests": [
+            {
+              "request_id": 0,
+              "start_position": 0,
+              "new_tokens": 3,
+              "committed_length": 3,
+              "paged_vs_no_cache_max_abs_diff": 5.7220458984375e-06,
+              "paged_vs_hf_max_abs_diff": 5.245208740234375e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 310
+            },
+            {
+              "request_id": 1,
+              "start_position": 0,
+              "new_tokens": 2,
+              "committed_length": 2,
+              "paged_vs_no_cache_max_abs_diff": 5.245208740234375e-06,
+              "paged_vs_hf_max_abs_diff": 5.245208740234375e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 29871
+            }
+          ]
+        }
+      },
+      {
+        "label": "retry boundary-crossing append",
+        "comparison": {
+          "flat_token_ids": [
+            310,
+            3444
+          ],
+          "positions": [
+            3,
+            4
+          ],
+          "sequence_ids": [
+            0,
+            0
+          ],
+          "slot_mapping": [
+            3,
+            6
+          ],
+          "requests": [
+            {
+              "request_id": 0,
+              "start_position": 3,
+              "new_tokens": 2,
+              "committed_length": 5,
+              "paged_vs_no_cache_max_abs_diff": 4.76837158203125e-06,
+              "paged_vs_hf_max_abs_diff": 5.7220458984375e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 29892
+            }
+          ]
+        }
+      },
+      {
+        "label": "mixed new prefill and resumed append",
+        "comparison": {
+          "flat_token_ids": [
+            1,
+            319,
+            21577,
+            4086,
+            7483
+          ],
+          "positions": [
+            0,
+            1,
+            2,
+            3,
+            2
+          ],
+          "sequence_ids": [
+            2,
+            2,
+            2,
+            2,
+            1
+          ],
+          "slot_mapping": [
+            6,
+            7,
+            2,
+            3,
+            0
+          ],
+          "requests": [
+            {
+              "request_id": 2,
+              "start_position": 0,
+              "new_tokens": 4,
+              "committed_length": 4,
+              "paged_vs_no_cache_max_abs_diff": 0.0,
+              "paged_vs_hf_max_abs_diff": 6.67572021484375e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 393
+            },
+            {
+              "request_id": 1,
+              "start_position": 2,
+              "new_tokens": 1,
+              "committed_length": 3,
+              "paged_vs_no_cache_max_abs_diff": 5.7220458984375e-06,
+              "paged_vs_hf_max_abs_diff": 5.7220458984375e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 310
+            }
+          ]
+        }
+      },
+      {
+        "label": "reset without release",
+        "comparison": {
+          "flat_token_ids": [
+            1,
+            450
+          ],
+          "positions": [
+            0,
+            1
+          ],
+          "sequence_ids": [
+            2,
+            2
+          ],
+          "slot_mapping": [
+            6,
+            7
+          ],
+          "requests": [
+            {
+              "request_id": 2,
+              "start_position": 0,
+              "new_tokens": 2,
+              "committed_length": 2,
+              "paged_vs_no_cache_max_abs_diff": 0.0,
+              "paged_vs_hf_max_abs_diff": 3.814697265625e-06,
+              "all_row_argmax_equal": true,
+              "next_token_id": 29871
+            }
+          ]
+        }
+      }
+    ],
+    "exhaustion": [
+      {
+        "request_id": 2,
+        "total_tokens": 4,
+        "error": "need 2 blocks but only 1 are free",
+        "state_unchanged": true
+      },
+      {
+        "request_id": 0,
+        "total_tokens": 7,
+        "error": "need 2 blocks but only 1 are free",
+        "state_unchanged": true
+      }
+    ],
+    "forward_failure_error": "injected D3 later-layer failure",
+    "failed_forward_preserved_metadata_and_prefix_kv": true,
+    "reused_blocks": [
+      3,
+      1
+    ],
+    "final_lengths_before_reset": {
+      "1": 3,
+      "2": 4
+    },
+    "storage_addresses_unchanged": true,
+    "all_blocks_released": true,
+    "paged_vs_no_cache_diff_range": {
+      "min": 0.0,
+      "max": 5.7220458984375e-06
+    },
+    "paged_vs_hf_diff_range": {
+      "min": 3.814697265625e-06,
+      "max": 6.67572021484375e-06
+    },
+    "pytest": {
+      "returncode": 0,
+      "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/bin/python3\ncachedir: .pytest_cache\nrootdir: /content/tinyserve\nconfigfile: pyproject.toml\nplugins: typeguard-4.6.0, anyio-4.15.1, platformdirs-4.14.0, langsmith-0.14.15\ncollecting ... collected 254 items\n\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[4] PASSED        [  0%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[2] PASSED        [  0%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[1] PASSED        [  1%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[False] PASSED [  1%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[True] PASSED [  1%]\ntests/test_b8_model.py::test_wrong_and_missing_weights_raise PASSED      [  2%]\ntests/test_b8_model.py::test_embedding_final_norm_and_lm_head_wiring PASSED [  2%]\ntests/test_b8_model.py::test_full_model_causality PASSED                 [  3%]\ntests/test_b8_model.py::test_packed_full_model_matches_separate_requests PASSED [  3%]\ntests/test_b8_model.py::test_explicit_positions_match_hf PASSED          [  3%]\ntests/test_b8_model.py::test_token_exact_greedy_matches_hf_generate PASSED [  4%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids0] PASSED        [  4%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids1] PASSED        [  5%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids2] PASSED        [  5%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids3] PASSED        [  5%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids4] PASSED        [  6%]\ntests/test_b8_model.py::test_mismatched_metadata_positions_raise PASSED  [  6%]\ntests/test_b8_model.py::test_negative_positions_raise PASSED             [  7%]\ntests/test_b8_model.py::test_unsupported_rope_raises PASSED              [  7%]\ntests/test_b8_model.py::test_fp16_full_model_vs_same_weights_in_fp32 PASSED [  7%]\ntests/test_c2_generation.py::test_recomputes_growing_prefix_and_includes_eos PASSED [  8%]\ntests/test_c2_generation.py::test_new_token_limit_not_total_length PASSED [  8%]\ntests/test_c2_generation.py::test_immediate_eos PASSED                   [  9%]\ntests/test_c2_generation.py::test_prompt_eos_does_not_stop_a_new_turn PASSED [  9%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos0] PASSED       [  9%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos1] PASSED       [ 10%]\ntests/test_c2_generation.py::test_zero_new_tokens_returns_independent_copy_without_forward PASSED [ 10%]\ntests/test_c2_generation.py::test_exact_context_budget_allowed PASSED    [ 11%]\ntests/test_c2_generation.py::test_oversized_request_raises_before_forward_even_if_eos_would_be_early PASSED [ 11%]\ntests/test_c2_generation.py::test_seeded_sampling_matches_manual_sampler_sequence PASSED [ 11%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[-1] PASSED [ 12%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[True] PASSED [ 12%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[2.5] PASSED [ 12%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options0] PASSED [ 13%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options1] PASSED [ 13%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options2] PASSED [ 14%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt0] PASSED  [ 14%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt1] PASSED  [ 14%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt2] PASSED  [ 15%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt3] PASSED  [ 15%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt4] PASSED  [ 16%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[True] PASSED [ 16%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[2] PASSED [ 16%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[-1] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos3] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos4] PASSED [ 18%]\ntests/test_c2_generation.py::test_training_mode_raises PASSED            [ 18%]\ntests/test_c2_generation.py::test_invalid_generator_type_raises_before_forward PASSED [ 18%]\ntests/test_c2_generation.py::test_wrong_logits_shape_raises PASSED       [ 19%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[False] PASSED [ 19%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[True] PASSED [ 20%]\ntests/test_c2_generation.py::test_device_dtype_and_generator_validation PASSED [ 20%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[False] PASSED [ 20%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[True] PASSED [ 21%]\ntests/test_c2_generation.py::test_generator_on_other_cuda_device_raises_before_forward SKIPPED [ 21%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-4] PASSED [ 22%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-2] PASSED [ 22%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-1] PASSED [ 22%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-4] PASSED [ 23%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-2] PASSED [ 23%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-1] PASSED [ 24%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-4] PASSED [ 24%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-2] PASSED [ 24%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-1] PASSED [ 25%]\ntests/test_c3_cache.py::test_storage_uses_kv_heads_and_exact_memory_cost PASSED [ 25%]\ntests/test_c3_cache.py::test_keys_are_rotated_once_and_values_are_not_rotated PASSED [ 25%]\ntests/test_c3_cache.py::test_old_entries_are_unchanged_and_unused_storage_is_invisible PASSED [ 26%]\ntests/test_c3_cache.py::test_reset_reuses_storage_without_leaking_previous_request PASSED [ 26%]\ntests/test_c3_cache.py::test_prefill_and_chunk_masks_use_absolute_positions PASSED [ 27%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[0] PASSED           [ 27%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[-1] PASSED          [ 27%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[33] PASSED          [ 28%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[True] PASSED        [ 28%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[1.5] PASSED         [ 29%]\ntests/test_c3_cache.py::test_exact_capacity_then_overflow_preserves_committed_prefix PASSED [ 29%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions0] PASSED [ 29%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions1] PASSED [ 30%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions2] PASSED [ 30%]\ntests/test_c3_cache.py::test_decode_cannot_restart_positions_at_zero PASSED [ 31%]\ntests/test_c3_cache.py::test_packed_cached_requests_are_rejected_but_no_cache_still_works PASSED [ 31%]\ntests/test_c3_cache.py::test_cache_rejects_other_model_and_changed_dtype PASSED [ 31%]\ntests/test_c3_cache.py::test_cached_forward_requires_eval_and_no_grad PASSED [ 32%]\ntests/test_c3_cache.py::test_failed_later_layer_does_not_commit_and_can_retry PASSED [ 32%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[layer] PASSED    [ 33%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[shape] PASSED    [ 33%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[dtype] PASSED    [ 33%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[overflow] PASSED [ 34%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[False] PASSED [ 34%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[True] PASSED [ 35%]\ntests/test_c3_cache.py::test_lesson_probe_checks_each_step_and_reports_actual_forward_shapes PASSED [ 35%]\ntests/test_c3_cache.py::test_generation_prefills_once_then_only_forwards_new_token PASSED [ 35%]\ntests/test_c3_cache.py::test_zero_budget_and_context_errors_do_not_allocate_cache PASSED [ 36%]\ntests/test_c3_cache.py::test_exact_context_budget_and_repeated_calls PASSED [ 36%]\ntests/test_c3_cache.py::test_seeded_cached_sampling_replays PASSED       [ 37%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[1] PASSED       [ 37%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[None] PASSED    [ 37%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[yes] PASSED     [ 38%]\ntests/test_c3_cache.py::test_cuda_fp16_cache_against_same_rounded_weights_in_fp32 PASSED [ 38%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype0] PASSED [ 38%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype1] PASSED [ 39%]\ntests/test_d1_batching.py::test_single_request_is_ordinary_causal_layout PASSED [ 39%]\ntests/test_d1_batching.py::test_hand_block_diagonal_mask PASSED          [ 40%]\ntests/test_d1_batching.py::test_position_resets_alone_do_not_isolate_requests PASSED [ 40%]\ntests/test_d1_batching.py::test_split_logits_routes_each_last_row_and_returns_views PASSED [ 40%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts0] PASSED   [ 41%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts1] PASSED   [ 41%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts2] PASSED   [ 42%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts3] PASSED   [ 42%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts4] PASSED   [ 42%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts5] PASSED   [ 43%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts6] PASSED   [ 43%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts7] PASSED   [ 44%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts8] PASSED   [ 44%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts9] PASSED   [ 44%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts10] PASSED  [ 45%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths0] PASSED [ 45%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths1] PASSED [ 46%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths2] PASSED [ 46%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths3] PASSED [ 46%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths4] PASSED [ 47%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths5] PASSED [ 47%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths6] PASSED [ 48%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths7] PASSED [ 48%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths8] PASSED [ 48%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[None] PASSED [ 49%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[tensor1] PASSED [ 49%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-4] PASSED [ 50%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-2] PASSED [ 50%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-1] PASSED [ 50%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-4] PASSED [ 51%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-2] PASSED [ 51%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-1] PASSED [ 51%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-4] PASSED [ 52%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-2] PASSED [ 52%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-1] PASSED [ 53%]\ntests/test_d1_batching.py::test_changing_one_request_cannot_change_any_other_request PASSED [ 53%]\ntests/test_d1_batching.py::test_future_change_stays_causal_inside_its_request PASSED [ 53%]\ntests/test_d1_batching.py::test_request_reordering_preserves_outputs_after_routing PASSED [ 54%]\ntests/test_d1_batching.py::test_contiguous_cache_still_rejects_packed_requests PASSED [ 54%]\ntests/test_d1_batching.py::test_probe_rejects_oversized_individual_request_not_total_packed_tokens PASSED [ 55%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[training] PASSED [ 55%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[float16] PASSED [ 55%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[hf_attention] PASSED [ 56%]\ntests/test_d1_batching.py::test_cuda_layout_and_mixed_devices_rejection PASSED [ 56%]\ntests/test_d1_batching.py::test_fp16_packed_logits_against_same_rounded_weights_in_fp32 PASSED [ 57%]\ntests/test_d2_paged_cache.py::test_hand_slot_mapping_and_pool_cost PASSED [ 57%]\ntests/test_d2_paged_cache.py::test_tables_and_committed_lengths_cannot_be_changed_by_callers PASSED [ 57%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[0-2-tables0] PASSED [ 58%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-0-tables1] PASSED [ 58%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[True-2-tables2] PASSED [ 59%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-1.5-tables3] PASSED [ 59%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables4] PASSED [ 59%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables5] PASSED [ 60%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables6] PASSED [ 60%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables7] PASSED [ 61%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables8] PASSED [ 61%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables9] PASSED [ 61%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables10] PASSED [ 62%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables11] PASSED [ 62%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables12] PASSED [ 62%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables13] PASSED [ 63%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions0-owners0] PASSED [ 63%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions1-owners1] PASSED [ 64%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions2-owners2] PASSED [ 64%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions3-owners3] PASSED [ 64%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions4-None] PASSED [ 65%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions5-owners5] PASSED [ 65%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions6-owners6] PASSED [ 66%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions7-owners7] PASSED [ 66%]\ntests/test_d2_paged_cache.py::test_gather_uses_logical_order_and_hides_unwritten_slots PASSED [ 66%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-1] PASSED [ 67%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-2] PASSED [ 67%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-3] PASSED [ 68%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-4] PASSED [ 68%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-1] PASSED [ 68%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-2] PASSED [ 69%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-3] PASSED [ 69%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-4] PASSED [ 70%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-1] PASSED [ 70%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-2] PASSED [ 70%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-3] PASSED [ 71%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-4] PASSED [ 71%]\ntests/test_d2_paged_cache.py::test_mixed_decode_new_prefill_and_paused_request PASSED [ 72%]\ntests/test_d2_paged_cache.py::test_interleaved_input_order_is_scattered_back_correctly PASSED [ 72%]\ntests/test_d2_paged_cache.py::test_other_request_storage_cannot_affect_active_decode PASSED [ 72%]\ntests/test_d2_paged_cache.py::test_failed_later_layer_preserves_all_lengths_and_can_retry PASSED [ 73%]\ntests/test_d2_paged_cache.py::test_reset_one_request_reuses_blocks_and_leaves_other_length PASSED [ 73%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions0] PASSED [ 74%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions1] PASSED [ 74%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions2] PASSED [ 74%]\ntests/test_d2_paged_cache.py::test_pool_capacity_and_model_context_are_separate_limits PASSED [ 75%]\ntests/test_d2_paged_cache.py::test_cache_model_dtype_eval_grad_and_backend_boundaries PASSED [ 75%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[layer] PASSED [ 75%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[key_shape] PASSED [ 76%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[key_dtype] PASSED [ 76%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[query_heads] PASSED [ 77%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[query_dtype] PASSED [ 77%]\ntests/test_d2_paged_cache.py::test_cuda_fp16_paged_against_same_rounded_weights_in_fp32 PASSED [ 77%]\ntests/test_d3_block_manager.py::test_reference_lifetime_and_reuse PASSED [ 78%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[0] PASSED [ 78%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[-1] PASSED [ 79%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[True] PASSED [ 79%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[1.5] PASSED [ 79%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[None] PASSED [ 80%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[-1] PASSED [ 80%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[3] PASSED [ 81%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[True] PASSED [ 81%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[0.5] PASSED [ 81%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[None] PASSED [ 82%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[2] PASSED [ 82%]\ntests/test_d3_block_manager.py::test_exhaustion_is_atomic_and_live_blocks_are_never_evicted PASSED [ 83%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[0] PASSED [ 83%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[1] PASSED [ 83%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[2] PASSED [ 84%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[3] PASSED [ 84%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[4] PASSED [ 85%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[5] PASSED [ 85%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[6] PASSED [ 85%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[7] PASSED [ 86%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[8] PASSED [ 86%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[9] PASSED [ 87%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[10] PASSED [ 87%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[11] PASSED [ 87%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[12] PASSED [ 88%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[13] PASSED [ 88%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[14] PASSED [ 88%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[15] PASSED [ 89%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[16] PASSED [ 89%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[17] PASSED [ 90%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[18] PASSED [ 90%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[19] PASSED [ 90%]\ntests/test_d3_block_manager.py::test_managed_growth_rounding_reset_release_and_read_only_views PASSED [ 91%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[-1-1] PASSED [ 91%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[True-1] PASSED [ 92%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1.5-1] PASSED [ 92%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[None-1] PASSED [ 92%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-0] PASSED [ 93%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1--1] PASSED [ 93%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-True] PASSED [ 94%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-1.5] PASSED [ 94%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-33] PASSED [ 94%]\ntests/test_d3_block_manager.py::test_failed_admission_and_growth_leave_tables_and_lengths_unchanged PASSED [ 95%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[0] PASSED [ 95%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[1] PASSED [ 96%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[2] PASSED [ 96%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[3] PASSED [ 96%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[4] PASSED [ 97%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[5] PASSED [ 97%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[6] PASSED [ 98%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[7] PASSED [ 98%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[8] PASSED [ 98%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[9] PASSED [ 99%]\ntests/test_d3_block_manager.py::test_managed_model_mixed_growth_reuse_and_failure_retry[cpu] PASSED [ 99%]\ntests/test_d3_block_manager.py::test_managed_model_mixed_growth_reuse_and_failure_retry[cuda] PASSED [100%]\n\n=========================== short test summary info ============================\nSKIPPED [1] tests/test_c2_generation.py:209: Two CUDA devices required\n======================= 253 passed, 1 skipped in 13.15s ========================\n",
+      "stderr": ""
+    }
+  }
+}

@@ -190,7 +190,9 @@ repeats both worked timelines with real FP32 TinyLlama. Every new or replayed
 logits row uses `rtol=1e-5, atol=1e-4` plus exact argmax checks.
 
 Local checks are static only. D4 runtime validation is pending on a fresh
-Colab T4; D3's missing real-model retry evidence remains separately pending.
+Colab T4. D3's complete real-model failure/retry evidence is now archived in
+[D3_block_manager.json](../../results/D3_block_manager.json); it does not
+count as D4 validation.
 The notebook saves `D4_scheduler.json` with environment details, test output,
 both complete timelines, preemption/recomputation records and numerical ranges.
 It checks required scenario records before saving rather than relying only

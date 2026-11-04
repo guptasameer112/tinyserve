@@ -12,15 +12,26 @@ and release-and-recompute preemption timelines against FP32 ours/HF references.
 Runtime validation is pending; no D4 JSON is archived yet. The notebook requires
 both complete scenarios and explicit replay records before saving
 `D4_scheduler.json`. Preserve the successful notebook outputs separately.
-This does not complete D3's outstanding real-model failure/retry evidence.
+D3's complete result is archived below; it does not count as D4 validation.
 
 ## D3 status
 
-[D3_block_manager.ipynb](../notebooks/D3_block_manager.ipynb) is prepared
-to run allocator/property tests and a real-model ownership/reuse demo on Colab.
-Runtime validation is pending; no D3 JSON is archived yet. Save the generated
-`D3_block_manager.json` and successful notebook outputs before replacing
-the runtime. Static checks do not count as passing runtime tests.
+[D3_block_manager.json](D3_block_manager.json) was archived from the user's
+complete Colab output on November 4, 2026. It preserves timestamp
+`2026-11-04T05:02:37Z`, source commit `e176350`, T4 environment and test output.
+The run records 253 passed B8/C2/C3/D1/D2/D3 tests and one skipped two-GPU test.
+
+All four demo stages are present, including the previously missing failure
+snapshot and boundary-crossing retry. Request 0 stayed at committed length
+three after the injected error, then reached five after retry. Reused blocks,
+mixed work, reset and final release are recorded. Six request comparisons
+cover fourteen logits rows, all with equal argmax choices.
+
+The JSON payload was checked for equality with the supplied text. State
+conservation, slot mappings, pool bytes and numerical ranges were checked
+without running models or tests locally. No notebook outputs were fabricated;
+retain the successful [D3 notebook](../notebooks/D3_block_manager.ipynb) with
+outputs separately.
 
 ## Recovered archive
 

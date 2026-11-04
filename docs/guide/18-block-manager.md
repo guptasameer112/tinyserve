@@ -133,9 +133,41 @@ notebook repeats lifecycle checks with real FP32 TinyLlama and saves
 All-row logits use D2's `rtol=1e-5, atol=1e-4` tolerance, with separate exact
 argmax checks; this is numerical correctness, not a timing benchmark.
 
-Local validation is static only. Runtime tests and demos are **pending on a
-fresh Colab T4**. Save both the JSON and successful notebook outputs before
-replacing the runtime. Do not mark D3 complete until that evidence is available.
+Local validation is static only. Save both the JSON and successful notebook
+outputs before replacing a Colab runtime.
+
+### Recorded Colab run (2026-11-04)
+
+The user's complete [D3_block_manager.json](../../results/D3_block_manager.json)
+records a Tesla T4 at commit `e176350`, Python `3.13.16`, PyTorch
+`2.11.0+cu130` and Transformers `5.22.0`. **253 B8/C2/C3/D1/D2/D3 tests
+passed; one C2 test requiring two GPUs was skipped.** Pytest returned zero
+with empty stderr. These are user-supplied runtime results, not local tests.
+
+Both failed reservations required two additional blocks when only one was
+free, and left state unchanged. Growing request 0 then assigned its third
+block without advancing its length. The injected later-layer failure kept
+lengths at `{0: 3, 1: 2}` and retained the same tables and reference counts.
+The result reports preserved committed-prefix K/V, and the explicit retry
+comparison records successful processing of positions 3 and 4.
+
+| Successful comparison stage | Request 0 length | Request 1 length | Request 2 length |
+|---|---:|---:|---:|
+| Initial prefill | 3 | 2 | - |
+| Retry boundary-crossing append | 5 | 2 | - |
+| Mixed new prefill and resumed append | Released | 3 | 4 |
+| Reset without release, then process two tokens | Released | 3 | 2 |
+
+Across six request comparisons and fourteen new logits rows, all tested
+argmax choices matched separate no-cache ours/HF. The paged/no-cache maximum
+absolute differences range from zero to `5.72e-6`; paged/HF differences
+range from `3.81e-6` to `6.68e-6`.
+
+Request 2 reused physical blocks `[3, 1]`. The four-block, two-slot FP32
+pool occupied `360,448` bytes (352 KiB), with unchanged K/V storage addresses.
+The final snapshot contains no requests, four free blocks and zero references.
+This validates the demonstrated ownership lifecycle; it is not a throughput
+or GPU allocation reduction measurement. D4 remains separately pending.
 
 ## Three interview questions
 
