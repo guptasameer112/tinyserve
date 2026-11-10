@@ -7,17 +7,9 @@ from tinyserve.models.attention import AttentionMetadata
 from tinyserve.sampling import sample_token, validate_sampling_options
 
 
-@torch.no_grad()
-def generate(model, input_ids, max_new_tokens=20, temperature=0.0, top_k=0, top_p=1.0, generator=None,
-             *, use_cache=False):
-    """Return prompt + new token IDs (including generated EOS), without mutating input.
-
-    Default is greedy. EOS comes from model.config (integer, list/tuple or None).
-    A prompt EOS does not stop generation. Prompt + requested new tokens must
-    fit max_position_embeddings; oversized requests raise, never truncate.
-    use_cache=True prefills once, then processes one new token per step.
-    The cache is fresh for each call. Default no-cache behavior is unchanged.
-    """
+def _validate_generation_request(model, input_ids, max_new_tokens, temperature, top_k, top_p,
+                                 generator, use_cache=False):
+    """Keep single-request and engine admission checks identical."""
     validate_sampling_options(temperature, top_k, top_p)
     if not isinstance(use_cache, bool):
         raise ValueError("use_cache must be a boolean")
@@ -52,9 +44,27 @@ def generate(model, input_ids, max_new_tokens=20, temperature=0.0, top_k=0, top_
         eos_ids = tuple(eos)
     else:
         raise ValueError("eos_token_id must be an integer, list/tuple of integers, or None")
-    if any(isinstance(token, bool) or not isinstance(token, Integral) or not 0 <= token < vocab_size
+    if any(isinstance(token, bool) or not isinstance(token, Integral) or not 0 <= int(token) < vocab_size
            for token in eos_ids):
         raise ValueError("EOS token IDs must be integers within the model vocabulary")
+    return tuple(int(token) for token in eos_ids)
+
+
+@torch.no_grad()
+def generate(model, input_ids, max_new_tokens=20, temperature=0.0, top_k=0, top_p=1.0, generator=None,
+             *, use_cache=False):
+    """Return prompt + new token IDs (including generated EOS), without mutating input.
+
+    Default is greedy. EOS comes from model.config (integer, list/tuple or None).
+    A prompt EOS does not stop generation. Prompt + requested new tokens must
+    fit max_position_embeddings; oversized requests raise, never truncate.
+    use_cache=True prefills once, then processes one new token per step.
+    The cache is fresh for each call. Default no-cache behavior is unchanged.
+    """
+    eos_ids = _validate_generation_request(
+        model, input_ids, max_new_tokens, temperature, top_k, top_p, generator, use_cache,
+    )
+    vocab_size = model.get_input_embeddings().num_embeddings
 
     ids = input_ids.clone()
     cache = model.new_kv_cache(ids.numel() + max_new_tokens) if use_cache and max_new_tokens else None

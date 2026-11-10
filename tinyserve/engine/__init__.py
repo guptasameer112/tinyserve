@@ -1,1 +1,1 @@
-"""Block ownership and scheduling; the automatic engine loop comes in D5."""
+"""Block ownership, scheduling and continuous generation."""

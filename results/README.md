@@ -4,6 +4,17 @@ These JSON files contain saved Colab observations, not fresh local runs.
 Each result includes the original UTC timestamp, GPU/library environment,
 git SHA and lesson data.
 
+## D5 status
+
+[D5_engine.ipynb](../notebooks/D5_engine.ipynb) is prepared for a fresh Colab T4.
+Runtime validation is pending; no D5 result JSON is archived yet.
+The notebook saves test output, real-model generation and all-row logits
+parity, continuous arrivals, preemption, failure/retry, seeded replay,
+EOS/cancellation and KV memory calculations to `D5_engine.json`.
+FP16 comparisons use FP32 reference arithmetic with the same rounded weights.
+Preserve the complete successful JSON and notebook outputs separately.
+Local static checks do not establish runtime correctness or OOM safety.
+
 ## D4 status
 
 [D4_scheduler.json](D4_scheduler.json) was archived from the user's complete

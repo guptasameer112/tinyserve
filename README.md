@@ -108,7 +108,18 @@ argmax choices, with maximum difference 2.50e-5. All blocks were free at the end
 Results are archived in [D4_scheduler.json](results/D4_scheduler.json).
 See the [D4 guide](docs/guide/19-continuous-batching.md).
 These are correctness checks, not serving-throughput measurements.
-Next: D5 (engine loop and memory budgeting).
+
+[D5: engine loop and memory budgeting](notebooks/D5_engine.ipynb) is prepared
+for a fresh Colab T4; runtime validation is pending.
+The engine connects the existing scheduler, paged cache, model and sampler.
+It supports continuous arrivals, chunked prompts, EOS, cancellation and
+release-and-recompute preemption without duplicate sampled outputs.
+KV-only byte budgets round down to whole blocks; CUDA free-memory sizing
+requires explicit workspace headroom and does not guarantee OOM safety.
+Tests and the [D5 guide](docs/guide/20-engine-loop.md) cover generation parity,
+seeded replay, failure/retry and FP16-versus-FP32 checks.
+The existing single-request `generate()` remains supported.
+Next after D5 validation: E1 (streaming OpenAI-compatible serving).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.
