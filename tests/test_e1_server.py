@@ -243,9 +243,22 @@ def test_text_chunks_handle_word_boundaries_unicode_and_flush():
     assert first + decoder.take() == "caf\u00e9 \u732b"
 
 
-def test_actual_loopback_stream_disconnect_and_shutdown():
+@pytest.mark.parametrize("finish_before_disconnect", [False, True])
+def test_actual_loopback_stream_disconnect_and_shutdown(monkeypatch, finish_before_disconnect):
     async def scenario():
         app, engine = app_for()
+        allow_inference = asyncio.Event()
+        if finish_before_disconnect:
+            allow_inference.set()
+        wake_wait = app.state.driver._wake.wait
+
+        async def controlled_wake():
+            await wake_wait()
+            await allow_inference.wait()
+            return True
+
+        # Gate inference, not HTTP, so cancellation cannot lose a timing race.
+        monkeypatch.setattr(app.state.driver._wake, "wait", controlled_wake)
         async with serve_local(app) as url:
             assert url.startswith("http://127.0.0.1:")
             async with httpx.AsyncClient(base_url=url, timeout=10, trust_env=False) as client:
@@ -253,15 +266,29 @@ def test_actual_loopback_stream_disconnect_and_shutdown():
                 async with client.stream("POST", "/v1/chat/completions",
                                          json=payload(stream=True, max_tokens=20)) as response:
                     assert response.status_code == 200
+                    if finish_before_disconnect:
+                        async def finished():
+                            while not engine.get_output(0).finished:
+                                await asyncio.sleep(0.001)
+                        await asyncio.wait_for(finished(), timeout=5)
+                    else:
+                        assert not engine.get_output(0).finished
+                        assert not engine.model.calls
                     async for line in response.aiter_lines():
                         if line.startswith("data: "):
                             assert json.loads(line[6:])["choices"][0]["delta"]["role"] == "assistant"
                             break
+                    else:
+                        raise AssertionError("stream ended without the initial role event")
                 async def cancelled():
                     while app.state.driver.jobs:
                         await asyncio.sleep(0.01)
                 await asyncio.wait_for(cancelled(), timeout=5)
-                assert engine.get_output(0).finish_reason == "cancelled"
+                output = engine.get_output(0)
+                assert output.finish_reason == ("length" if finish_before_disconnect else "cancelled")
+                assert len(output.generated_tokens) == (20 if finish_before_disconnect else 0)
                 assert engine.cache.num_free_blocks == engine.cache.num_blocks
         assert not engine.has_pending_requests
+        with pytest.raises(RuntimeError, match="closed"):
+            engine.step()
     asyncio.run(scenario())

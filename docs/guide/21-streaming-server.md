@@ -160,6 +160,10 @@ When a client disconnects, the response generator's `finally` block removes
 its job and cancels any unfinished engine request. Resident blocks become
 available to other requests. Already completed requests need no cancellation.
 Disconnect checks and cancellation cannot interrupt a running forward.
+The initial role event is not an inference-progress barrier. Generation can
+finish before the client reads that event or its disconnect reaches the server.
+In that case, `"length"` remains correct; disconnecting must not rewrite a
+completed request as `"cancelled"`.
 
 If engine execution raises, the driver logs the error, notifies all waiting
 clients, closes the engine and rejects future requests. It does not silently
@@ -189,13 +193,20 @@ bounded queues, cancellation and fail-closed behavior.
 
 ASGI in-process tests validate protocol behavior, but HTTPX's ASGI transport
 can buffer streams. They do not prove real network incremental delivery.
-A separate loopback-socket test reads the initial role event, disconnects
-early, and checks cancellation and block release.
+A separate loopback-socket test gates the driver's wake-up with an async event,
+without changing the production driver. It proves that the initial role event
+arrives while inference is paused, then disconnects and checks cancellation.
+A second case lets inference finish before disconnecting and requires
+`"length"` to remain unchanged. Both cases check pool release and shutdown.
+The separate driver cancellation test covers requests after inference starts.
 
 The notebook uses a fresh T4 runtime and real TinyLlama FP32. It verifies
 health and model discovery over actual HTTP, streamed/nonstreamed text
 against direct greedy generation, concurrent clients, invalid requests and
 early disconnect. It records model-forward ownership and final pool state.
+Unlike the gated test, the real-model demo permits inference to run freely.
+It records cancellation or normal length completion and checks the corresponding
+token count; neither outcome can leak jobs or blocks.
 The server must stop before saving the complete result payload.
 For finite, predictable overlapping workloads, the demo temporarily disables
 EOS stopping and restores the original model setting on exit. Deterministic
