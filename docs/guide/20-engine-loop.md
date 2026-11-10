@@ -229,6 +229,15 @@ greedy parity on CPU and CUDA. FP16 logits are compared numerically with
 an FP32 model loaded from the same rounded weights, using `rtol=atol=1e-2`
 as in C3; FP16 is not required to be bit-equal to FP32.
 
+The full-TinyLlama notebook run reported 7,328 mismatches among 64,000
+logits under that threshold, with maximum absolute difference about 0.12117.
+The small-model tolerance is therefore not an established full-model bound.
+This result alone does not distinguish paging errors from precision drift.
+The notebook now prints same-FP16 paged/no-cache comparisons alongside
+both FP16/FP32 comparisons before asserting. Both references use the exact
+same token prefix and positions. The threshold is unchanged; do not widen
+it without investigating the diagnostic output. D5 validation stays pending.
+
 The notebook uses real TinyLlama FP32 references and records every planned
 row, output routing, preemption, retry and final block release. FP32 logits
 use `rtol=1e-5`, `atol=1e-4`: the absolute allowance matches the previously
