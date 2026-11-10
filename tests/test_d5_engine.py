@@ -486,6 +486,7 @@ def test_cuda_available_memory_rounding_and_fp16_reference(monkeypatch):
     with pytest.raises(ValueError, match="leaves no free"):
         InferenceEngine.from_available_memory(model, reserve + 3 * unit + 7)
     from tinyserve.models.attention import AttentionMetadata
+    from tinyserve.probe import compare_precision_paths
 
     rounded_fp32 = type(model)(model.config, device="cuda", dtype=torch.float32).eval()
     rounded_fp32.load_state_dict(model.state_dict(), strict=True)
@@ -509,9 +510,76 @@ def test_cuda_available_memory_rounding_and_fp16_reference(monkeypatch):
             with torch.no_grad():
                 fp32_logits = rounded_fp32(histories[item.request_id][:item.end], positions,
                                            AttentionMetadata(positions))[item.start:item.end]
+                no_cache = model(histories[item.request_id][:item.end], positions,
+                                 AttentionMetadata(positions))[item.start:item.end]
             actual = captured[0][offset - (item.end - item.start):offset]
+            compare_precision_paths(actual, no_cache, fp32_logits,
+                                    check_sample=(item.phase != "recompute"
+                                                  and item.end >= engine.scheduler.requests[item.request_id].prompt_tokens))
+            # The existing small-model numeric bound is not a full-TinyLlama bound.
             torch.testing.assert_close(actual, fp32_logits, rtol=1e-2, atol=1e-2)
             if item.phase != "recompute" and item.end >= engine.scheduler.requests[item.request_id].prompt_tokens:
                 output = engine.get_output(item.request_id)
                 assert output.generated_tokens[-1] == actual[-1].argmax().item()
     assert_free(engine)
+
+
+def test_precision_probe_accepts_baseline_drift_without_relaxing_paging_checks():
+    from tinyserve.probe import compare_precision_paths
+
+    no_cache = torch.tensor([[0.0, 5.0], [3.0, 0.0]])
+    fp32 = torch.tensor([[0.12117, 5.0], [3.0, 0.0]])
+    report = compare_precision_paths(no_cache.clone(), no_cache, fp32)
+    assert report["paged_fp16_vs_no_cache_fp16"]["mismatched_elements"] == 0
+    assert report["paged_fp16_vs_fp32"]["mismatched_elements"] == 1
+    assert report["sampled_fp32_argmax_equal"] is True
+    assert report["cross_precision_score_threshold_is_gate"] is False
+    broken_paging = no_cache.clone()
+    broken_paging[0, 0] = 0.2
+    with pytest.raises(AssertionError, match="Paged FP16 differs"):
+        compare_precision_paths(broken_paging, no_cache, fp32)
+
+
+def test_precision_probe_checks_argmax_even_when_logits_are_numerically_close():
+    from tinyserve.probe import compare_precision_paths
+
+    no_cache = torch.tensor([[1.0, 1.001]])
+    flipped = torch.tensor([[1.001, 1.0]])
+    with pytest.raises(AssertionError, match="Paged/no-cache FP16 argmax"):
+        compare_precision_paths(flipped, no_cache, no_cache)
+    with pytest.raises(AssertionError, match="Sampled greedy choice"):
+        compare_precision_paths(no_cache, no_cache, flipped)
+    report = compare_precision_paths(no_cache, no_cache, flipped, check_sample=False)
+    assert report["sampled_fp32_argmax_equal"] is None
+
+
+@pytest.mark.parametrize("path", [0, 1, 2])
+@pytest.mark.parametrize("bad_value", [float("nan"), float("inf"), -float("inf")])
+def test_precision_probe_rejects_nonfinite_logits_in_any_path(path, bad_value):
+    from tinyserve.probe import compare_precision_paths
+
+    scores = [torch.tensor([[0.0, 5.0]]) for _ in range(3)]
+    scores[path][0, 0] = bad_value
+    with pytest.raises(ValueError, match="finite logits"):
+        compare_precision_paths(*scores)
+
+
+@pytest.mark.parametrize("invalid", [
+    None, torch.tensor([]), torch.tensor([1.0, 2.0]), torch.tensor([[1, 2]]),
+])
+def test_precision_probe_rejects_invalid_score_shapes_and_types(invalid):
+    from tinyserve.probe import compare_precision_paths
+
+    scores = torch.tensor([[0.0, 5.0]])
+    with pytest.raises(ValueError, match="floating-point"):
+        compare_precision_paths(invalid, scores, scores)
+
+
+def test_precision_probe_rejects_mismatched_shapes_and_invalid_sample_flag():
+    from tinyserve.probe import compare_precision_paths
+
+    scores = torch.tensor([[0.0, 5.0]])
+    with pytest.raises(ValueError, match="matching shapes"):
+        compare_precision_paths(scores, scores[:, :1], scores)
+    with pytest.raises(ValueError):
+        compare_precision_paths(scores, scores, scores, check_sample=1)

@@ -231,12 +231,27 @@ as in C3; FP16 is not required to be bit-equal to FP32.
 
 The full-TinyLlama notebook run reported 7,328 mismatches among 64,000
 logits under that threshold, with maximum absolute difference about 0.12117.
-The small-model tolerance is therefore not an established full-model bound.
-This result alone does not distinguish paging errors from precision drift.
-The notebook now prints same-FP16 paged/no-cache comparisons alongside
-both FP16/FP32 comparisons before asserting. Both references use the exact
-same token prefix and positions. The threshold is unchanged; do not widen
-it without investigating the diagnostic output. D5 validation stays pending.
+The follow-up diagnostic on that first two-row prefill showed zero
+paged/no-cache FP16 differences, identical cross-precision errors in both
+FP16 paths, and matching argmax choices in all three paths. Thus the
+observed first-batch error is not introduced by paging. This does not yet
+validate subsequent decode steps or establish a full-model error ceiling.
+
+The notebook now uses [compare_precision_paths](../../tinyserve/probe.py)
+to separate the contracts. Paged/no-cache FP16 scores retain the `1e-2`
+relative/absolute check and must have equal argmax on every scheduled row.
+Each sampled greedy choice must also match the rounded-weight FP32
+reference on this workload. All logits must be finite.
+
+FP16/FP32 maximum/mean score differences and historical threshold mismatch
+counts remain recorded for every row, but the uncalibrated full-model
+cross-precision score gate is removed, not increased to an arbitrary number.
+This intentionally changes the validation contract: engine correctness
+requires paging agreement and tested greedy parity, not a claim of full
+FP16/FP32 logit equivalence. The original small-model numerical regression
+test remains. Additional tests accept baseline precision drift but reject
+paging errors, changed sampled choices and nonfinite scores. D5 validation
+stays pending until the complete Colab run passes.
 
 The notebook uses real TinyLlama FP32 references and records every planned
 row, output routing, preemption, retry and final block release. FP32 logits

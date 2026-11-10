@@ -12,6 +12,54 @@ from tinyserve.weights import head_dim
 
 
 @torch.no_grad()
+def compare_precision_paths(paged, no_cache, fp32, *, check_sample=True):
+    """Separate paging correctness from full-model FP16/FP32 arithmetic drift.
+
+    The 1e-2 score gate applies only to paged versus no-cache FP16.
+    FP32 drift is measured, not assigned an uncalibrated full-model bound.
+    A sampled row must still choose the same greedy token as FP32 on this workload.
+    """
+    tensors = (paged, no_cache, fp32)
+    if (not isinstance(check_sample, bool)
+            or any(not isinstance(scores, torch.Tensor) or scores.ndim != 2
+                   or scores.numel() == 0 or not scores.is_floating_point() for scores in tensors)):
+        raise ValueError("precision comparison needs nonempty floating-point (tokens, vocab) logits")
+    if any(scores.shape != paged.shape or scores.device != paged.device for scores in tensors):
+        raise ValueError("precision comparison logits must have matching shapes and devices")
+    if any(not bool(torch.isfinite(scores).all()) for scores in tensors):
+        raise ValueError("precision comparison requires finite logits in all three paths")
+
+    def summary(actual, expected):
+        difference = (actual.float() - expected.float()).abs()
+        return {
+            "row_max_abs_diff": difference.amax(-1).tolist(),
+            "row_mean_abs_diff": difference.mean(-1).tolist(),
+            "mismatched_elements": int((difference > 1e-2 + 1e-2 * expected.float().abs()).sum().item()),
+            "total_elements": actual.numel(),
+            "actual_argmax": actual.argmax(-1).tolist(),
+            "reference_argmax": expected.argmax(-1).tolist(),
+        }
+
+    report = {
+        "paging_rtol": 1e-2, "paging_atol": 1e-2,
+        "cross_precision_score_threshold_is_gate": False,
+        "paged_fp16_vs_no_cache_fp16": summary(paged, no_cache),
+        "no_cache_fp16_vs_fp32": summary(no_cache, fp32),
+        "paged_fp16_vs_fp32": summary(paged, fp32),
+        "sampled_fp32_argmax_equal": (paged[-1].argmax().item() == fp32[-1].argmax().item()
+                                    if check_sample else None),
+    }
+    detail = "FP16_DIAGNOSTIC " + repr(report)
+    torch.testing.assert_close(paged, no_cache, rtol=1e-2, atol=1e-2,
+                               msg="Paged FP16 differs from no-cache FP16. " + detail)
+    if not torch.equal(paged.argmax(-1), no_cache.argmax(-1)):
+        raise AssertionError("Paged/no-cache FP16 argmax differs. " + detail)
+    if check_sample and not report["sampled_fp32_argmax_equal"]:
+        raise AssertionError("Sampled greedy choice differs from rounded-weight FP32. " + detail)
+    return report
+
+
+@torch.no_grad()
 def capture_module_io(model, input_ids, module_type):
     """Run one forward pass on input_ids (N,) and record (name, input, output) of every module of module_type."""
     records, handles = [], []
