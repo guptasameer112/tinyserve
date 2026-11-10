@@ -109,17 +109,20 @@ Results are archived in [D4_scheduler.json](results/D4_scheduler.json).
 See the [D4 guide](docs/guide/19-continuous-batching.md).
 These are correctness checks, not serving-throughput measurements.
 
-[D5: engine loop and memory budgeting](notebooks/D5_engine.ipynb) is prepared
-for a fresh Colab T4; runtime validation is pending.
-The engine connects the existing scheduler, paged cache, model and sampler.
-It supports continuous arrivals, chunked prompts, EOS, cancellation and
-release-and-recompute preemption without duplicate sampled outputs.
-KV-only byte budgets round down to whole blocks; CUDA free-memory sizing
-requires explicit workspace headroom and does not guarantee OOM safety.
-Tests and the [D5 guide](docs/guide/20-engine-loop.md) cover generation parity,
-seeded replay, failure/retry and FP16-versus-FP32 checks.
-The existing single-request `generate()` remains supported.
-Next after D5 validation: E1 (streaming OpenAI-compatible serving).
+[D5: engine loop and memory budgeting](notebooks/D5_engine.ipynb) passed
+422 B8/C1/C2/C3/D1/D2/D3/D4/D5 tests in Colab on November 10, 2026;
+one two-GPU test was skipped. Continuous arrivals, preemption/recomputation,
+failure/retry, seeded replay, EOS/cancellation and KV memory checks passed.
+All 43 successful FP32 scheduled/replayed rows matched no-cache/HF argmax,
+with maximum HF logits difference 3.62e-5.
+Five FP16 rows passed paged/no-cache FP16 checks; all four sampled greedy
+choices matched the rounded-weight FP32 reference. Cross-precision score
+differences reached 0.12117 and are recorded, not claimed numerically equivalent.
+All demonstrated pools were fully released. Results are archived in
+[D5_engine.json](results/D5_engine.json).
+KV-only budgeting still requires separate workspace headroom and does not
+guarantee OOM safety. The existing single-request `generate()` remains supported.
+See the [D5 guide](docs/guide/20-engine-loop.md). Next: validate E1.
 
 [E1: streaming server](notebooks/E1_streaming_server.ipynb) is prepared for
 a separate fresh Colab T4; runtime validation remains pending.
@@ -128,8 +131,8 @@ with SSE, shared-engine scheduling, strict options, cancellation and explicit
 failure handling. There is no public tunnel, authentication or deployment.
 The finite lesson server accepts at most 32 requests per app lifetime by
 default; it is not a production service or a full OpenAI API implementation.
-The demo uses FP32 and a small explicit KV pool while D5's full-model FP16
-comparison remains under investigation. Preparing E1 does not validate D5.
+The demo uses FP32 and a small explicit KV pool. D5's supplied run is
+validated under its documented precision contract; E1 requires its own run.
 See the [E1 guide](docs/guide/21-streaming-server.md).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered

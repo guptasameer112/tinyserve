@@ -79,8 +79,8 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] D2 (197 B8/C2/C3/D1/D2 tests passed, 1 two-GPU test skipped; ordered/scrambled parity, mixed prefill/decode, pause/resume and reset passed in Colab on 2026-11-03)
 - [x] D3 (253 B8/C2/C3/D1/D2/D3 tests passed, 1 two-GPU test skipped; atomic exhaustion, real-model failure/retry, growth, reuse and reset passed in Colab on 2026-11-04)
 - [x] D4 (304 B8/C2/C3/D1/D2/D3/D4 tests passed, 1 two-GPU test skipped; continuous arrivals, chunked mixed batches, preemption/recomputation and final release passed in Colab on 2026-11-04)
-- [ ] D5 (continuous generation engine, explicit KV memory budgeting, tests, notebook and guide prepared; Colab runtime validation pending)
-- [ ] E1 (loopback-only streaming chat server, tests, notebook and guide prepared; Colab runtime validation pending; D5 validation remains separately pending)
+- [x] D5 (422 B8/C1/C2/C3/D1/D2/D3/D4/D5 tests passed, 1 two-GPU test skipped; continuous generation, preemption/replay, failure/retry, seeded sampling, lifecycle and KV memory checks passed in Colab on 2026-11-10; FP16 paging and sampled FP32 greedy parity passed under the corrected precision contract)
+- [ ] E1 (loopback-only streaming chat server, tests, notebook and guide prepared; Colab runtime validation pending)
 - [ ] E2
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
@@ -107,5 +107,11 @@ release-and-recompute preemption. D3's complete user-provided Colab run is
 archived in `results/D3_block_manager.json`, including the failure snapshot and
 successful boundary-crossing retry. D4's complete run is archived in
 `results/D4_scheduler.json`: both worked timelines passed, including one
-preemption and a two-token prefix replay. Next: D5, engine loop and memory budgeting.
+preemption and a two-token prefix replay. Next: E1, streaming chat serving.
+D5's complete user-provided Colab run at source `d013743` is archived in
+`results/D5_engine.json`, preserving its original timestamp and environment.
+All 43 successful FP32 scheduled/replayed rows matched reference argmax.
+Five FP16 rows passed paging checks and all four sampled choices matched FP32;
+cross-precision score differences are recorded, not claimed numerically equivalent.
+E1 is prepared and remains separately pending.
 Shared-prefix blocks and copy-on-write remain deferred.

@@ -12,18 +12,33 @@ Its fresh-T4 FP32 demo saves test output, dependency versions, actual HTTP
 JSON/SSE records, direct generation parity, shared-forward ownership,
 disconnect cancellation and final release to `E1_streaming_server.json`.
 The server binds only loopback and stops before saving results.
-D5's separate full-TinyLlama FP16 validation remains pending.
+D5's separately validated run is archived below; it does not validate E1.
 
 ## D5 status
 
-[D5_engine.ipynb](../notebooks/D5_engine.ipynb) is prepared for a fresh Colab T4.
-Runtime validation is pending; no D5 result JSON is archived yet.
-The notebook saves test output, real-model generation and all-row logits
-parity, continuous arrivals, preemption, failure/retry, seeded replay,
-EOS/cancellation and KV memory calculations to `D5_engine.json`.
-FP16 comparisons use FP32 reference arithmetic with the same rounded weights.
-Preserve the complete successful JSON and notebook outputs separately.
-Local static checks do not establish runtime correctness or OOM safety.
+[D5_engine.json](D5_engine.json) was archived from the complete user-supplied
+Colab output on November 10, 2026. The original timestamp
+`2026-11-10T09:35:14Z`, T4 environment, source `d013743` and test log are preserved:
+422 tests passed and one two-GPU test was skipped.
+
+The three FP32 scenarios record 18, 12 and 13 successful scheduled rows.
+The latter two include two and three recomputed rows respectively.
+All 43 rows passed reference argmax checks; HF absolute differences ranged
+from zero to 3.6239624e-5. The injected failure snapshot is unchanged before
+retry. Seeded outputs/RNG states, EOS, zero budgets, invalid admission,
+cancellation, block conservation and final release are recorded.
+
+Five FP16 rows passed same-precision paging checks, with per-row maximum
+absolute differences ranging from zero to 0.015625 under the relative/absolute
+tolerance. All four sampled greedy choices matched rounded-weight FP32.
+FP16/FP32 per-row maxima ranged from 0.00964546 to 0.12116957; this run does
+not claim a universal cross-precision score bound or logit equivalence.
+
+The archive was checked for equality with the supplied JSON after removing
+only its Markdown fence. Timelines, counts, pool bytes and recorded summaries
+were checked without executing model code locally. Preserve the successful
+[D5 notebook](../notebooks/D5_engine.ipynb) outputs separately.
+Memory planning is not an OOM guarantee. E1 runtime validation remains pending.
 
 ## D4 status
 

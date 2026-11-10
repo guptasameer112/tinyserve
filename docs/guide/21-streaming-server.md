@@ -7,10 +7,11 @@ Notebook: [E1_streaming_server.ipynb](../../notebooks/E1_streaming_server.ipynb)
 
 ## Status and scope
 
-E1 is prepared, not runtime-validated. D5 remains separately pending while
-its full-TinyLlama FP16 numerical comparison is investigated. The E1 demo
-uses FP32 and a small explicit KV pool. This is a transport/lifecycle lesson,
-not evidence that D5's unresolved FP16 check passes.
+E1 is prepared, not runtime-validated. D5's complete Colab run at source
+`d013743` is validated under its corrected precision contract: same-precision
+paging checks and sampled FP32 greedy parity, with cross-precision score
+differences recorded rather than claimed equivalent. The E1 demo uses FP32
+and a small explicit KV pool. It needs separate transport/lifecycle evidence.
 
 The user approved loopback-only exposure: `127.0.0.1` inside Colab.
 There is no public tunnel, authentication, TLS, CORS or deployment.

@@ -234,8 +234,9 @@ logits under that threshold, with maximum absolute difference about 0.12117.
 The follow-up diagnostic on that first two-row prefill showed zero
 paged/no-cache FP16 differences, identical cross-precision errors in both
 FP16 paths, and matching argmax choices in all three paths. Thus the
-observed first-batch error is not introduced by paging. This does not yet
-validate subsequent decode steps or establish a full-model error ceiling.
+observed first-batch error is not introduced by paging. That diagnostic
+alone did not validate subsequent decode steps or establish a full-model
+error ceiling; the complete run is recorded below.
 
 The notebook now uses [compare_precision_paths](../../tinyserve/probe.py)
 to separate the contracts. Paged/no-cache FP16 scores retain the `1e-2`
@@ -250,8 +251,7 @@ This intentionally changes the validation contract: engine correctness
 requires paging agreement and tested greedy parity, not a claim of full
 FP16/FP32 logit equivalence. The original small-model numerical regression
 test remains. Additional tests accept baseline precision drift but reject
-paging errors, changed sampled choices and nonfinite scores. D5 validation
-stays pending until the complete Colab run passes.
+paging errors, changed sampled choices and nonfinite scores.
 
 The notebook uses real TinyLlama FP32 references and records every planned
 row, output routing, preemption, retry and final block release. FP32 logits
@@ -259,10 +259,36 @@ use `rtol=1e-5`, `atol=1e-4`: the absolute allowance matches the previously
 observed small-model-backend differences, and argmax parity is checked
 separately. It records numerical ranges, not a single selected difference.
 
-All runtime checks remain pending until the user's fresh Colab T4 run.
-Local syntax/JSON/whitespace checks do not count as runtime validation.
-The notebook saves its complete payload to `results/D5_engine.json`, with
-environment, source SHA and test output. No result JSON is fabricated locally.
+## Recorded Colab validation
+
+The complete user-supplied run on November 10, 2026 at source `d013743`
+passed 422 tests; one test requiring two CUDA devices was skipped.
+The original T4 environment, timestamp and test output are archived in
+[D5_engine.json](../../results/D5_engine.json).
+
+Continuous arrival finished in seven steps with 18 successful model rows.
+The three-block preemption case finished in eight steps with ten original
+rows plus two replay rows. The failure/retry case finished in seven successful
+steps with ten original rows plus three replay rows; failed partial execution
+is not included in that successful-row count. Its failure snapshot retained
+identical histories, progress, resident lengths and ownership before retry.
+
+Across all 43 successful FP32 rows, no-cache/HF argmax checks passed.
+Per-row maximum absolute HF differences ranged from zero to 3.6239624e-5.
+Seeded output and RNG replay, EOS, cancellation, admission errors and exact
+KV pool arithmetic passed. All demonstrated pools were fully released.
+
+The FP16 case processed five rows and generated four tokens.
+Paged/no-cache FP16 per-row maximum absolute differences ranged from zero
+to 0.015625, passing the combined `rtol=atol=1e-2` rule. All four sampled
+choices matched rounded-weight FP32. FP16/FP32 per-row maxima ranged from
+0.00964546 to 0.12116957, retained as measurements rather than a score bound.
+This validates the documented workload and contract, not universal FP16/FP32
+logit equivalence or OOM safety.
+
+The archived JSON was checked against the supplied text and its internal
+invariants without running models locally. Existing notebook outputs were
+not modified. Local syntax/JSON/whitespace checks remain static only.
 
 ## Three interview questions
 

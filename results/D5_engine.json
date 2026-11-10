@@ -1,0 +1,4567 @@
+{
+  "name": "D5_engine",
+  "timestamp_utc": "2026-11-10T09:35:14Z",
+  "env": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+    "git_sha": "d013743",
+    "gpu": "Tesla T4",
+    "torch": "2.14.1+cu130",
+    "cuda": "13.0",
+    "transformers": "5.22.1"
+  },
+  "data": {
+    "test_run": {
+      "returncode": 0,
+      "stdout": "============================= test session starts ==============================\nplatform linux -- Python 3.13.16, pytest-8.4.2, pluggy-1.7.0 -- /usr/bin/python3\ncachedir: .pytest_cache\nrootdir: /content/tinyserve\nconfigfile: pyproject.toml\nplugins: typeguard-4.6.0, langsmith-0.14.17, platformdirs-4.14.3, anyio-4.16.0\ncollecting ... collected 423 items\n\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[4] PASSED        [  0%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[2] PASSED        [  0%]\ntests/test_b8_model.py::test_fp32_full_stack_matches_hf[1] PASSED        [  0%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[False] PASSED [  0%]\ntests/test_b8_model.py::test_strict_checkpoint_loading_and_parameter_count[True] PASSED [  1%]\ntests/test_b8_model.py::test_wrong_and_missing_weights_raise PASSED      [  1%]\ntests/test_b8_model.py::test_embedding_final_norm_and_lm_head_wiring PASSED [  1%]\ntests/test_b8_model.py::test_full_model_causality PASSED                 [  1%]\ntests/test_b8_model.py::test_packed_full_model_matches_separate_requests PASSED [  2%]\ntests/test_b8_model.py::test_explicit_positions_match_hf PASSED          [  2%]\ntests/test_b8_model.py::test_token_exact_greedy_matches_hf_generate PASSED [  2%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids0] PASSED        [  2%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids1] PASSED        [  3%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids2] PASSED        [  3%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids3] PASSED        [  3%]\ntests/test_b8_model.py::test_invalid_token_ids_raise[ids4] PASSED        [  3%]\ntests/test_b8_model.py::test_mismatched_metadata_positions_raise PASSED  [  4%]\ntests/test_b8_model.py::test_negative_positions_raise PASSED             [  4%]\ntests/test_b8_model.py::test_unsupported_rope_raises PASSED              [  4%]\ntests/test_b8_model.py::test_fp16_full_model_vs_same_weights_in_fp32 PASSED [  4%]\ntests/test_c1_sampling.py::test_plain_softmax_matches_hand_probabilities PASSED [  4%]\ntests/test_c1_sampling.py::test_temperature_squares_probabilities_at_half_temperature PASSED [  5%]\ntests/test_c1_sampling.py::test_higher_temperature_flattens_distribution PASSED [  5%]\ntests/test_c1_sampling.py::test_greedy_is_one_hot_lowest_index_on_tie_and_does_not_consume_rng PASSED [  5%]\ntests/test_c1_sampling.py::test_top_k_two PASSED                         [  5%]\ntests/test_c1_sampling.py::test_top_k_keeps_threshold_ties PASSED        [  6%]\ntests/test_c1_sampling.py::test_top_k_larger_than_vocab_is_unfiltered PASSED [  6%]\ntests/test_c1_sampling.py::test_top_p_keeps_crossing_token_and_normalizes PASSED [  6%]\ntests/test_c1_sampling.py::test_top_p_tiny_keeps_best_token PASSED       [  6%]\ntests/test_c1_sampling.py::test_top_p_exact_boundary_uses_hf_ascending_tail_convention PASSED [  7%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[1.0-0-1.0] PASSED [  7%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[0.5-0-1.0] PASSED [  7%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[2.0-2-1.0] PASSED [  7%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[1.0-0-0.8] PASSED [  8%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[0.7-3-0.8] PASSED [  8%]\ntests/test_c1_sampling.py::test_probabilities_match_hf_warpers[1.0-100-0.01] PASSED [  8%]\ntests/test_c1_sampling.py::test_filters_do_not_modify_input PASSED       [  8%]\ntests/test_c1_sampling.py::test_negative_infinity_is_a_valid_pre_masked_token PASSED [  8%]\ntests/test_c1_sampling.py::test_float64_matches_explicit_formula PASSED  [  9%]\ntests/test_c1_sampling.py::test_low_precision_scores_upcast_before_softmax[dtype0] PASSED [  9%]\ntests/test_c1_sampling.py::test_low_precision_scores_upcast_before_softmax[dtype1] PASSED [  9%]\ntests/test_c1_sampling.py::test_seeded_sampling_is_reproducible_and_filtered_tokens_never_appear PASSED [  9%]\ntests/test_c1_sampling.py::test_empirical_multinomial_frequencies_match_probabilities PASSED [ 10%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options0] PASSED [ 10%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options1] PASSED [ 10%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options2] PASSED [ 10%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options3] PASSED [ 11%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options4] PASSED [ 11%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options5] PASSED [ 11%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options6] PASSED [ 11%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options7] PASSED [ 12%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options8] PASSED [ 12%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options9] PASSED [ 12%]\ntests/test_c1_sampling.py::test_invalid_sampling_options_raise[options10] PASSED [ 12%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores0] PASSED     [ 13%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores1] PASSED     [ 13%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores2] PASSED     [ 13%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores3] PASSED     [ 13%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores4] PASSED     [ 13%]\ntests/test_c1_sampling.py::test_invalid_logits_raise[scores5] PASSED     [ 14%]\ntests/test_c1_sampling.py::test_temperature_scaling_overflow_is_reported PASSED [ 14%]\ntests/test_c1_sampling.py::test_cuda_sampling_uses_device_generator PASSED [ 14%]\ntests/test_c2_generation.py::test_recomputes_growing_prefix_and_includes_eos PASSED [ 14%]\ntests/test_c2_generation.py::test_new_token_limit_not_total_length PASSED [ 15%]\ntests/test_c2_generation.py::test_immediate_eos PASSED                   [ 15%]\ntests/test_c2_generation.py::test_prompt_eos_does_not_stop_a_new_turn PASSED [ 15%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos0] PASSED       [ 15%]\ntests/test_c2_generation.py::test_multiple_eos_tokens[eos1] PASSED       [ 16%]\ntests/test_c2_generation.py::test_zero_new_tokens_returns_independent_copy_without_forward PASSED [ 16%]\ntests/test_c2_generation.py::test_exact_context_budget_allowed PASSED    [ 16%]\ntests/test_c2_generation.py::test_oversized_request_raises_before_forward_even_if_eos_would_be_early PASSED [ 16%]\ntests/test_c2_generation.py::test_seeded_sampling_matches_manual_sampler_sequence PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[-1] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[True] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_token_budget_raises[2.5] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options0] PASSED [ 17%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options1] PASSED [ 18%]\ntests/test_c2_generation.py::test_invalid_sampling_options_raise_even_for_zero_tokens[options2] PASSED [ 18%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt0] PASSED  [ 18%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt1] PASSED  [ 18%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt2] PASSED  [ 19%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt3] PASSED  [ 19%]\ntests/test_c2_generation.py::test_invalid_prompts_raise[prompt4] PASSED  [ 19%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[True] PASSED [ 19%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[2] PASSED [ 20%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[-1] PASSED [ 20%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos3] PASSED [ 20%]\ntests/test_c2_generation.py::test_invalid_eos_configuration_raises[eos4] PASSED [ 20%]\ntests/test_c2_generation.py::test_training_mode_raises PASSED            [ 21%]\ntests/test_c2_generation.py::test_invalid_generator_type_raises_before_forward PASSED [ 21%]\ntests/test_c2_generation.py::test_wrong_logits_shape_raises PASSED       [ 21%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[False] PASSED [ 21%]\ntests/test_c2_generation.py::test_greedy_matches_hf_generate[True] PASSED [ 21%]\ntests/test_c2_generation.py::test_device_dtype_and_generator_validation PASSED [ 22%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[False] PASSED [ 22%]\ntests/test_c2_generation.py::test_cuda_seeded_generation_matches_manual_sampling[True] PASSED [ 22%]\ntests/test_c2_generation.py::test_generator_on_other_cuda_device_raises_before_forward SKIPPED [ 22%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-4] PASSED [ 23%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-2] PASSED [ 23%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks0-1] PASSED [ 23%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-4] PASSED [ 23%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-2] PASSED [ 24%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks1-1] PASSED [ 24%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-4] PASSED [ 24%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-2] PASSED [ 24%]\ntests/test_c3_cache.py::test_every_chunk_logit_matches_no_cache_and_hf[chunks2-1] PASSED [ 25%]\ntests/test_c3_cache.py::test_storage_uses_kv_heads_and_exact_memory_cost PASSED [ 25%]\ntests/test_c3_cache.py::test_keys_are_rotated_once_and_values_are_not_rotated PASSED [ 25%]\ntests/test_c3_cache.py::test_old_entries_are_unchanged_and_unused_storage_is_invisible PASSED [ 25%]\ntests/test_c3_cache.py::test_reset_reuses_storage_without_leaking_previous_request PASSED [ 26%]\ntests/test_c3_cache.py::test_prefill_and_chunk_masks_use_absolute_positions PASSED [ 26%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[0] PASSED           [ 26%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[-1] PASSED          [ 26%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[33] PASSED          [ 26%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[True] PASSED        [ 27%]\ntests/test_c3_cache.py::test_invalid_capacity_raises[1.5] PASSED         [ 27%]\ntests/test_c3_cache.py::test_exact_capacity_then_overflow_preserves_committed_prefix PASSED [ 27%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions0] PASSED [ 27%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions1] PASSED [ 28%]\ntests/test_c3_cache.py::test_nonconsecutive_prefill_positions_raise[positions2] PASSED [ 28%]\ntests/test_c3_cache.py::test_decode_cannot_restart_positions_at_zero PASSED [ 28%]\ntests/test_c3_cache.py::test_packed_cached_requests_are_rejected_but_no_cache_still_works PASSED [ 28%]\ntests/test_c3_cache.py::test_cache_rejects_other_model_and_changed_dtype PASSED [ 29%]\ntests/test_c3_cache.py::test_cached_forward_requires_eval_and_no_grad PASSED [ 29%]\ntests/test_c3_cache.py::test_failed_later_layer_does_not_commit_and_can_retry PASSED [ 29%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[layer] PASSED    [ 29%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[shape] PASSED    [ 30%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[dtype] PASSED    [ 30%]\ntests/test_c3_cache.py::test_invalid_cache_writes_raise[overflow] PASSED [ 30%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[False] PASSED [ 30%]\ntests/test_c3_cache.py::test_cached_greedy_matches_no_cache_and_hf[True] PASSED [ 30%]\ntests/test_c3_cache.py::test_lesson_probe_checks_each_step_and_reports_actual_forward_shapes PASSED [ 31%]\ntests/test_c3_cache.py::test_generation_prefills_once_then_only_forwards_new_token PASSED [ 31%]\ntests/test_c3_cache.py::test_zero_budget_and_context_errors_do_not_allocate_cache PASSED [ 31%]\ntests/test_c3_cache.py::test_exact_context_budget_and_repeated_calls PASSED [ 31%]\ntests/test_c3_cache.py::test_seeded_cached_sampling_replays PASSED       [ 32%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[1] PASSED       [ 32%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[None] PASSED    [ 32%]\ntests/test_c3_cache.py::test_invalid_cache_switch_raises[yes] PASSED     [ 32%]\ntests/test_c3_cache.py::test_cuda_fp16_cache_against_same_rounded_weights_in_fp32 PASSED [ 33%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype0] PASSED [ 33%]\ntests/test_d1_batching.py::test_hand_layout_and_round_trip_without_mutation[dtype1] PASSED [ 33%]\ntests/test_d1_batching.py::test_single_request_is_ordinary_causal_layout PASSED [ 33%]\ntests/test_d1_batching.py::test_hand_block_diagonal_mask PASSED          [ 34%]\ntests/test_d1_batching.py::test_position_resets_alone_do_not_isolate_requests PASSED [ 34%]\ntests/test_d1_batching.py::test_split_logits_routes_each_last_row_and_returns_views PASSED [ 34%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts0] PASSED   [ 34%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts1] PASSED   [ 34%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts2] PASSED   [ 35%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts3] PASSED   [ 35%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts4] PASSED   [ 35%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts5] PASSED   [ 35%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts6] PASSED   [ 36%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts7] PASSED   [ 36%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts8] PASSED   [ 36%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts9] PASSED   [ 36%]\ntests/test_d1_batching.py::test_invalid_prompts_raise[prompts10] PASSED  [ 37%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths0] PASSED [ 37%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths1] PASSED [ 37%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths2] PASSED [ 37%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths3] PASSED [ 38%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths4] PASSED [ 38%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths5] PASSED [ 38%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths6] PASSED [ 38%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths7] PASSED [ 39%]\ntests/test_d1_batching.py::test_invalid_split_lengths_raise[lengths8] PASSED [ 39%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[None] PASSED [ 39%]\ntests/test_d1_batching.py::test_split_requires_token_major_tensor[tensor1] PASSED [ 39%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-4] PASSED [ 39%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-2] PASSED [ 40%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths0-1] PASSED [ 40%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-4] PASSED [ 40%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-2] PASSED [ 40%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths1-1] PASSED [ 41%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-4] PASSED [ 41%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-2] PASSED [ 41%]\ntests/test_d1_batching.py::test_full_model_and_hf_parity_for_variable_lengths[lengths2-1] PASSED [ 41%]\ntests/test_d1_batching.py::test_changing_one_request_cannot_change_any_other_request PASSED [ 42%]\ntests/test_d1_batching.py::test_future_change_stays_causal_inside_its_request PASSED [ 42%]\ntests/test_d1_batching.py::test_request_reordering_preserves_outputs_after_routing PASSED [ 42%]\ntests/test_d1_batching.py::test_contiguous_cache_still_rejects_packed_requests PASSED [ 42%]\ntests/test_d1_batching.py::test_probe_rejects_oversized_individual_request_not_total_packed_tokens PASSED [ 43%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[training] PASSED [ 43%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[float16] PASSED [ 43%]\ntests/test_d1_batching.py::test_probe_rejects_nonreference_modes[hf_attention] PASSED [ 43%]\ntests/test_d1_batching.py::test_cuda_layout_and_mixed_devices_rejection PASSED [ 43%]\ntests/test_d1_batching.py::test_fp16_packed_logits_against_same_rounded_weights_in_fp32 PASSED [ 44%]\ntests/test_d2_paged_cache.py::test_hand_slot_mapping_and_pool_cost PASSED [ 44%]\ntests/test_d2_paged_cache.py::test_tables_and_committed_lengths_cannot_be_changed_by_callers PASSED [ 44%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[0-2-tables0] PASSED [ 44%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-0-tables1] PASSED [ 45%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[True-2-tables2] PASSED [ 45%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-1.5-tables3] PASSED [ 45%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables4] PASSED [ 45%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables5] PASSED [ 46%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables6] PASSED [ 46%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables7] PASSED [ 46%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables8] PASSED [ 46%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables9] PASSED [ 47%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables10] PASSED [ 47%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables11] PASSED [ 47%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables12] PASSED [ 47%]\ntests/test_d2_paged_cache.py::test_invalid_pool_tables_raise[3-2-tables13] PASSED [ 47%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions0-owners0] PASSED [ 48%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions1-owners1] PASSED [ 48%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions2-owners2] PASSED [ 48%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions3-owners3] PASSED [ 48%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions4-None] PASSED [ 49%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions5-owners5] PASSED [ 49%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions6-owners6] PASSED [ 49%]\ntests/test_d2_paged_cache.py::test_invalid_slot_layouts_raise[positions7-owners7] PASSED [ 49%]\ntests/test_d2_paged_cache.py::test_gather_uses_logical_order_and_hides_unwritten_slots PASSED [ 50%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-1] PASSED [ 50%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-2] PASSED [ 50%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-3] PASSED [ 50%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[4-4] PASSED [ 51%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-1] PASSED [ 51%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-2] PASSED [ 51%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-3] PASSED [ 51%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[2-4] PASSED [ 52%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-1] PASSED [ 52%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-2] PASSED [ 52%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-3] PASSED [ 52%]\ntests/test_d2_paged_cache.py::test_scrambled_blocks_prefill_and_decode_match_contiguous_and_hf[1-4] PASSED [ 52%]\ntests/test_d2_paged_cache.py::test_mixed_decode_new_prefill_and_paused_request PASSED [ 53%]\ntests/test_d2_paged_cache.py::test_interleaved_input_order_is_scattered_back_correctly PASSED [ 53%]\ntests/test_d2_paged_cache.py::test_other_request_storage_cannot_affect_active_decode PASSED [ 53%]\ntests/test_d2_paged_cache.py::test_failed_later_layer_preserves_all_lengths_and_can_retry PASSED [ 53%]\ntests/test_d2_paged_cache.py::test_reset_one_request_reuses_blocks_and_leaves_other_length PASSED [ 54%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions0] PASSED [ 54%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions1] PASSED [ 54%]\ntests/test_d2_paged_cache.py::test_nonappend_positions_raise_before_writes[positions2] PASSED [ 54%]\ntests/test_d2_paged_cache.py::test_pool_capacity_and_model_context_are_separate_limits PASSED [ 55%]\ntests/test_d2_paged_cache.py::test_cache_model_dtype_eval_grad_and_backend_boundaries PASSED [ 55%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[layer] PASSED [ 55%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[key_shape] PASSED [ 55%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[key_dtype] PASSED [ 56%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[query_heads] PASSED [ 56%]\ntests/test_d2_paged_cache.py::test_invalid_attention_inputs_raise_before_pool_writes[query_dtype] PASSED [ 56%]\ntests/test_d2_paged_cache.py::test_cuda_fp16_paged_against_same_rounded_weights_in_fp32 PASSED [ 56%]\ntests/test_d3_block_manager.py::test_reference_lifetime_and_reuse PASSED [ 56%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[0] PASSED [ 57%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[-1] PASSED [ 57%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[True] PASSED [ 57%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[1.5] PASSED [ 57%]\ntests/test_d3_block_manager.py::test_invalid_sizes_do_not_mutate[None] PASSED [ 58%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[-1] PASSED [ 58%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[3] PASSED [ 58%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[True] PASSED [ 58%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[0.5] PASSED [ 59%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[None] PASSED [ 59%]\ntests/test_d3_block_manager.py::test_invalid_reference_operations_are_atomic[2] PASSED [ 59%]\ntests/test_d3_block_manager.py::test_exhaustion_is_atomic_and_live_blocks_are_never_evicted PASSED [ 59%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[0] PASSED [ 60%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[1] PASSED [ 60%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[2] PASSED [ 60%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[3] PASSED [ 60%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[4] PASSED [ 60%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[5] PASSED [ 61%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[6] PASSED [ 61%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[7] PASSED [ 61%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[8] PASSED [ 61%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[9] PASSED [ 62%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[10] PASSED [ 62%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[11] PASSED [ 62%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[12] PASSED [ 62%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[13] PASSED [ 63%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[14] PASSED [ 63%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[15] PASSED [ 63%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[16] PASSED [ 63%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[17] PASSED [ 64%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[18] PASSED [ 64%]\ntests/test_d3_block_manager.py::test_randomized_allocator_properties_against_reference[19] PASSED [ 64%]\ntests/test_d3_block_manager.py::test_managed_growth_rounding_reset_release_and_read_only_views PASSED [ 64%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[-1-1] PASSED [ 65%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[True-1] PASSED [ 65%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1.5-1] PASSED [ 65%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[None-1] PASSED [ 65%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-0] PASSED [ 65%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1--1] PASSED [ 66%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-True] PASSED [ 66%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-1.5] PASSED [ 66%]\ntests/test_d3_block_manager.py::test_invalid_reservations_do_not_mutate[1-33] PASSED [ 66%]\ntests/test_d3_block_manager.py::test_failed_admission_and_growth_leave_tables_and_lengths_unchanged PASSED [ 67%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[0] PASSED [ 67%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[1] PASSED [ 67%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[2] PASSED [ 67%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[3] PASSED [ 68%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[4] PASSED [ 68%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[5] PASSED [ 68%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[6] PASSED [ 68%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[7] PASSED [ 69%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[8] PASSED [ 69%]\ntests/test_d3_block_manager.py::test_randomized_request_tables_are_disjoint_and_conserve_blocks[9] PASSED [ 69%]\ntests/test_d3_block_manager.py::test_managed_model_mixed_growth_reuse_and_failure_retry[cpu] PASSED [ 69%]\ntests/test_d3_block_manager.py::test_managed_model_mixed_growth_reuse_and_failure_retry[cuda] PASSED [ 69%]\ntests/test_d4_scheduler.py::test_invalid_batch_budgets[0] PASSED         [ 70%]\ntests/test_d4_scheduler.py::test_invalid_batch_budgets[-1] PASSED        [ 70%]\ntests/test_d4_scheduler.py::test_invalid_batch_budgets[True] PASSED      [ 70%]\ntests/test_d4_scheduler.py::test_invalid_batch_budgets[1.5] PASSED       [ 70%]\ntests/test_d4_scheduler.py::test_invalid_batch_budgets[None] PASSED      [ 71%]\ntests/test_d4_scheduler.py::test_scheduler_requires_exclusive_empty_pool_and_detects_external_changes PASSED [ 71%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[-1-1-0] PASSED [ 71%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[True-1-0] PASSED [ 71%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[1.5-1-0] PASSED [ 72%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[None-1-0] PASSED [ 72%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-0-0] PASSED [ 72%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0--1-0] PASSED [ 72%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-True-0] PASSED [ 73%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-1.5-0] PASSED [ 73%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-1--1] PASSED [ 73%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-1-True] PASSED [ 73%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-1-1.5] PASSED [ 73%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-1-None] PASSED [ 74%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-10-1] PASSED [ 74%]\ntests/test_d4_scheduler.py::test_invalid_admission_is_atomic[0-33-0] PASSED [ 74%]\ntests/test_d4_scheduler.py::test_empty_scheduler_read_only_states_and_unique_lifetime_ids PASSED [ 74%]\ntests/test_d4_scheduler.py::test_continuous_admission_chunked_prefill_and_mixed_decode PASSED [ 75%]\ntests/test_d4_scheduler.py::test_newest_victim_recomputes_without_losing_logical_progress PASSED [ 75%]\ntests/test_d4_scheduler.py::test_lower_priority_request_waits_without_unnecessary_eviction PASSED [ 75%]\ntests/test_d4_scheduler.py::test_victim_selection_prefers_newest_resident_request PASSED [ 75%]\ntests/test_d4_scheduler.py::test_partial_recomputation_and_repeated_preemption_preserve_progress PASSED [ 76%]\ntests/test_d4_scheduler.py::test_incomplete_forward_preserves_pending_plan_and_rejects_lifecycle_changes PASSED [ 76%]\ntests/test_d4_scheduler.py::test_completion_validates_entire_batch_before_updating_any_request PASSED [ 76%]\ntests/test_d4_scheduler.py::test_cancel_waiting_running_and_preempted_requests PASSED [ 76%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[0] PASSED [ 77%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[1] PASSED [ 77%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[2] PASSED [ 77%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[3] PASSED [ 77%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[4] PASSED [ 78%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[5] PASSED [ 78%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[6] PASSED [ 78%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[7] PASSED [ 78%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[8] PASSED [ 78%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[9] PASSED [ 79%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[10] PASSED [ 79%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[11] PASSED [ 79%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[12] PASSED [ 79%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[13] PASSED [ 80%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[14] PASSED [ 80%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[15] PASSED [ 80%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[16] PASSED [ 80%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[17] PASSED [ 81%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[18] PASSED [ 81%]\ntests/test_d4_scheduler.py::test_randomized_budget_ownership_progress_and_termination[19] PASSED [ 81%]\ntests/test_d4_scheduler.py::test_model_preemption_recompute_parity_and_failed_forward_retry[cpu] PASSED [ 81%]\ntests/test_d4_scheduler.py::test_model_preemption_recompute_parity_and_failed_forward_retry[cuda] PASSED [ 82%]\ntests/test_d5_engine.py::test_tinyllama_memory_uses_kv_heads_and_dtype[dtype0-45056] PASSED [ 82%]\ntests/test_d5_engine.py::test_tinyllama_memory_uses_kv_heads_and_dtype[dtype1-22528] PASSED [ 82%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[0-2] PASSED [ 82%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[-1-2] PASSED [ 82%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[True-2] PASSED [ 83%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[1.5-2] PASSED [ 83%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[None-2] PASSED [ 83%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[1-2] PASSED [ 83%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[1000-0] PASSED [ 84%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[1000--1] PASSED [ 84%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[1000-True] PASSED [ 84%]\ntests/test_d5_engine.py::test_invalid_memory_budgets_do_not_allocate[1000-1.5] PASSED [ 84%]\ntests/test_d5_engine.py::test_actual_storage_matches_budget_and_reuses_one_fixed_pool PASSED [ 85%]\ntests/test_d5_engine.py::test_three_outputs_need_prompt_and_two_decode_forwards PASSED [ 85%]\ntests/test_d5_engine.py::test_chunked_prefill_only_samples_its_last_row PASSED [ 85%]\ntests/test_d5_engine.py::test_continuous_arrival_mixes_prefill_decode_and_routes_each_request PASSED [ 85%]\ntests/test_d5_engine.py::test_eos_is_included_and_releases_blocks_early[2] PASSED [ 86%]\ntests/test_d5_engine.py::test_eos_is_included_and_releases_blocks_early[eos1] PASSED [ 86%]\ntests/test_d5_engine.py::test_eos_is_included_and_releases_blocks_early[eos2] PASSED [ 86%]\ntests/test_d5_engine.py::test_eos_at_final_budget_and_prompt_eos_semantics PASSED [ 86%]\ntests/test_d5_engine.py::test_zero_budget_clones_prompt_and_does_not_register_scheduler_work PASSED [ 86%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs0] PASSED [ 87%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs1] PASSED [ 87%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs2] PASSED [ 87%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs3] PASSED [ 87%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs4] PASSED [ 88%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs5] PASSED [ 88%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs6] PASSED [ 88%]\ntests/test_d5_engine.py::test_admission_checks_are_atomic_even_for_zero_output_requests[kwargs7] PASSED [ 88%]\ntests/test_d5_engine.py::test_invalid_prompts_raise_before_reservation[prompt0] PASSED [ 89%]\ntests/test_d5_engine.py::test_invalid_prompts_raise_before_reservation[prompt1] PASSED [ 89%]\ntests/test_d5_engine.py::test_invalid_prompts_raise_before_reservation[prompt2] PASSED [ 89%]\ntests/test_d5_engine.py::test_invalid_prompts_raise_before_reservation[prompt3] PASSED [ 89%]\ntests/test_d5_engine.py::test_invalid_prompts_raise_before_reservation[prompt4] PASSED [ 90%]\ntests/test_d5_engine.py::test_invalid_request_ids_raise[-1] PASSED       [ 90%]\ntests/test_d5_engine.py::test_invalid_request_ids_raise[True] PASSED     [ 90%]\ntests/test_d5_engine.py::test_invalid_request_ids_raise[1.5] PASSED      [ 90%]\ntests/test_d5_engine.py::test_invalid_request_ids_raise[None] PASSED     [ 91%]\ntests/test_d5_engine.py::test_invalid_request_ids_raise[9223372036854775808] PASSED [ 91%]\ntests/test_d5_engine.py::test_invalid_eos_raises_before_admission[True] PASSED [ 91%]\ntests/test_d5_engine.py::test_invalid_eos_raises_before_admission[-1] PASSED [ 91%]\ntests/test_d5_engine.py::test_invalid_eos_raises_before_admission[64] PASSED [ 91%]\ntests/test_d5_engine.py::test_invalid_eos_raises_before_admission[eos3] PASSED [ 92%]\ntests/test_d5_engine.py::test_invalid_eos_raises_before_admission[2] PASSED [ 92%]\ntests/test_d5_engine.py::test_context_and_pool_limits_are_strict_and_exact_boundaries_work PASSED [ 92%]\ntests/test_d5_engine.py::test_cancellation_and_unique_lifetime_ids PASSED [ 92%]\ntests/test_d5_engine.py::test_preempted_request_can_be_cancelled_without_touching_other_blocks PASSED [ 93%]\ntests/test_d5_engine.py::test_preemption_replays_without_duplicate_outputs_or_extra_random_draws[False] PASSED [ 93%]\ntests/test_d5_engine.py::test_preemption_replays_without_duplicate_outputs_or_extra_random_draws[True] PASSED [ 93%]\ntests/test_d5_engine.py::test_forward_failure_keeps_plan_histories_and_rng_for_retry PASSED [ 93%]\ntests/test_d5_engine.py::test_sampling_failure_keeps_committed_logits_and_restores_all_rng[False] PASSED [ 94%]\ntests/test_d5_engine.py::test_sampling_failure_keeps_committed_logits_and_restores_all_rng[True] PASSED [ 94%]\ntests/test_d5_engine.py::test_invalid_logits_raise_without_success_shaped_output PASSED [ 94%]\ntests/test_d5_engine.py::test_model_eval_device_dtype_must_not_change_after_pool_creation PASSED [ 94%]\ntests/test_d5_engine.py::test_close_aborts_a_failed_pending_forward_and_is_idempotent PASSED [ 95%]\ntests/test_d5_engine.py::test_available_memory_requires_cuda_and_explicit_valid_headroom PASSED [ 95%]\ntests/test_d5_engine.py::test_real_model_preemption_generation_matches_hf_and_c2[cpu] PASSED [ 95%]\ntests/test_d5_engine.py::test_real_model_preemption_generation_matches_hf_and_c2[cuda] PASSED [ 95%]\ntests/test_d5_engine.py::test_real_later_layer_failure_retries_without_changing_resident_prefix PASSED [ 95%]\ntests/test_d5_engine.py::test_cuda_available_memory_rounding_and_fp16_reference PASSED [ 96%]\ntests/test_d5_engine.py::test_precision_probe_accepts_baseline_drift_without_relaxing_paging_checks PASSED [ 96%]\ntests/test_d5_engine.py::test_precision_probe_checks_argmax_even_when_logits_are_numerically_close PASSED [ 96%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[nan-0] PASSED [ 96%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[nan-1] PASSED [ 97%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[nan-2] PASSED [ 97%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[inf-0] PASSED [ 97%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[inf-1] PASSED [ 97%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[inf-2] PASSED [ 98%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[-inf-0] PASSED [ 98%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[-inf-1] PASSED [ 98%]\ntests/test_d5_engine.py::test_precision_probe_rejects_nonfinite_logits_in_any_path[-inf-2] PASSED [ 98%]\ntests/test_d5_engine.py::test_precision_probe_rejects_invalid_score_shapes_and_types[None] PASSED [ 99%]\ntests/test_d5_engine.py::test_precision_probe_rejects_invalid_score_shapes_and_types[invalid1] PASSED [ 99%]\ntests/test_d5_engine.py::test_precision_probe_rejects_invalid_score_shapes_and_types[invalid2] PASSED [ 99%]\ntests/test_d5_engine.py::test_precision_probe_rejects_invalid_score_shapes_and_types[invalid3] PASSED [ 99%]\ntests/test_d5_engine.py::test_precision_probe_rejects_mismatched_shapes_and_invalid_sample_flag PASSED [100%]\n\n=========================== short test summary info ============================\nSKIPPED [1] tests/test_c2_generation.py:209: Two CUDA devices required\n======================= 422 passed, 1 skipped in 25.91s ========================\n",
+      "stderr": ""
+    },
+    "fp32_backend": "pytorch_paged_gather",
+    "fp32_rtol": 1e-05,
+    "fp32_atol": 0.0001,
+    "scenarios": [
+      {
+        "name": "continuous_arrival",
+        "pool_budget": {
+          "kv_budget_bytes": 901120,
+          "block_size": 2,
+          "bytes_per_token": 45056,
+          "num_blocks": 10
+        },
+        "allocated_bytes": 901120,
+        "steps": [
+          {
+            "tick": 0,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 0,
+                  "end": 4,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 4,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 0
+              },
+              "resident_lengths": {
+                "0": 0
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1
+                ]
+              },
+              "free_blocks": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 4
+              },
+              "resident_lengths": {
+                "0": 4
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1
+                ]
+              },
+              "free_blocks": [
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ]
+            },
+            "updates": [],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "prefill",
+                "start": 0,
+                "end": 4,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "hf_row_max_abs_diff": [
+                  0.0,
+                  3.337860107421875e-06,
+                  4.76837158203125e-06,
+                  5.245208740234375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 1,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 4,
+                  "end": 6,
+                  "phase": "prefill"
+                },
+                {
+                  "request_id": 1,
+                  "start": 0,
+                  "end": 2,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 4,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 4,
+                "1": 0
+              },
+              "resident_lengths": {
+                "0": 4,
+                "1": 0
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1,
+                  2
+                ],
+                "1": [
+                  3
+                ]
+              },
+              "free_blocks": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681
+                  ],
+                  "generated_tokens": [
+                    3681
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 6,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 6,
+                "1": 2
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1,
+                  2
+                ],
+                "1": [
+                  3
+                ]
+              },
+              "free_blocks": [
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  3444,
+                  338,
+                  3681
+                ],
+                "generated_tokens": [
+                  3681
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "prefill",
+                "start": 4,
+                "end": 6,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  9.5367431640625e-06,
+                  1.1920928955078125e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  1.1444091796875e-05,
+                  1.1444091796875e-05
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "prefill",
+                "start": 0,
+                "end": 2,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  5.245208740234375e-06,
+                  4.76837158203125e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  5.245208740234375e-06,
+                  4.76837158203125e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 2,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 6,
+                  "end": 7,
+                  "phase": "decode"
+                },
+                {
+                  "request_id": 1,
+                  "start": 2,
+                  "end": 5,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 4,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681
+                  ],
+                  "generated_tokens": [
+                    3681
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 6,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 6,
+                "1": 2
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1,
+                  2,
+                  4
+                ],
+                "1": [
+                  3,
+                  5,
+                  6
+                ]
+              },
+              "free_blocks": [
+                7,
+                8,
+                9
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 7,
+                "1": 5
+              },
+              "resident_lengths": {
+                "0": 7,
+                "1": 5
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1,
+                  2,
+                  4
+                ],
+                "1": [
+                  3,
+                  5,
+                  6
+                ]
+              },
+              "free_blocks": [
+                7,
+                8,
+                9
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  3444,
+                  338,
+                  3681,
+                  29889
+                ],
+                "generated_tokens": [
+                  3681,
+                  29889
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 6,
+                "end": 7,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  1.049041748046875e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  9.5367431640625e-06
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "prefill",
+                "start": 2,
+                "end": 5,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  5.7220458984375e-06,
+                  5.245208740234375e-06,
+                  5.245208740234375e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  6.556510925292969e-06,
+                  4.291534423828125e-06,
+                  5.245208740234375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 3,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 7,
+                  "end": 8,
+                  "phase": "decode"
+                },
+                {
+                  "request_id": 1,
+                  "start": 5,
+                  "end": 6,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 2,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 7,
+                "1": 5
+              },
+              "resident_lengths": {
+                "0": 7,
+                "1": 5
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1,
+                  2,
+                  4
+                ],
+                "1": [
+                  3,
+                  5,
+                  6
+                ]
+              },
+              "free_blocks": [
+                7,
+                8,
+                9
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889,
+                    13
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889,
+                    13
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338,
+                    5115
+                  ],
+                  "generated_tokens": [
+                    5115
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 8,
+                "1": 6
+              },
+              "resident_lengths": {
+                "0": 8,
+                "1": 6
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1,
+                  2,
+                  4
+                ],
+                "1": [
+                  3,
+                  5,
+                  6
+                ]
+              },
+              "free_blocks": [
+                7,
+                8,
+                9
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  3444,
+                  338,
+                  3681,
+                  29889,
+                  13
+                ],
+                "generated_tokens": [
+                  3681,
+                  29889,
+                  13
+                ],
+                "finish_reason": null
+              },
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  9556,
+                  338,
+                  5115
+                ],
+                "generated_tokens": [
+                  5115
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 7,
+                "end": 8,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  1.1444091796875e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  1.1444091796875e-05
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "prefill",
+                "start": 5,
+                "end": 6,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  1.33514404296875e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  9.5367431640625e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 4,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 8,
+                  "end": 9,
+                  "phase": "decode"
+                },
+                {
+                  "request_id": 1,
+                  "start": 6,
+                  "end": 7,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 2,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889,
+                    13
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889,
+                    13
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338,
+                    5115
+                  ],
+                  "generated_tokens": [
+                    5115
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 8,
+                "1": 6
+              },
+              "resident_lengths": {
+                "0": 8,
+                "1": 6
+              },
+              "tables": {
+                "0": [
+                  0,
+                  1,
+                  2,
+                  4,
+                  7
+                ],
+                "1": [
+                  3,
+                  5,
+                  6,
+                  8
+                ]
+              },
+              "free_blocks": [
+                9
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338,
+                    5115,
+                    29889
+                  ],
+                  "generated_tokens": [
+                    5115,
+                    29889
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 9,
+                "1": 7
+              },
+              "resident_lengths": {
+                "1": 7
+              },
+              "tables": {
+                "1": [
+                  3,
+                  5,
+                  6,
+                  8
+                ]
+              },
+              "free_blocks": [
+                7,
+                4,
+                2,
+                1,
+                0,
+                9
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  3444,
+                  338,
+                  3681,
+                  29889,
+                  13,
+                  13
+                ],
+                "generated_tokens": [
+                  3681,
+                  29889,
+                  13,
+                  13
+                ],
+                "finish_reason": "length"
+              },
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  9556,
+                  338,
+                  5115,
+                  29889
+                ],
+                "generated_tokens": [
+                  5115,
+                  29889
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 8,
+                "end": 9,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  1.3828277587890625e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  1.1444091796875e-05
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 6,
+                "end": 7,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  1.33514404296875e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  1.430511474609375e-05
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 5,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 7,
+                  "end": 8,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338,
+                    5115,
+                    29889
+                  ],
+                  "generated_tokens": [
+                    5115,
+                    29889
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 9,
+                "1": 7
+              },
+              "resident_lengths": {
+                "1": 7
+              },
+              "tables": {
+                "1": [
+                  3,
+                  5,
+                  6,
+                  8
+                ]
+              },
+              "free_blocks": [
+                7,
+                4,
+                2,
+                1,
+                0,
+                9
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338,
+                    5115,
+                    29889,
+                    13
+                  ],
+                  "generated_tokens": [
+                    5115,
+                    29889,
+                    13
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 9,
+                "1": 8
+              },
+              "resident_lengths": {
+                "1": 8
+              },
+              "tables": {
+                "1": [
+                  3,
+                  5,
+                  6,
+                  8
+                ]
+              },
+              "free_blocks": [
+                7,
+                4,
+                2,
+                1,
+                0,
+                9
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  9556,
+                  338,
+                  5115,
+                  29889,
+                  13
+                ],
+                "generated_tokens": [
+                  5115,
+                  29889,
+                  13
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 7,
+                "end": 8,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  1.3828277587890625e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  1.5735626220703125e-05
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 6,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 8,
+                  "end": 9,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338,
+                    5115,
+                    29889,
+                    13
+                  ],
+                  "generated_tokens": [
+                    5115,
+                    29889,
+                    13
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 9,
+                "1": 8
+              },
+              "resident_lengths": {
+                "1": 8
+              },
+              "tables": {
+                "1": [
+                  3,
+                  5,
+                  6,
+                  8,
+                  7
+                ]
+              },
+              "free_blocks": [
+                4,
+                2,
+                1,
+                0,
+                9
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    3444,
+                    338,
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "generated_tokens": [
+                    3681,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    7483,
+                    310,
+                    9556,
+                    338,
+                    5115,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "generated_tokens": [
+                    5115,
+                    29889,
+                    13,
+                    13
+                  ],
+                  "finish_reason": "length"
+                }
+              },
+              "logical_progress": {
+                "0": 9,
+                "1": 9
+              },
+              "resident_lengths": {},
+              "tables": {},
+              "free_blocks": [
+                7,
+                8,
+                6,
+                5,
+                3,
+                4,
+                2,
+                1,
+                0,
+                9
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  7483,
+                  310,
+                  9556,
+                  338,
+                  5115,
+                  29889,
+                  13,
+                  13
+                ],
+                "generated_tokens": [
+                  5115,
+                  29889,
+                  13,
+                  13
+                ],
+                "finish_reason": "length"
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 8,
+                "end": 9,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  3.337860107421875e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  3.62396240234375e-05
+                ]
+              }
+            ]
+          }
+        ],
+        "logical_tokens": 18,
+        "recomputed_tokens": 0,
+        "scheduled_tokens": 18,
+        "hf_row_max_abs_diff_range": {
+          "min": 0.0,
+          "max": 3.62396240234375e-05
+        },
+        "outputs": [
+          {
+            "request_id": 0,
+            "token_ids": [
+              1,
+              450,
+              7483,
+              310,
+              3444,
+              338,
+              3681,
+              29889,
+              13,
+              13
+            ],
+            "generated_tokens": [
+              3681,
+              29889,
+              13,
+              13
+            ],
+            "finish_reason": "length"
+          },
+          {
+            "request_id": 1,
+            "token_ids": [
+              1,
+              450,
+              7483,
+              310,
+              9556,
+              338,
+              5115,
+              29889,
+              13,
+              13
+            ],
+            "generated_tokens": [
+              5115,
+              29889,
+              13,
+              13
+            ],
+            "finish_reason": "length"
+          }
+        ],
+        "failure_retry": null,
+        "final": {
+          "outputs": {
+            "0": {
+              "request_id": 0,
+              "token_ids": [
+                1,
+                450,
+                7483,
+                310,
+                3444,
+                338,
+                3681,
+                29889,
+                13,
+                13
+              ],
+              "generated_tokens": [
+                3681,
+                29889,
+                13,
+                13
+              ],
+              "finish_reason": "length"
+            },
+            "1": {
+              "request_id": 1,
+              "token_ids": [
+                1,
+                450,
+                7483,
+                310,
+                9556,
+                338,
+                5115,
+                29889,
+                13,
+                13
+              ],
+              "generated_tokens": [
+                5115,
+                29889,
+                13,
+                13
+              ],
+              "finish_reason": "length"
+            }
+          },
+          "logical_progress": {
+            "0": 9,
+            "1": 9
+          },
+          "resident_lengths": {},
+          "tables": {},
+          "free_blocks": [
+            7,
+            8,
+            6,
+            5,
+            3,
+            4,
+            2,
+            1,
+            0,
+            9
+          ]
+        }
+      },
+      {
+        "name": "preemption",
+        "pool_budget": {
+          "kv_budget_bytes": 270336,
+          "block_size": 2,
+          "bytes_per_token": 45056,
+          "num_blocks": 3
+        },
+        "allocated_bytes": 270336,
+        "steps": [
+          {
+            "tick": 0,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 0,
+                  "end": 2,
+                  "phase": "prefill"
+                },
+                {
+                  "request_id": 1,
+                  "start": 0,
+                  "end": 1,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 3,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 0,
+                "1": 0
+              },
+              "resident_lengths": {
+                "0": 0,
+                "1": 0
+              },
+              "tables": {
+                "0": [
+                  0
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                2
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 2,
+                "1": 1
+              },
+              "resident_lengths": {
+                "0": 2,
+                "1": 1
+              },
+              "tables": {
+                "0": [
+                  0
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                2
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871
+                ],
+                "generated_tokens": [
+                  29871
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "prefill",
+                "start": 0,
+                "end": 2,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  0.0,
+                  0.0
+                ],
+                "hf_row_max_abs_diff": [
+                  0.0,
+                  3.814697265625e-06
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "prefill",
+                "start": 0,
+                "end": 1,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  2.5033950805664062e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  2.5033950805664062e-05
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 1,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 2,
+                  "end": 3,
+                  "phase": "decode"
+                },
+                {
+                  "request_id": 1,
+                  "start": 1,
+                  "end": 2,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 2,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 2,
+                "1": 1
+              },
+              "resident_lengths": {
+                "0": 2,
+                "1": 1
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": []
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 3,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 3,
+                "1": 2
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": []
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896
+                ],
+                "finish_reason": null
+              },
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871
+                ],
+                "generated_tokens": [
+                  29871
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 2,
+                "end": 3,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  3.814697265625e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  4.76837158203125e-06
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "prefill",
+                "start": 1,
+                "end": 2,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  0.0
+                ],
+                "hf_row_max_abs_diff": [
+                  3.814697265625e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 2,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 3,
+                  "end": 4,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 3,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 3,
+                "1": 2
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": []
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 4,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 4,
+                "1": 2
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": []
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 3,
+                "end": 4,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  5.7220458984375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 3,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 4,
+                  "end": 5,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": [
+                1
+              ]
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 4,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 4
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2,
+                  1
+                ]
+              },
+              "free_blocks": []
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 2
+              },
+              "resident_lengths": {},
+              "tables": {},
+              "free_blocks": [
+                1,
+                2,
+                0
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "finish_reason": "length"
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 4,
+                "end": 5,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  6.198883056640625e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  5.7220458984375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 4,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 0,
+                  "end": 2,
+                  "phase": "recompute"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 2,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 2
+              },
+              "resident_lengths": {
+                "1": 0
+              },
+              "tables": {
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                2,
+                0
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 2
+              },
+              "resident_lengths": {
+                "1": 2
+              },
+              "tables": {
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                2,
+                0
+              ]
+            },
+            "updates": [],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "recompute",
+                "start": 0,
+                "end": 2,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  0.0,
+                  0.0
+                ],
+                "hf_row_max_abs_diff": [
+                  0.0,
+                  3.814697265625e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 5,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 2,
+                  "end": 3,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 2
+              },
+              "resident_lengths": {
+                "1": 2
+              },
+              "tables": {
+                "1": [
+                  1,
+                  2
+                ]
+              },
+              "free_blocks": [
+                0
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 3
+              },
+              "resident_lengths": {
+                "1": 3
+              },
+              "tables": {
+                "1": [
+                  1,
+                  2
+                ]
+              },
+              "free_blocks": [
+                0
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 2,
+                "end": 3,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  8.58306884765625e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 6,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 3,
+                  "end": 4,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 3
+              },
+              "resident_lengths": {
+                "1": 3
+              },
+              "tables": {
+                "1": [
+                  1,
+                  2
+                ]
+              },
+              "free_blocks": [
+                0
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 4
+              },
+              "resident_lengths": {
+                "1": 4
+              },
+              "tables": {
+                "1": [
+                  1,
+                  2
+                ]
+              },
+              "free_blocks": [
+                0
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 3,
+                "end": 4,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 7,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 4,
+                  "end": 5,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 4
+              },
+              "resident_lengths": {
+                "1": 4
+              },
+              "tables": {
+                "1": [
+                  1,
+                  2,
+                  0
+                ]
+              },
+              "free_blocks": []
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 5
+              },
+              "resident_lengths": {},
+              "tables": {},
+              "free_blocks": [
+                0,
+                2,
+                1
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "finish_reason": "length"
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 4,
+                "end": 5,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  5.7220458984375e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ]
+              }
+            ]
+          }
+        ],
+        "logical_tokens": 10,
+        "recomputed_tokens": 2,
+        "scheduled_tokens": 12,
+        "hf_row_max_abs_diff_range": {
+          "min": 0.0,
+          "max": 2.5033950805664062e-05
+        },
+        "outputs": [
+          {
+            "request_id": 0,
+            "token_ids": [
+              1,
+              450,
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "generated_tokens": [
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "finish_reason": "length"
+          },
+          {
+            "request_id": 1,
+            "token_ids": [
+              1,
+              450,
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "generated_tokens": [
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "finish_reason": "length"
+          }
+        ],
+        "failure_retry": null,
+        "final": {
+          "outputs": {
+            "0": {
+              "request_id": 0,
+              "token_ids": [
+                1,
+                450,
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "generated_tokens": [
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "finish_reason": "length"
+            },
+            "1": {
+              "request_id": 1,
+              "token_ids": [
+                1,
+                450,
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "generated_tokens": [
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "finish_reason": "length"
+            }
+          },
+          "logical_progress": {
+            "0": 5,
+            "1": 5
+          },
+          "resident_lengths": {},
+          "tables": {},
+          "free_blocks": [
+            0,
+            2,
+            1
+          ]
+        }
+      },
+      {
+        "name": "failure_retry",
+        "pool_budget": {
+          "kv_budget_bytes": 360448,
+          "block_size": 2,
+          "bytes_per_token": 45056,
+          "num_blocks": 4
+        },
+        "allocated_bytes": 360448,
+        "steps": [
+          {
+            "tick": 0,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 0,
+                  "end": 2,
+                  "phase": "prefill"
+                },
+                {
+                  "request_id": 1,
+                  "start": 0,
+                  "end": 1,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 3,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 0,
+                "1": 0
+              },
+              "resident_lengths": {
+                "0": 0,
+                "1": 0
+              },
+              "tables": {
+                "0": [
+                  0
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                2,
+                3
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 2,
+                "1": 1
+              },
+              "resident_lengths": {
+                "0": 2,
+                "1": 1
+              },
+              "tables": {
+                "0": [
+                  0
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                2,
+                3
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871
+                ],
+                "generated_tokens": [
+                  29871
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "prefill",
+                "start": 0,
+                "end": 2,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  0.0,
+                  0.0
+                ],
+                "hf_row_max_abs_diff": [
+                  0.0,
+                  3.814697265625e-06
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "prefill",
+                "start": 0,
+                "end": 1,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  2.5033950805664062e-05
+                ],
+                "hf_row_max_abs_diff": [
+                  2.5033950805664062e-05
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 1,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 2,
+                  "end": 3,
+                  "phase": "decode"
+                },
+                {
+                  "request_id": 1,
+                  "start": 1,
+                  "end": 2,
+                  "phase": "prefill"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 2,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450
+                  ],
+                  "generated_tokens": [],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 2,
+                "1": 1
+              },
+              "resident_lengths": {
+                "0": 2,
+                "1": 1
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                3
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 3,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 3,
+                "1": 2
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                3
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896
+                ],
+                "finish_reason": null
+              },
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871
+                ],
+                "generated_tokens": [
+                  29871
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 2,
+                "end": 3,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  3.814697265625e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  4.76837158203125e-06
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "prefill",
+                "start": 1,
+                "end": 2,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  0.0
+                ],
+                "hf_row_max_abs_diff": [
+                  3.814697265625e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 2,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 3,
+                  "end": 4,
+                  "phase": "decode"
+                },
+                {
+                  "request_id": 1,
+                  "start": 2,
+                  "end": 3,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 2,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871
+                  ],
+                  "generated_tokens": [
+                    29871
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 3,
+                "1": 2
+              },
+              "resident_lengths": {
+                "0": 3,
+                "1": 2
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1,
+                  3
+                ]
+              },
+              "free_blocks": []
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 4,
+                "1": 3
+              },
+              "resident_lengths": {
+                "0": 4,
+                "1": 3
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2
+                ],
+                "1": [
+                  1,
+                  3
+                ]
+              },
+              "free_blocks": []
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900
+                ],
+                "finish_reason": null
+              },
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 3,
+                "end": 4,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  5.7220458984375e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  5.7220458984375e-06
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 2,
+                "end": 3,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  3.814697265625e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  4.76837158203125e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 3,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 0,
+                  "start": 4,
+                  "end": 5,
+                  "phase": "decode"
+                },
+                {
+                  "request_id": 1,
+                  "start": 0,
+                  "end": 2,
+                  "phase": "recompute"
+                }
+              ],
+              "preempted": [
+                1
+              ]
+            },
+            "num_tokens": 3,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 4,
+                "1": 3
+              },
+              "resident_lengths": {
+                "0": 4,
+                "1": 0
+              },
+              "tables": {
+                "0": [
+                  0,
+                  2,
+                  3
+                ],
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": []
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 3
+              },
+              "resident_lengths": {
+                "1": 2
+              },
+              "tables": {
+                "1": [
+                  1
+                ]
+              },
+              "free_blocks": [
+                3,
+                2,
+                0
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "finish_reason": "length"
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 0,
+                "phase": "decode",
+                "start": 4,
+                "end": 5,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  4.76837158203125e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  5.7220458984375e-06
+                ]
+              },
+              {
+                "request_id": 1,
+                "phase": "recompute",
+                "start": 0,
+                "end": 2,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  0.0,
+                  0.0
+                ],
+                "hf_row_max_abs_diff": [
+                  0.0,
+                  3.814697265625e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 4,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 2,
+                  "end": 3,
+                  "phase": "recompute"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 3
+              },
+              "resident_lengths": {
+                "1": 2
+              },
+              "tables": {
+                "1": [
+                  1,
+                  3
+                ]
+              },
+              "free_blocks": [
+                2,
+                0
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 3
+              },
+              "resident_lengths": {
+                "1": 3
+              },
+              "tables": {
+                "1": [
+                  1,
+                  3
+                ]
+              },
+              "free_blocks": [
+                2,
+                0
+              ]
+            },
+            "updates": [],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "recompute",
+                "start": 2,
+                "end": 3,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  8.58306884765625e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 5,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 3,
+                  "end": 4,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 3
+              },
+              "resident_lengths": {
+                "1": 3
+              },
+              "tables": {
+                "1": [
+                  1,
+                  3
+                ]
+              },
+              "free_blocks": [
+                2,
+                0
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 4
+              },
+              "resident_lengths": {
+                "1": 4
+              },
+              "tables": {
+                "1": [
+                  1,
+                  3
+                ]
+              },
+              "free_blocks": [
+                2,
+                0
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900
+                ],
+                "finish_reason": null
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 3,
+                "end": 4,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ]
+              }
+            ]
+          },
+          {
+            "tick": 6,
+            "plan": {
+              "work": [
+                {
+                  "request_id": 1,
+                  "start": 4,
+                  "end": 5,
+                  "phase": "decode"
+                }
+              ],
+              "preempted": []
+            },
+            "num_tokens": 1,
+            "before": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900
+                  ],
+                  "finish_reason": null
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 4
+              },
+              "resident_lengths": {
+                "1": 4
+              },
+              "tables": {
+                "1": [
+                  1,
+                  3,
+                  2
+                ]
+              },
+              "free_blocks": [
+                0
+              ]
+            },
+            "after": {
+              "outputs": {
+                "0": {
+                  "request_id": 0,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                },
+                "1": {
+                  "request_id": 1,
+                  "token_ids": [
+                    1,
+                    450,
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "generated_tokens": [
+                    29871,
+                    29896,
+                    29900,
+                    6407
+                  ],
+                  "finish_reason": "length"
+                }
+              },
+              "logical_progress": {
+                "0": 5,
+                "1": 5
+              },
+              "resident_lengths": {},
+              "tables": {},
+              "free_blocks": [
+                2,
+                3,
+                1,
+                0
+              ]
+            },
+            "updates": [
+              {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450,
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "generated_tokens": [
+                  29871,
+                  29896,
+                  29900,
+                  6407
+                ],
+                "finish_reason": "length"
+              }
+            ],
+            "comparisons": [
+              {
+                "request_id": 1,
+                "phase": "decode",
+                "start": 4,
+                "end": 5,
+                "all_row_argmax_equal": true,
+                "ours_row_max_abs_diff": [
+                  5.7220458984375e-06
+                ],
+                "hf_row_max_abs_diff": [
+                  6.67572021484375e-06
+                ]
+              }
+            ]
+          }
+        ],
+        "logical_tokens": 10,
+        "recomputed_tokens": 3,
+        "scheduled_tokens": 13,
+        "hf_row_max_abs_diff_range": {
+          "min": 0.0,
+          "max": 2.5033950805664062e-05
+        },
+        "outputs": [
+          {
+            "request_id": 0,
+            "token_ids": [
+              1,
+              450,
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "generated_tokens": [
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "finish_reason": "length"
+          },
+          {
+            "request_id": 1,
+            "token_ids": [
+              1,
+              450,
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "generated_tokens": [
+              29871,
+              29896,
+              29900,
+              6407
+            ],
+            "finish_reason": "length"
+          }
+        ],
+        "failure_retry": {
+          "error": "injected D5 later-layer failure",
+          "before": {
+            "outputs": {
+              "0": {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871
+                ],
+                "generated_tokens": [
+                  29871
+                ],
+                "finish_reason": null
+              },
+              "1": {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450
+                ],
+                "generated_tokens": [],
+                "finish_reason": null
+              }
+            },
+            "logical_progress": {
+              "0": 2,
+              "1": 1
+            },
+            "resident_lengths": {
+              "0": 2,
+              "1": 1
+            },
+            "tables": {
+              "0": [
+                0,
+                2
+              ],
+              "1": [
+                1
+              ]
+            },
+            "free_blocks": [
+              3
+            ]
+          },
+          "after_failure": {
+            "outputs": {
+              "0": {
+                "request_id": 0,
+                "token_ids": [
+                  1,
+                  450,
+                  29871
+                ],
+                "generated_tokens": [
+                  29871
+                ],
+                "finish_reason": null
+              },
+              "1": {
+                "request_id": 1,
+                "token_ids": [
+                  1,
+                  450
+                ],
+                "generated_tokens": [],
+                "finish_reason": null
+              }
+            },
+            "logical_progress": {
+              "0": 2,
+              "1": 1
+            },
+            "resident_lengths": {
+              "0": 2,
+              "1": 1
+            },
+            "tables": {
+              "0": [
+                0,
+                2
+              ],
+              "1": [
+                1
+              ]
+            },
+            "free_blocks": [
+              3
+            ]
+          }
+        },
+        "final": {
+          "outputs": {
+            "0": {
+              "request_id": 0,
+              "token_ids": [
+                1,
+                450,
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "generated_tokens": [
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "finish_reason": "length"
+            },
+            "1": {
+              "request_id": 1,
+              "token_ids": [
+                1,
+                450,
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "generated_tokens": [
+                29871,
+                29896,
+                29900,
+                6407
+              ],
+              "finish_reason": "length"
+            }
+          },
+          "logical_progress": {
+            "0": 5,
+            "1": 5
+          },
+          "resident_lengths": {},
+          "tables": {},
+          "free_blocks": [
+            2,
+            3,
+            1,
+            0
+          ]
+        }
+      }
+    ],
+    "seeded_replay": {
+      "seeds": [
+        71,
+        72
+      ],
+      "temperature": 0.8,
+      "top_k": 20,
+      "top_p": 0.9,
+      "first": [
+        {
+          "request_id": 0,
+          "token_ids": [
+            1,
+            450,
+            7027,
+            402,
+            1446,
+            1609
+          ],
+          "generated_tokens": [
+            7027,
+            402,
+            1446,
+            1609
+          ],
+          "finish_reason": "length"
+        },
+        {
+          "request_id": 1,
+          "token_ids": [
+            1,
+            450,
+            937,
+            1196,
+            310,
+            278
+          ],
+          "generated_tokens": [
+            937,
+            1196,
+            310,
+            278
+          ],
+          "finish_reason": "length"
+        }
+      ],
+      "second": [
+        {
+          "request_id": 0,
+          "token_ids": [
+            1,
+            450,
+            7027,
+            402,
+            1446,
+            1609
+          ],
+          "generated_tokens": [
+            7027,
+            402,
+            1446,
+            1609
+          ],
+          "finish_reason": "length"
+        },
+        {
+          "request_id": 1,
+          "token_ids": [
+            1,
+            450,
+            937,
+            1196,
+            310,
+            278
+          ],
+          "generated_tokens": [
+            937,
+            1196,
+            310,
+            278
+          ],
+          "finish_reason": "length"
+        }
+      ],
+      "rng_states_equal": true,
+      "newer_request_preemptions_each_run": 1
+    },
+    "lifecycle": {
+      "forced_eos": 29871,
+      "eos_output": {
+        "request_id": 0,
+        "token_ids": [
+          1,
+          450,
+          29871
+        ],
+        "generated_tokens": [
+          29871
+        ],
+        "finish_reason": "eos"
+      },
+      "zero_output": {
+        "request_id": 20,
+        "token_ids": [
+          1,
+          450
+        ],
+        "generated_tokens": [],
+        "finish_reason": "length"
+      },
+      "admission_errors": {
+        "context": "prompt plus max_new_tokens exceeds the model context limit",
+        "pool": "request cannot fit in the entire block pool"
+      },
+      "waiting_cancel": {
+        "request_id": 1,
+        "token_ids": [
+          1,
+          450
+        ],
+        "generated_tokens": [],
+        "finish_reason": "cancelled"
+      },
+      "running_cancel": {
+        "request_id": 0,
+        "token_ids": [
+          1,
+          450,
+          29871
+        ],
+        "generated_tokens": [
+          29871
+        ],
+        "finish_reason": "cancelled"
+      },
+      "final_free_blocks": 3
+    },
+    "memory": {
+      "fp32": {
+        "kv_budget_bytes": 2097152,
+        "block_size": 16,
+        "bytes_per_token": 45056,
+        "num_blocks": 2
+      },
+      "fp32_allocated_bytes": 1441792,
+      "driver_free_bytes": 6670843904,
+      "driver_total_bytes": 15637086208,
+      "example_workspace_reserve_bytes": 1073741824,
+      "available_plan_without_allocation": {
+        "kv_budget_bytes": 5597102080,
+        "block_size": 16,
+        "bytes_per_token": 45056,
+        "num_blocks": 7764
+      }
+    },
+    "fp16": {
+      "paging_rtol": 0.01,
+      "paging_atol": 0.01,
+      "checked_rows": 5,
+      "cross_precision_score_threshold_is_gate": false,
+      "sampled_fp32_greedy_parity_checked": true,
+      "row_max_abs_diff_range": {
+        "min": 0.009645462036132812,
+        "max": 0.1211695671081543
+      },
+      "diagnostics": [
+        {
+          "tick": 0,
+          "work": {
+            "request_id": 0,
+            "start": 0,
+            "end": 2,
+            "phase": "prefill"
+          },
+          "paging_rtol": 0.01,
+          "paging_atol": 0.01,
+          "cross_precision_score_threshold_is_gate": false,
+          "paged_fp16_vs_no_cache_fp16": {
+            "row_max_abs_diff": [
+              0.0,
+              0.0
+            ],
+            "row_mean_abs_diff": [
+              0.0,
+              0.0
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 64000,
+            "actual_argmax": [
+              529,
+              29871
+            ],
+            "reference_argmax": [
+              529,
+              29871
+            ]
+          },
+          "no_cache_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.1211695671081543,
+              0.009645462036132812
+            ],
+            "row_mean_abs_diff": [
+              0.018011411651968956,
+              0.0014794872840866446
+            ],
+            "mismatched_elements": 7328,
+            "total_elements": 64000,
+            "actual_argmax": [
+              529,
+              29871
+            ],
+            "reference_argmax": [
+              529,
+              29871
+            ]
+          },
+          "paged_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.1211695671081543,
+              0.009645462036132812
+            ],
+            "row_mean_abs_diff": [
+              0.018011411651968956,
+              0.0014794872840866446
+            ],
+            "mismatched_elements": 7328,
+            "total_elements": 64000,
+            "actual_argmax": [
+              529,
+              29871
+            ],
+            "reference_argmax": [
+              529,
+              29871
+            ]
+          },
+          "sampled_fp32_argmax_equal": true
+        },
+        {
+          "tick": 1,
+          "work": {
+            "request_id": 0,
+            "start": 2,
+            "end": 3,
+            "phase": "decode"
+          },
+          "paging_rtol": 0.01,
+          "paging_atol": 0.01,
+          "cross_precision_score_threshold_is_gate": false,
+          "paged_fp16_vs_no_cache_fp16": {
+            "row_max_abs_diff": [
+              0.015625
+            ],
+            "row_mean_abs_diff": [
+              0.0019705472514033318
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              29896
+            ],
+            "reference_argmax": [
+              29896
+            ]
+          },
+          "no_cache_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.010770797729492188
+            ],
+            "row_mean_abs_diff": [
+              0.002137734554708004
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              29896
+            ],
+            "reference_argmax": [
+              29896
+            ]
+          },
+          "paged_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.009936332702636719
+            ],
+            "row_mean_abs_diff": [
+              0.0018293829634785652
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              29896
+            ],
+            "reference_argmax": [
+              29896
+            ]
+          },
+          "sampled_fp32_argmax_equal": true
+        },
+        {
+          "tick": 2,
+          "work": {
+            "request_id": 0,
+            "start": 3,
+            "end": 4,
+            "phase": "decode"
+          },
+          "paging_rtol": 0.01,
+          "paging_atol": 0.01,
+          "cross_precision_score_threshold_is_gate": false,
+          "paged_fp16_vs_no_cache_fp16": {
+            "row_max_abs_diff": [
+              0.015625
+            ],
+            "row_mean_abs_diff": [
+              0.001991499215364456
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              29900
+            ],
+            "reference_argmax": [
+              29900
+            ]
+          },
+          "no_cache_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.014543533325195312
+            ],
+            "row_mean_abs_diff": [
+              0.0020984886214137077
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              29900
+            ],
+            "reference_argmax": [
+              29900
+            ]
+          },
+          "paged_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.012389183044433594
+            ],
+            "row_mean_abs_diff": [
+              0.0019659711979329586
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              29900
+            ],
+            "reference_argmax": [
+              29900
+            ]
+          },
+          "sampled_fp32_argmax_equal": true
+        },
+        {
+          "tick": 3,
+          "work": {
+            "request_id": 0,
+            "start": 4,
+            "end": 5,
+            "phase": "decode"
+          },
+          "paging_rtol": 0.01,
+          "paging_atol": 0.01,
+          "cross_precision_score_threshold_is_gate": false,
+          "paged_fp16_vs_no_cache_fp16": {
+            "row_max_abs_diff": [
+              0.015625
+            ],
+            "row_mean_abs_diff": [
+              0.0020297099836170673
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              6407
+            ],
+            "reference_argmax": [
+              6407
+            ]
+          },
+          "no_cache_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.011187076568603516
+            ],
+            "row_mean_abs_diff": [
+              0.002134009962901473
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              6407
+            ],
+            "reference_argmax": [
+              6407
+            ]
+          },
+          "paged_fp16_vs_fp32": {
+            "row_max_abs_diff": [
+              0.012603759765625
+            ],
+            "row_mean_abs_diff": [
+              0.0021456973627209663
+            ],
+            "mismatched_elements": 0,
+            "total_elements": 32000,
+            "actual_argmax": [
+              6407
+            ],
+            "reference_argmax": [
+              6407
+            ]
+          },
+          "sampled_fp32_argmax_equal": true
+        }
+      ],
+      "pool_budget": {
+        "kv_budget_bytes": 135168,
+        "block_size": 2,
+        "bytes_per_token": 22528,
+        "num_blocks": 3
+      },
+      "actual_allocated_bytes": 135168,
+      "one_mib_plan": {
+        "kv_budget_bytes": 1048576,
+        "block_size": 16,
+        "bytes_per_token": 22528,
+        "num_blocks": 2
+      },
+      "one_mib_unused_bytes": 327680,
+      "output": {
+        "request_id": 0,
+        "token_ids": [
+          1,
+          450,
+          29871,
+          29896,
+          29900,
+          6407
+        ],
+        "generated_tokens": [
+          29871,
+          29896,
+          29900,
+          6407
+        ],
+        "finish_reason": "length"
+      },
+      "final_free_blocks": 3
+    }
+  }
+}
