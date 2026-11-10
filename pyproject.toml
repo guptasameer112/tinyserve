@@ -11,6 +11,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest"]
+server = ["fastapi>=0.100", "uvicorn>=0.23", "httpx>=0.24"]
 
 [tool.setuptools.packages.find]
 include = ["tinyserve*"]

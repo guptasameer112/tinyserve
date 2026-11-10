@@ -121,6 +121,17 @@ seeded replay, failure/retry and FP16-versus-FP32 checks.
 The existing single-request `generate()` remains supported.
 Next after D5 validation: E1 (streaming OpenAI-compatible serving).
 
+[E1: streaming server](notebooks/E1_streaming_server.ipynb) is prepared for
+a separate fresh Colab T4; runtime validation remains pending.
+It serves a documented text-only Chat Completions subset over loopback HTTP,
+with SSE, shared-engine scheduling, strict options, cancellation and explicit
+failure handling. There is no public tunnel, authentication or deployment.
+The finite lesson server accepts at most 32 requests per app lifetime by
+default; it is not a production service or a full OpenAI API implementation.
+The demo uses FP32 and a small explicit KV pool while D5's full-model FP16
+comparison remains under investigation. Preparing E1 does not validate D5.
+See the [E1 guide](docs/guide/21-streaming-server.md).
+
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.
 Existing notebook outputs are preserved.

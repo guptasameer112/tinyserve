@@ -4,6 +4,16 @@ These JSON files contain saved Colab observations, not fresh local runs.
 Each result includes the original UTC timestamp, GPU/library environment,
 git SHA and lesson data.
 
+## E1 status
+
+[E1_streaming_server.ipynb](../notebooks/E1_streaming_server.ipynb) is prepared,
+not runtime-validated. No E1 JSON result is archived yet.
+Its fresh-T4 FP32 demo saves test output, dependency versions, actual HTTP
+JSON/SSE records, direct generation parity, shared-forward ownership,
+disconnect cancellation and final release to `E1_streaming_server.json`.
+The server binds only loopback and stops before saving results.
+D5's separate full-TinyLlama FP16 validation remains pending.
+
 ## D5 status
 
 [D5_engine.ipynb](../notebooks/D5_engine.ipynb) is prepared for a fresh Colab T4.

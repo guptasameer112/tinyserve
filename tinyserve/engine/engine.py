@@ -54,6 +54,7 @@ class InferenceEngine:
         self.scheduler = Scheduler(self.cache, max_batch_tokens)
         self._requests = {}
         self._pending_logits = None
+        self._closed = False
         if self.cache.allocated_bytes != self.memory_budget.allocated_bytes:
             raise RuntimeError("allocated KV bytes differ from the planned budget")
 
@@ -74,6 +75,8 @@ class InferenceEngine:
         return cls(model, free_bytes - reserve_bytes, block_size, max_batch_tokens)
 
     def _check_model(self):
+        if self._closed:
+            raise RuntimeError("engine is closed; create a new engine")
         weight = self.model.get_input_embeddings().weight
         if self.model.training or weight.device != self.cache.key.device or weight.dtype != self.cache.key.dtype:
             raise ValueError("engine model must remain in eval mode on its original device/dtype")
@@ -210,3 +213,19 @@ class InferenceEngine:
         while self.has_pending_requests:
             self.step()
         return tuple(self.get_output(owner) for owner in self._requests)
+
+    def close(self):
+        """Permanently abort all work, including a failed pending batch, and release leases.
+
+        E1 shutdown must not retry a failed forward or acknowledge incomplete work.
+        Storage stays allocated while this engine remains referenced.
+        """
+        if self._closed:
+            return
+        self._closed = True
+        self._pending_logits = None
+        for owner in tuple(self.cache.block_tables):
+            self.cache.release_request(owner)
+        for request in self._requests.values():
+            if request.finish_reason is None:
+                request.finish_reason = "cancelled"

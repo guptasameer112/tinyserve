@@ -80,7 +80,8 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] D3 (253 B8/C2/C3/D1/D2/D3 tests passed, 1 two-GPU test skipped; atomic exhaustion, real-model failure/retry, growth, reuse and reset passed in Colab on 2026-11-04)
 - [x] D4 (304 B8/C2/C3/D1/D2/D3/D4 tests passed, 1 two-GPU test skipped; continuous arrivals, chunked mixed batches, preemption/recomputation and final release passed in Colab on 2026-11-04)
 - [ ] D5 (continuous generation engine, explicit KV memory budgeting, tests, notebook and guide prepared; Colab runtime validation pending)
-- [ ] E1 E2
+- [ ] E1 (loopback-only streaming chat server, tests, notebook and guide prepared; Colab runtime validation pending; D5 validation remains separately pending)
+- [ ] E2
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
 - [ ] H

@@ -371,6 +371,24 @@ def test_model_eval_device_dtype_must_not_change_after_pool_creation():
         engine.add_request(0, torch.tensor([1]), 1)
 
 
+def test_close_aborts_a_failed_pending_forward_and_is_idempotent():
+    engine = engine_for()
+    engine.add_request(0, torch.tensor([1, 7]), 4)
+    engine.model.fail = True
+    with pytest.raises(RuntimeError, match="injected"):
+        engine.step()
+    assert engine.cache.block_tables
+    engine.close()
+    engine.close()
+    assert not engine.has_pending_requests
+    assert engine.get_output(0).finish_reason == "cancelled"
+    assert_free(engine)
+    with pytest.raises(RuntimeError, match="closed"):
+        engine.step()
+    with pytest.raises(RuntimeError, match="closed"):
+        engine.add_request(1, torch.tensor([1]), 1)
+
+
 def test_available_memory_requires_cuda_and_explicit_valid_headroom():
     model = ScriptedModel()
     with pytest.raises(ValueError, match="CUDA"):
