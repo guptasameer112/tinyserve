@@ -1,0 +1,6 @@
+include README.md MASTERPLAN.md
+recursive-include docs *.md *.typ *.png
+recursive-include scripts *.py
+recursive-include notebooks *.ipynb
+recursive-include tests *.py
+recursive-include results *.json *.md

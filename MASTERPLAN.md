@@ -17,6 +17,7 @@ concept (real numbers and shapes) -> spec -> you write the code -> test against 
 - Write package code, tests, lesson notebooks and guide chapters locally. **Do not set up a local testing environment.**
 - **Do not install dependencies, create virtual environments, download model weights, run pytest, or execute notebook/model code locally.** Dependency installation belongs in the Colab setup cell.
 - Local validation is limited to static analysis: Python syntax, notebook JSON/code-cell syntax and Git whitespace checks. Missing local PyTorch or CUDA is expected, not a problem to fix.
+- H exception approved on 2026-11-11: documentation-only local PDF builds are allowed. GitHub CI may run static checks and document/distribution builds, but no runtime tests. This does not authorize local pytest, notebook/model execution or a local model environment.
 - The user runs tests and demos on a **fresh Colab T4** and shares outputs. Report runtime validation as pending until those results are available; static checks do not count as passing runtime tests.
 - Preserve saved notebook outputs and unrelated work. Commit and push completed lesson files so the user can open them in Colab; do not include unrelated changes without approval.
 
@@ -84,7 +85,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] E2 (119 D5/E2 tests passed in Colab on 2026-11-11 at source 92de867; FP32 gate and all four FP16 workloads matched tokens, raw timing summaries verified, no preemption and full release; HF faster in all cases)
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
-- [ ] H
+- [ ] H (README entry points, short blog, 22-chapter PDF build, source/wheel packaging and static-only CI prepared; PDF/CI verification pending)
 
 Recorded B3-C2 JSON results are archived in `results/` from the original
 saved notebook outputs, with their original timestamps and environment metadata.
@@ -120,5 +121,7 @@ after three tokens. All 16 blocks were released and the server stopped.
 E2's complete run at source `92de867` is archived in `results/E2_engine_vs_hf.json`.
 All 119 tests passed. Four FP16 workloads retained all trials and matching
 continuations; HF was faster under the documented direct timing boundaries.
-Next: H packaging, then pause for a full core-project review before stretch work.
+H adds the blog, ordered guide/PDF build, installable benchmark modules and
+static/document/package CI. Verify packaging, then pause for the full
+`docs/CORE_REVIEW.md` review before stretch work; the review itself is not complete.
 Shared-prefix blocks and copy-on-write remain deferred.

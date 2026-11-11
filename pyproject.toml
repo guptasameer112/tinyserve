@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "tinyserve"
 version = "0.0.1"
 description = "A small vLLM-style inference engine built from scratch."
+readme = "README.md"
 requires-python = ">=3.8"
 dependencies = []
 
@@ -14,7 +15,7 @@ dev = ["pytest"]
 server = ["fastapi>=0.100", "uvicorn>=0.23", "httpx>=0.24"]
 
 [tool.setuptools.packages.find]
-include = ["tinyserve*"]
+include = ["tinyserve*", "bench*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

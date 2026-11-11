@@ -4,6 +4,48 @@ A small vLLM-style inference engine built from scratch for TinyLlama-1.1B-Chat (
 
 See [MASTERPLAN.md](MASTERPLAN.md) for the roadmap and process rules.
 
+## Start here
+
+The core A-E lessons are implemented and have recorded Colab evidence.
+H adds documentation, the compiled study guide and static packaging CI.
+This is a learning project: **HF was faster in every measured E2 workload**.
+It is not a production server or a claim of vLLM feature/performance parity.
+
+- [Read the short project story](docs/blog.md).
+- [Read the 22-chapter guide in order](docs/guide/README.md).
+- [Inspect complete runtime evidence](results/README.md), including exact source/environment.
+- [Download CI-built PDF and distributions](https://github.com/guptasameer112/tinyserve/actions/workflows/packaging.yml):
+  open a successful **Packaging CI** run and download `tinyserve-packaging`.
+  Artifacts expire after 30 days; rerun the workflow to rebuild them.
+- [Pause for the full core review](docs/CORE_REVIEW.md) before Parts F/G.
+
+### Run a lesson
+
+Open the relevant notebook in Colab, select a **fresh T4 runtime**, and run it
+top to bottom. Start with [A1](https://colab.research.google.com/github/guptasameer112/tinyserve/blob/main/notebooks/A1_tokens_tensors_logits.ipynb)
+or revisit [E2](https://colab.research.google.com/github/guptasameer112/tinyserve/blob/main/notebooks/E2_engine_vs_hf.ipynb).
+Each notebook sets up the checkout and installs its required extras in Colab.
+Save the complete JSON and notebook outputs. Pulling the repository does not
+refresh already-open notebook cells.
+
+Do not install model dependencies, download weights, run pytest or execute
+notebooks/models locally. The approved H exception is documentation-only PDF
+building. GitHub CI runs syntax, notebook JSON, local-link, package-content and
+document-build checks only; it does not rerun or certify GPU behavior.
+
+### Installable distribution
+
+The wheel contains `tinyserve` and the `bench` helpers used by the notebooks.
+The source archive also includes tests, lessons, docs and recorded results.
+PyTorch and Transformers remain supplied by the Colab runtime; this is not a
+self-contained inference environment. `dev` adds pytest, and `server` adds
+FastAPI/Uvicorn/HTTPX. There is no CLI, model weight bundle, PyPI publication,
+public deployment or authentication/TLS setup.
+
+The E1 app must stay on `127.0.0.1`. It implements a finite text-only Chat
+Completions subset with a default 32-admission lifetime quota, not an unrestricted
+OpenAI-compatible production API.
+
 ## Layout
 
 - `tinyserve/`: the package (model, generation, engine, server, kernels)
@@ -149,7 +191,9 @@ matching FP32 and measured FP16 continuations, no preemption and full block rele
 HF was faster in all four FP16 cases; TinyServe median output throughput was
 14.36-24.68 tokens/s versus HF's 38.23-130.26 tokens/s across those cases.
 See the [E2 guide](docs/guide/22-engine-vs-hf.md) for per-case ranges and limitations.
-Next: H packaging, then pause for a full core-project review before stretch work.
+H packaging adds the [blog](docs/blog.md), [PDF build](docs/guide/README.md)
+and static/document/package CI. After packaging verification, **pause for the
+[full core-project review](docs/CORE_REVIEW.md)** before stretch work.
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered
 from the saved notebook outputs with their original environment metadata.
