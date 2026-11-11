@@ -136,8 +136,14 @@ validated under its documented precision contract.
 The [E1 result](results/E1_streaming_server.json) records JSON/SSE text and
 token parity, shared concurrent forwards, cancellation after three tokens,
 all 16 blocks released and server shutdown.
-Next: E2 benchmarks, then H packaging. Pause for a full core-project review
-before starting stretch work.
+[E2: engine versus HF](notebooks/E2_engine_vs_hf.ipynb) is prepared for a fresh
+Colab T4; runtime validation remains pending. It compares direct fixed-work
+generation, with same-run token-ID TTFT, inter-token latency, request latency,
+output throughput and repeated min/median/max ranges. A short FP32 parity gate
+precedes FP16 timing. The comparison records backend/cache-lifecycle differences,
+memory, exact token outputs and all trials; it does not claim HTTP latency or
+require a speedup. See the [E2 guide](docs/guide/22-engine-vs-hf.md).
+After E2: H packaging, then pause for a full core-project review before stretch work.
 See the [E1 guide](docs/guide/21-streaming-server.md).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered

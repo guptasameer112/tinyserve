@@ -239,4 +239,5 @@ throughput, TTFT or latency claim; E2 owns those measurements.
    Send an explicit stream error and terminate without the success marker.
    You cannot retroactively change the response status.
 
-Next: E2, measured throughput, time to first token and latency versus HF.
+Next: [E2](22-engine-vs-hf.md), direct throughput, time to first token
+and latency versus HF, without conflating token readiness with HTTP text delivery.

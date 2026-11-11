@@ -4,6 +4,16 @@ These JSON files contain saved Colab observations, not fresh local runs.
 Each result includes the original UTC timestamp, GPU/library environment,
 git SHA and lesson data.
 
+## E2 status
+
+[E2_engine_vs_hf.ipynb](../notebooks/E2_engine_vs_hf.ipynb) is prepared,
+not runtime-validated. No E2 result is archived yet.
+Its direct comparison saves tests, a short FP32 parity gate and four FP16
+fixed-work cases, including all trials, token-ready timestamps, exact IDs,
+TTFT/ITL/last-ID latency, throughput, memory observations and timing boundaries.
+It uses no HTTP server and does not require a speedup or universal FP16 parity.
+Archive the complete user-supplied `E2_engine_vs_hf.json` before changing status.
+
 ## E1 status
 
 [E1_streaming_server.json](E1_streaming_server.json) was archived from the
