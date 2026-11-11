@@ -147,13 +147,18 @@ def _measure_hf(model, input_ids, new_tokens):
         cache_implementation="dynamic", eos_token_id=None,
         pad_token_id=model.config.pad_token_id if model.config.pad_token_id is not None else 0,
     )
-    trace.start, baseline = _start(input_ids.device)
-    output = model.generate(
-        input_ids=input_ids, attention_mask=torch.ones_like(input_ids),
-        generation_config=config, use_model_defaults=False, eos_token_id=None,
-        streamer=trace,
-    )
-    record = _finish(input_ids.device, trace.start, baseline, trace.times, trace.tokens)
+    original_config = model.generation_config
+    try:
+        # HF merges unset fields from its model policy; isolate that source too.
+        model.generation_config = config
+        trace.start, baseline = _start(input_ids.device)
+        output = model.generate(
+            input_ids=input_ids, attention_mask=torch.ones_like(input_ids),
+            generation_config=config, streamer=trace,
+        )
+        record = _finish(input_ids.device, trace.start, baseline, trace.times, trace.tokens)
+    finally:
+        model.generation_config = original_config
     batch, prompt = input_ids.shape
     if (not trace.ended or tuple(output.shape) != (batch, prompt + new_tokens)
             or any(len(row) != new_tokens for row in trace.tokens)

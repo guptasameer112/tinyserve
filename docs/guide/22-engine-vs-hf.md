@@ -125,8 +125,13 @@ identical continuations or universal numerical equivalence. D5's precision
 contract still applies; no new FP16 score tolerance is invented.
 
 EOS configuration is restored even on error. HF gets a fresh generation
-configuration with model defaults disabled, no EOS stopping or extra sampling
-processors. The original HF generation configuration remains unchanged.
+configuration with no EOS stopping or extra sampling processors. Modern HF
+merges unset fields from `model.generation_config`, so the benchmark temporarily
+uses the fresh policy as that default source too. It restores the original
+object in `finally`, including after generation or timing failure; the original
+policy's contents are not edited. No `use_model_defaults` argument is passed.
+Tests install conflicting sampling/beam/penalty settings in the original policy
+and check isolation, fixed work and restoration.
 Engine cleanup closes and releases even a failed pending forward. Errors
 propagate; no failed trial becomes a fabricated timing result.
 

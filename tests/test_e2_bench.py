@@ -226,12 +226,18 @@ def test_real_models_exact_work_token_parity_and_memory(device, dtype):
     config._attn_implementation = "eager"
     reference = transformers.LlamaForCausalLM(config).to(device=device, dtype=dtype).eval()
     model = LlamaForCausalLM.from_huggingface(reference)
+    reference.generation_config.do_sample = True
+    reference.generation_config.num_beams = 2
+    reference.generation_config.repetition_penalty = 1.5
+    reference.generation_config.forced_eos_token_id = 2
+    original_config = reference.generation_config
     before = deepcopy(reference.generation_config.to_dict())
     ids = torch.tensor([[1, 7, 9], [1, 11, 12]], device=device)
     # A two-row budget deliberately chunks prefill and staggers first outputs.
     result = benchmark.run_case(model, reference, ids, 3, trials=2,
                                 block_size=2, max_batch_tokens=2)
     assert model.config.eos_token_id == reference.config.eos_token_id == 2
+    assert reference.generation_config is original_config
     assert reference.generation_config.to_dict() == before
     if dtype == torch.float32:
         assert result["token_ids_equal_in_all_trials"]
@@ -253,23 +259,35 @@ def test_real_models_exact_work_token_parity_and_memory(device, dtype):
         assert pair["tinyserve"]["preemptions"] == 0
 
 
-def test_short_hf_stream_or_wrong_returned_tokens_are_rejected(monkeypatch):
+@pytest.mark.parametrize("fail", [False, True])
+def test_hf_policy_is_restored_after_bad_outputs_or_generation_failure(monkeypatch, fail):
     reference = ScriptedModel()
+    reference.config.pad_token_id = 0
+    reference.generation_config = transformers.GenerationConfig(eos_token_id=8, do_sample=True)
+    original_config = reference.generation_config
+    before = deepcopy(original_config.to_dict())
     ids = torch.tensor([[1, 7]])
 
-    def fake_generate(input_ids, streamer, **kwargs):
-        config = kwargs["generation_config"]
+    def fake_generate(input_ids, streamer, generation_config, attention_mask):
+        config = generation_config
+        assert reference.generation_config is config and config is not original_config
         assert config.eos_token_id is None and config.use_cache and not config.do_sample
         assert config.cache_implementation == "dynamic"
-        assert kwargs["use_model_defaults"] is False and kwargs["eos_token_id"] is None
-        assert torch.equal(kwargs["attention_mask"], torch.ones_like(input_ids))
+        assert torch.equal(attention_mask, torch.ones_like(input_ids))
+        if fail:
+            raise RuntimeError("injected generation failure")
         streamer.put(input_ids.cpu())
         streamer.put(torch.tensor([8]))
         streamer.end()
         return torch.tensor([[1, 7, 9]])
 
     monkeypatch.setattr(reference, "generate", fake_generate, raising=False)
-    with pytest.raises(RuntimeError, match="fixed output budget"):
+    message = "injected generation failure" if fail else "fixed output budget"
+    with pytest.raises(RuntimeError, match=message):
         benchmark._measure_hf(reference, ids, 2)
-    with pytest.raises(RuntimeError, match="fixed output budget"):
+    assert reference.generation_config is original_config
+    assert original_config.to_dict() == before
+    with pytest.raises(RuntimeError, match=message):
         benchmark._measure_hf(reference, ids, 1)
+    assert reference.generation_config is original_config
+    assert original_config.to_dict() == before
