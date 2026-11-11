@@ -6,7 +6,9 @@ Notebook: [E2_engine_vs_hf.ipynb](../../notebooks/E2_engine_vs_hf.ipynb).
 
 ## Status and scope
 
-E2 is prepared; Colab runtime validation is pending. E1's separate run is
+E2's complete user-supplied T4 run at source `92de867` passed on November 11,
+2026: all 119 D5/E2 tests passed, with no skips. Complete evidence is archived
+in [E2_engine_vs_hf.json](../../results/E2_engine_vs_hf.json). E1's separate run is
 archived in [E1_streaming_server.json](../../results/E1_streaming_server.json).
 It does not establish E2 performance.
 
@@ -135,8 +137,31 @@ and check isolation, fixed work and restoration.
 Engine cleanup closes and releases even a failed pending forward. Errors
 propagate; no failed trial becomes a fabricated timing result.
 
-Archive the user's **complete** Colab payload before marking E2 validated.
-Local checks remain static only.
+## Recorded Colab result
+
+The FP32 gate and every measured FP16 continuation matched HF. All timed
+engine runs recorded zero preemptions and full block release. HF used SDPA.
+All summary statistics were recomputed from the supplied raw trials.
+
+Output throughput is shown as **minimum / median / maximum**:
+
+| B | P | TinyServe output tokens/s | HF output tokens/s |
+|---|---|---|---|
+| 1 | 32 | 12.13 / 14.36 / 14.54 | 33.12 / 38.23 / 40.62 |
+| 4 | 32 | 22.20 / 24.68 / 25.13 | 101.97 / 118.16 / 121.91 |
+| 1 | 128 | 13.69 / 14.38 / 14.57 | 38.27 / 40.60 / 41.64 |
+| 4 | 128 | 19.74 / 21.29 / 22.77 | 101.09 / 130.26 / 137.19 |
+
+HF was faster in all four cases. Median TTFT was 71.79/29.07,
+162.22/36.62, 89.22/29.18 and 394.10/72.22 ms (TinyServe/HF), respectively.
+For the largest case, TinyServe TTFT spanned 68.32-663.79 ms across requests
+and trials, consistent with staggered prefill readiness. Profiling would
+be required to attribute the performance gap to individual operations.
+
+The complete archive preserves original timestamp, source and environment.
+Local checks remained static/data-only; no benchmark or model ran locally.
+These results do not establish HTTP latency, production p99 or universal
+FP16 token equality.
 
 ## Three interview questions
 

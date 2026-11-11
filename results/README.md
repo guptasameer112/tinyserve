@@ -6,13 +6,38 @@ git SHA and lesson data.
 
 ## E2 status
 
-[E2_engine_vs_hf.ipynb](../notebooks/E2_engine_vs_hf.ipynb) is prepared,
-not runtime-validated. No E2 result is archived yet.
-Its direct comparison saves tests, a short FP32 parity gate and four FP16
-fixed-work cases, including all trials, token-ready timestamps, exact IDs,
-TTFT/ITL/last-ID latency, throughput, memory observations and timing boundaries.
-It uses no HTTP server and does not require a speedup or universal FP16 parity.
-Archive the complete user-supplied `E2_engine_vs_hf.json` before changing status.
+[E2_engine_vs_hf.json](E2_engine_vs_hf.json) was archived from the complete
+user-supplied Colab output on November 11, 2026. Its original timestamp
+`2026-11-11T09:09:06Z`, source `92de867`, T4 environment and test log are preserved:
+all 119 D5/E2 tests passed in 24.16 seconds, with no skips.
+
+The FP32 gate (two requests, 16 prompt tokens, four outputs) and all measured
+FP16 continuations matched HF. Each FP16 case has three alternating paired
+trials after one full warmup per mode. Every timed engine run recorded zero
+preemptions and all blocks free. HF used SDPA and DynamicCache; TinyServe used
+PyTorch paged gather. These direct token-ID timings include observation costs,
+exclude TinyServe pool setup and include HF dynamic-cache setup.
+
+Output tokens/s below are **min / median / max**, not confidence intervals:
+
+| B | P | TinyServe output tokens/s | HF output tokens/s | Median TTFT ms, TinyServe / HF |
+|---|---|---|---|---|
+| 1 | 32 | 12.13 / 14.36 / 14.54 | 33.12 / 38.23 / 40.62 | 71.79 / 29.07 |
+| 4 | 32 | 22.20 / 24.68 / 25.13 | 101.97 / 118.16 / 121.91 | 162.22 / 36.62 |
+| 1 | 128 | 13.69 / 14.38 / 14.57 | 38.27 / 40.60 / 41.64 | 89.22 / 29.18 |
+| 4 | 128 | 19.74 / 21.29 / 22.77 | 101.09 / 130.26 / 137.19 | 394.10 / 72.22 |
+
+HF was faster in all four cases. Paired median HF speed factors were
+2.73x, 4.70x, 2.82x and 5.72x respectively. No speedup threshold was required.
+The largest FP16 pool held 12,976,128 bytes (36 blocks).
+
+Every summary was recomputed from raw trials, including timing intervals,
+throughput, paired ratios and allocator deltas. Counts, token equality,
+pool arithmetic and release were checked without executing model code locally.
+The archive matches the supplied JSON bytes after removing only Markdown fences.
+Preserve the successful [E2 notebook](../notebooks/E2_engine_vs_hf.ipynb)
+outputs separately. This does not establish HTTP latency, universal FP16
+equivalence, production p99 or the cause of the performance gap.
 
 ## E1 status
 

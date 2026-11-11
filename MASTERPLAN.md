@@ -81,7 +81,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] D4 (304 B8/C2/C3/D1/D2/D3/D4 tests passed, 1 two-GPU test skipped; continuous arrivals, chunked mixed batches, preemption/recomputation and final release passed in Colab on 2026-11-04)
 - [x] D5 (422 B8/C1/C2/C3/D1/D2/D3/D4/D5 tests passed, 1 two-GPU test skipped; continuous generation, preemption/replay, failure/retry, seeded sampling, lifecycle and KV memory checks passed in Colab on 2026-11-10; FP16 paging and sampled FP32 greedy parity passed under the corrected precision contract)
 - [x] E1 (114 D5/E1 tests passed in Colab on 2026-11-11 at source cee6f49; live FP32 JSON/SSE parity, shared forwards, disconnect cancellation, full block release and shutdown validated)
-- [ ] E2 (direct TinyServe/HF benchmark, per-token timing tests, descriptive FP32-parity/FP16-timing notebook and guide prepared; Colab runtime validation pending)
+- [x] E2 (119 D5/E2 tests passed in Colab on 2026-11-11 at source 92de867; FP32 gate and all four FP16 workloads matched tokens, raw timing summaries verified, no preemption and full release; HF faster in all cases)
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
 - [ ] H
@@ -117,5 +117,8 @@ E1's complete user-provided Colab run at source `cee6f49` is archived in
 `results/E1_streaming_server.json`: 114 tests passed, live JSON/SSE matched
 direct generation, concurrent clients shared forwards, and disconnect cancelled
 after three tokens. All 16 blocks were released and the server stopped.
-Next: E2 benchmarks, then H packaging and a full core-project review before stretch work.
+E2's complete run at source `92de867` is archived in `results/E2_engine_vs_hf.json`.
+All 119 tests passed. Four FP16 workloads retained all trials and matching
+continuations; HF was faster under the documented direct timing boundaries.
+Next: H packaging, then pause for a full core-project review before stretch work.
 Shared-prefix blocks and copy-on-write remain deferred.
