@@ -6,13 +6,26 @@ git SHA and lesson data.
 
 ## E1 status
 
-[E1_streaming_server.ipynb](../notebooks/E1_streaming_server.ipynb) is prepared,
-not runtime-validated. No E1 JSON result is archived yet.
-Its fresh-T4 FP32 demo saves test output, dependency versions, actual HTTP
-JSON/SSE records, direct generation parity, shared-forward ownership,
-disconnect cancellation and final release to `E1_streaming_server.json`.
-The server binds only loopback and stops before saving results.
-D5's separately validated run is archived below; it does not validate E1.
+[E1_streaming_server.json](E1_streaming_server.json) was archived from the
+complete user-supplied Colab output on November 11, 2026. The original timestamp
+`2026-11-11T08:31:24Z`, T4 environment, source `cee6f49` and test log are preserved:
+all 114 D5/E1 tests passed in 22.90 seconds, with no skips.
+
+The FP32 live-loopback demo records health/model discovery, JSON/SSE text
+and token histories matching direct generation, and eight forwards shared
+by the two concurrent clients. Completed requests each generated eight tokens;
+the streamed text arrived in three content chunks of 2-11 characters.
+The disconnected request was cancelled after three tokens. Unsupported
+options returned HTTP 400. All 16 blocks were released, block tables were
+empty, and shutdown closed the engine.
+
+The fixed KV pool held 11,534,336 bytes (11 MiB). The archive was checked
+for byte equality with the supplied JSON after removing only Markdown fences.
+Counts, schemas, parity, ownership, memory arithmetic and release were checked
+without executing model code locally. Preserve the successful
+[E1 notebook](../notebooks/E1_streaming_server.ipynb) outputs separately.
+This validates the documented loopback-only subset, not public deployment,
+full OpenAI compatibility or performance. E2 owns timing measurements.
 
 ## D5 status
 
@@ -38,7 +51,7 @@ The archive was checked for equality with the supplied JSON after removing
 only its Markdown fence. Timelines, counts, pool bytes and recorded summaries
 were checked without executing model code locally. Preserve the successful
 [D5 notebook](../notebooks/D5_engine.ipynb) outputs separately.
-Memory planning is not an OOM guarantee. E1 runtime validation remains pending.
+Memory planning is not an OOM guarantee. E1's separate run is archived above.
 
 ## D4 status
 

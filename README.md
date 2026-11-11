@@ -122,17 +122,22 @@ All demonstrated pools were fully released. Results are archived in
 [D5_engine.json](results/D5_engine.json).
 KV-only budgeting still requires separate workspace headroom and does not
 guarantee OOM safety. The existing single-request `generate()` remains supported.
-See the [D5 guide](docs/guide/20-engine-loop.md). Next: validate E1.
+See the [D5 guide](docs/guide/20-engine-loop.md). E1 is validated below.
 
-[E1: streaming server](notebooks/E1_streaming_server.ipynb) is prepared for
-a separate fresh Colab T4; runtime validation remains pending.
+[E1: streaming server](notebooks/E1_streaming_server.ipynb) passed its separate
+Colab T4 run on November 11, 2026 at source `cee6f49`: all 114 D5/E1 tests passed.
 It serves a documented text-only Chat Completions subset over loopback HTTP,
 with SSE, shared-engine scheduling, strict options, cancellation and explicit
 failure handling. There is no public tunnel, authentication or deployment.
 The finite lesson server accepts at most 32 requests per app lifetime by
 default; it is not a production service or a full OpenAI API implementation.
 The demo uses FP32 and a small explicit KV pool. D5's supplied run is
-validated under its documented precision contract; E1 requires its own run.
+validated under its documented precision contract.
+The [E1 result](results/E1_streaming_server.json) records JSON/SSE text and
+token parity, shared concurrent forwards, cancellation after three tokens,
+all 16 blocks released and server shutdown.
+Next: E2 benchmarks, then H packaging. Pause for a full core-project review
+before starting stretch work.
 See the [E1 guide](docs/guide/21-streaming-server.md).
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered

@@ -7,7 +7,11 @@ Notebook: [E1_streaming_server.ipynb](../../notebooks/E1_streaming_server.ipynb)
 
 ## Status and scope
 
-E1 is prepared, not runtime-validated. D5's complete Colab run at source
+E1's complete user-supplied T4 run at source `cee6f49` passed on November 11,
+2026: all 114 D5/E1 tests passed, including both socket disconnect-order cases.
+The original JSON is archived in
+[E1_streaming_server.json](../../results/E1_streaming_server.json).
+D5's complete Colab run at source
 `d013743` is validated under its corrected precision contract: same-precision
 paging checks and sampled FP32 greedy parity, with cross-precision score
 differences recorded rather than claimed equivalent. The E1 demo uses FP32
@@ -212,10 +216,16 @@ For finite, predictable overlapping workloads, the demo temporarily disables
 EOS stopping and restores the original model setting on exit. Deterministic
 tests separately verify the app's EOS-to-`stop` mapping and early release.
 
-Runtime validation remains pending until the user's complete Colab outputs
-are available. Local syntax, notebook JSON and whitespace checks are static
-only. This lesson makes no throughput, TTFT or latency claim; E2 owns those
-measurements.
+The archived FP32 demo matched direct token histories and JSON/SSE text.
+Both concurrent clients shared eight forwards. Each completed request generated
+eight tokens; the streamed text used three content chunks of 2-11 characters.
+The disconnected request was cancelled after three tokens. All 16 blocks
+were released, block tables were empty, and shutdown closed the engine.
+The fixed KV pool held 11,534,336 bytes (11 MiB).
+
+Local syntax, notebook JSON and whitespace checks remain static only; the
+runtime evidence came from the user's Colab run. This lesson makes no
+throughput, TTFT or latency claim; E2 owns those measurements.
 
 ## Three interview questions
 

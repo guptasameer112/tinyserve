@@ -80,7 +80,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] D3 (253 B8/C2/C3/D1/D2/D3 tests passed, 1 two-GPU test skipped; atomic exhaustion, real-model failure/retry, growth, reuse and reset passed in Colab on 2026-11-04)
 - [x] D4 (304 B8/C2/C3/D1/D2/D3/D4 tests passed, 1 two-GPU test skipped; continuous arrivals, chunked mixed batches, preemption/recomputation and final release passed in Colab on 2026-11-04)
 - [x] D5 (422 B8/C1/C2/C3/D1/D2/D3/D4/D5 tests passed, 1 two-GPU test skipped; continuous generation, preemption/replay, failure/retry, seeded sampling, lifecycle and KV memory checks passed in Colab on 2026-11-10; FP16 paging and sampled FP32 greedy parity passed under the corrected precision contract)
-- [ ] E1 (loopback-only streaming chat server, tests, notebook and guide prepared; Colab runtime validation pending)
+- [x] E1 (114 D5/E1 tests passed in Colab on 2026-11-11 at source cee6f49; live FP32 JSON/SSE parity, shared forwards, disconnect cancellation, full block release and shutdown validated)
 - [ ] E2
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
@@ -113,5 +113,9 @@ D5's complete user-provided Colab run at source `d013743` is archived in
 All 43 successful FP32 scheduled/replayed rows matched reference argmax.
 Five FP16 rows passed paging checks and all four sampled choices matched FP32;
 cross-precision score differences are recorded, not claimed numerically equivalent.
-E1 is prepared and remains separately pending.
+E1's complete user-provided Colab run at source `cee6f49` is archived in
+`results/E1_streaming_server.json`: 114 tests passed, live JSON/SSE matched
+direct generation, concurrent clients shared forwards, and disconnect cancelled
+after three tokens. All 16 blocks were released and the server stopped.
+Next: E2 benchmarks, then H packaging and a full core-project review before stretch work.
 Shared-prefix blocks and copy-on-write remain deferred.
