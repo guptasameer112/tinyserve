@@ -7,16 +7,16 @@ See [MASTERPLAN.md](MASTERPLAN.md) for the roadmap and process rules.
 ## Start here
 
 The core A-E lessons are implemented and have recorded Colab evidence.
-H adds documentation, the compiled study guide and static packaging CI.
+H adds documentation and the compiled study guide. CI and distribution builds
+are out of scope.
 This is a learning project: **HF was faster in every measured E2 workload**.
 It is not a production server or a claim of vLLM feature/performance parity.
 
 - [Read the short project story](docs/blog.md).
 - [Read the 22-chapter guide in order](docs/guide/README.md).
 - [Inspect complete runtime evidence](results/README.md), including exact source/environment.
-- [Download CI-built PDF and distributions](https://github.com/guptasameer112/tinyserve/actions/workflows/packaging.yml):
-  open a successful **Packaging CI** run and download `tinyserve-packaging`.
-  Artifacts expire after 30 days; rerun the workflow to rebuild them.
+- [Read the compiled 22-chapter PDF](docs/tinyserve-study-guide.pdf).
+- [Inspect its build manifest](docs/tinyserve-study-guide.manifest.json).
 - [Pause for the full core review](docs/CORE_REVIEW.md) before Parts F/G.
 
 ### Run a lesson
@@ -30,17 +30,17 @@ refresh already-open notebook cells.
 
 Do not install model dependencies, download weights, run pytest or execute
 notebooks/models locally. The approved H exception is documentation-only PDF
-building. GitHub CI runs syntax, notebook JSON, local-link, package-content and
-document-build checks only; it does not rerun or certify GPU behavior.
+building and inspection. Local static checks cover syntax, notebook JSON,
+local links and recorded result envelopes; they do not certify GPU behavior.
 
-### Installable distribution
+### Run from the repository
 
-The wheel contains `tinyserve` and the `bench` helpers used by the notebooks.
-The source archive also includes tests, lessons, docs and recorded results.
-PyTorch and Transformers remain supplied by the Colab runtime; this is not a
-self-contained inference environment. `dev` adds pytest, and `server` adds
-FastAPI/Uvicorn/HTTPX. There is no CLI, model weight bundle, PyPI publication,
-public deployment or authentication/TLS setup.
+Use the Colab notebook setup cells to run `tinyserve` and the `bench` helpers
+from the checkout. PyTorch and Transformers remain supplied by the Colab runtime;
+this is not a self-contained inference environment. `dev` adds pytest, and
+`server` adds FastAPI/Uvicorn/HTTPX. CI, wheel and source-distribution builds
+are not Part H deliverables. There is no CLI, model weight bundle, PyPI
+publication, public deployment or authentication/TLS setup.
 
 The E1 app must stay on `127.0.0.1`. It implements a finite text-only Chat
 Completions subset with a default 32-admission lifetime quota, not an unrestricted
@@ -191,8 +191,11 @@ matching FP32 and measured FP16 continuations, no preemption and full block rele
 HF was faster in all four FP16 cases; TinyServe median output throughput was
 14.36-24.68 tokens/s versus HF's 38.23-130.26 tokens/s across those cases.
 See the [E2 guide](docs/guide/22-engine-vs-hf.md) for per-case ranges and limitations.
-H packaging adds the [blog](docs/blog.md), [PDF build](docs/guide/README.md)
-and static/document/package CI. After packaging verification, **pause for the
+H includes the [blog](docs/blog.md), [compiled PDF](docs/tinyserve-study-guide.pdf)
+and [local PDF build instructions](docs/guide/README.md). The 22-chapter,
+65-page PDF passed local structure, link-target, hash and sampled-layout checks
+on November 11, 2026. Local static checks also passed; no runtime tests were run.
+**Pause for the
 [full core-project review](docs/CORE_REVIEW.md)** before stretch work.
 
 Recorded B3-C2 JSON files are now in [results/](results/README.md), recovered

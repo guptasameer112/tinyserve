@@ -1,4 +1,4 @@
-"""Static-only CI: parse sources/notebooks, check local links and inspect wheels."""
+"""Static-only checks: parse sources/notebooks, check links and optional archives."""
 import argparse
 import ast
 import json

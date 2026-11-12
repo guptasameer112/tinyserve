@@ -1,0 +1,37 @@
+{
+  "source_commit": "940ca91dfdc5955e34643ffdc9c10689ef584e66",
+  "chapter_count": 22,
+  "tools": {
+    "pandoc": "3.13",
+    "typst": "0.15.1"
+  },
+  "sources": {
+    "docs/guide/README.md": "6df4b4481f14b1f612c93efb1358936ee98a0c4cea55d7a5846164c34bba29ee",
+    "docs/guide/01-tokens-tensors-logits.md": "a1e7dcc5a26a24fd96d73c501f032faaccf6e87b91a0723f9e18fc8df33f9821",
+    "docs/guide/02-gpu-roofline.md": "21aef07381aa94d7822eb9e51ee1f6580d870a35be0cf0a1af0f499a211a7ffd",
+    "docs/guide/03-hf-baseline.md": "13c43f9bb67327ac7254ae4411f265c7f06aec3c4f26ce21eecdfc753647f47c",
+    "docs/guide/04-weight-tour.md": "668537d702d771698cad5512e9d844d9a86cedf8d8dc2a33b5864553d80299c4",
+    "docs/guide/05-rmsnorm.md": "1bf85d35a05f4c68beae38e0590ca4dca63151829a2a49a5f2f8525a238aac16",
+    "docs/guide/06-rope.md": "f1ac326a4d5ac3d7b8e28aab8abaacbf03ab36d1eecaa9d3de1c0bf835290ccc",
+    "docs/guide/07-attention.md": "86d789dfa6e0baa095c93c8295e9b2a1bbd2293c1f5fffe550138f13cfeee8e8",
+    "docs/guide/08-gqa.md": "b316d719e8c92a1b367f4827045e0223ebf5264135f9d848e53bd738584d6f6f",
+    "docs/guide/09-mlp.md": "dca1540f5b15615b61e734869da051e394abda6b63a3b1ddbd9e5c1cd8016367",
+    "docs/guide/10-decoder-layer.md": "2086e189c0da64d02444b2e96345f05e292b373e65e8a764d9126bce18726b97",
+    "docs/guide/11-full-model.md": "12d9921d8c4245faca3623d9e230bc2f89a30e48a092ac8fa0517fac8ae24369",
+    "docs/guide/12-sampling.md": "92686bea46d2b4134b2ab99234d57d6c281a6fe4ac66d1e98845d3d4a75ff025",
+    "docs/guide/13-generation-loop.md": "22f26e3d2afa4561948fcd9e14a672caf01abf47c994dee376881df241e6d7ca",
+    "docs/guide/14-contiguous-kv-cache.md": "2b4852db79a55cc6c78529722574c4d5fd0d3044ca7adc888a670352b659a5d8",
+    "docs/guide/15-cache-speed-curve.md": "f9a7857498cfc82ea7927265dca7c8c94b2f30de535fb003afc9dedbecfc1f54",
+    "docs/guide/16-flattened-batching.md": "60fc45ebad51c3321f83f674ff72f3bf61af0dfe799a8a21738600d016c9d514",
+    "docs/guide/17-paged-kv-cache.md": "8cddf19b9d907239286d60a9a7b5af10551e4d6d650625a892fba2b00e341d79",
+    "docs/guide/18-block-manager.md": "998b3a844c61c94d27786ae19ec11fff430523603ee8d473ff888b6be03e3fd5",
+    "docs/guide/19-continuous-batching.md": "edf6adf90154d83237341d36c755372b1845b23b534d7a8d54a1736c310a0c14",
+    "docs/guide/20-engine-loop.md": "52a5aecf70c30b601372028dd9991f9bd201f4cef567f0d1c04c7792e1147b6e",
+    "docs/guide/21-streaming-server.md": "ebe0f7fc1785a9fa69348e3028e5da9e62219b23946b2ccf96535b5ccd27bfff",
+    "docs/guide/22-engine-vs-hf.md": "abf81288c1d7e38334e18bf9f1ac844be366c45f75150ad5ca522b6a7f8906d7",
+    "docs/CORE_REVIEW.md": "dae2a5149b44ebccd216743c24d8b481d561c88d4aa2b41fefac59456612076b",
+    "docs/guide/pdf.typ": "e47ebb9b54f714d9a020553998ce7e0c56c95007ef9f8c8466ea0f4e93c7dcae",
+    "docs/guide/img/A2_roofline.png": "958e52e4f9528780f67d6189b055abc1a9e7b137b35a42cbf534f2ae4786e0b9"
+  },
+  "pdf_sha256": "4d6feef1836a5f27c9daa555e54fba93b62eade95c46df77e2eacbda23f9ca9f"
+}

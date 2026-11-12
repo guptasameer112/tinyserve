@@ -27,9 +27,10 @@ claim that later performance features already exist.
 
 ## PDF and reproducible build
 
-The **Packaging CI** workflow produces `tinyserve-study-guide.pdf` and its source
-manifest in the `tinyserve-packaging` artifact. Download the artifact from a
-successful run on the repository's Actions page. There is no release or deployment.
+Read `docs/tinyserve-study-guide.pdf` and its build manifest,
+`docs/tinyserve-study-guide.manifest.json`, directly from the repository.
+Part H uses a local documentation-only build, not CI or distribution builds.
+There is no release or deployment.
 The PDF includes this introduction, all numbered chapters, the existing roofline
 image and the core-review checklist. Its table of contents is navigable.
 Code/result links point to the source commit recorded by the build.
@@ -39,8 +40,8 @@ Required documentation tools:
 - [Pandoc 3.13](https://github.com/jgm/pandoc/releases/tag/3.13).
 - [Typst 0.15.1](https://github.com/typst/typst/releases/tag/v0.15.1).
 
-Use official release archives. CI checks their SHA256 digests before extraction.
-The workflow records the exact source SHA and produces source-file/PDF hashes
+Use official release archives and verify their published SHA256 digests before
+extraction. The build records the link-target commit and source-file/PDF hashes
 in `tinyserve-study-guide.manifest.json`.
 
 From a clean checkout, with both executables on PATH:
@@ -50,14 +51,15 @@ python scripts/check_static.py
 python scripts/build_guide.py --revision FULL_40_CHARACTER_COMMIT_SHA
 ```
 
-Replace the placeholder with `git rev-parse HEAD`. An explicit SHA prevents
-ambiguous links; it does not prove a dirty tree matches that SHA. Build from
-a clean checkout, or export the committed source first. Output defaults to
-the ignored `dist` directory. `--pandoc`, `--typst` and `--output` accept explicit
-paths when the tools are not on PATH.
+Replace the placeholder with `git rev-parse HEAD`. An explicit SHA fixes the
+code/result link targets; it does not prove a dirty tree matches that SHA.
+The manifest hashes identify the actual local document inputs. For an exact
+committed-source build, use a clean checkout or export the committed source first.
+Output defaults to `docs/tinyserve-study-guide.pdf`, alongside its manifest.
+`--pandoc`, `--typst` and `--output` accept explicit paths when tools are not on PATH.
 
 The user approved local documentation-only builds for H. This does **not**
 permit local pytest, notebook/model execution, dependency setup or weight
-downloads. Runtime lessons remain Colab-only. CI performs static/document/package
-checks; it does not replace the archived T4 runs. No byte-for-byte cross-platform
+downloads. Runtime lessons remain Colab-only. Local static and PDF checks
+do not replace the archived T4 runs. No byte-for-byte cross-platform
 PDF reproducibility is promised: system fonts can differ.

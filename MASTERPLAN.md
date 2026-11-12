@@ -17,7 +17,7 @@ concept (real numbers and shapes) -> spec -> you write the code -> test against 
 - Write package code, tests, lesson notebooks and guide chapters locally. **Do not set up a local testing environment.**
 - **Do not install dependencies, create virtual environments, download model weights, run pytest, or execute notebook/model code locally.** Dependency installation belongs in the Colab setup cell.
 - Local validation is limited to static analysis: Python syntax, notebook JSON/code-cell syntax and Git whitespace checks. Missing local PyTorch or CUDA is expected, not a problem to fix.
-- H exception approved on 2026-11-11: documentation-only local PDF builds are allowed. GitHub CI may run static checks and document/distribution builds, but no runtime tests. This does not authorize local pytest, notebook/model execution or a local model environment.
+- H exception approved on 2026-11-11: documentation-only local PDF builds and inspection are allowed. CI and wheel/source-distribution builds are out of scope. This does not authorize local pytest, notebook/model execution or a local model environment.
 - The user runs tests and demos on a **fresh Colab T4** and shares outputs. Report runtime validation as pending until those results are available; static checks do not count as passing runtime tests.
 - Preserve saved notebook outputs and unrelated work. Commit and push completed lesson files so the user can open them in Colab; do not include unrelated changes without approval.
 
@@ -56,7 +56,7 @@ Clock, power and temperature details are a footnote ("the T4 varies run to run, 
 | **E. Serving** | E1 Streaming OpenAI-compatible server (driven from the notebook). E2 Benchmark vs HF (throughput, TTFT, latency) | `server/`, `bench/` | Core |
 | **F. Performance** | F1 Hash-chained prefix cache. F2 Triton paged-attention decode kernel plus fuzz tests. F3 CUDA graphs. F4 Ablation table and MBU analysis | `kernels/`, `engine/` | Stretch |
 | **G. Extras** | G1 Qwen2.5-0.5B support. G2 Prompt-lookup speculative decoding. G3 KV visualizer. G4 INT8 KV cache | | Planned |
-| **H. Packaging** | README, blog post, PDF, CI | | Core |
+| **H. Packaging** | README, blog post, locally built and checked PDF (no CI or distribution builds) | | Core |
 
 Parts A to E and H make a project that can be explained end to end. Part F is what makes it stand out for inference roles.
 
@@ -85,7 +85,7 @@ Parts A to E and H make a project that can be explained end to end. Part F is wh
 - [x] E2 (119 D5/E2 tests passed in Colab on 2026-11-11 at source 92de867; FP32 gate and all four FP16 workloads matched tokens, raw timing summaries verified, no preemption and full release; HF faster in all cases)
 - [ ] F1 F2 F3 F4
 - [ ] G1 G2 G3 G4
-- [ ] H (README entry points, short blog, 22-chapter PDF build, source/wheel packaging and static-only CI prepared; PDF/CI verification pending)
+- [x] H (README, short blog and 22-chapter/65-page PDF verified locally on 2026-11-11: contents, bookmarks, internal/source-file links, hashes and sampled layout checked; static checks passed; CI and distribution builds excluded)
 
 Recorded B3-C2 JSON results are archived in `results/` from the original
 saved notebook outputs, with their original timestamps and environment metadata.
@@ -121,7 +121,7 @@ after three tokens. All 16 blocks were released and the server stopped.
 E2's complete run at source `92de867` is archived in `results/E2_engine_vs_hf.json`.
 All 119 tests passed. Four FP16 workloads retained all trials and matching
 continuations; HF was faster under the documented direct timing boundaries.
-H adds the blog, ordered guide/PDF build, installable benchmark modules and
-static/document/package CI. Verify packaging, then pause for the full
+H includes the blog, ordered guide and locally built PDF. Local PDF and static
+checks passed on 2026-11-11; CI and distribution builds are excluded. Pause for the full
 `docs/CORE_REVIEW.md` review before stretch work; the review itself is not complete.
 Shared-prefix blocks and copy-on-write remain deferred.

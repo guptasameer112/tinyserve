@@ -55,7 +55,7 @@ def main():
     parser.add_argument("--pandoc", default="pandoc")
     parser.add_argument("--typst", default="typst")
     parser.add_argument("--revision", required=True, help="Full source commit for PDF links/provenance")
-    parser.add_argument("--output", type=Path, default=ROOT / "dist" / "tinyserve-study-guide.pdf")
+    parser.add_argument("--output", type=Path, default=ROOT / "docs" / "tinyserve-study-guide.pdf")
     args = parser.parse_args()
     if len(args.revision) != 40 or any(char not in "0123456789abcdef" for char in args.revision):
         raise ValueError("--revision must be a full lowercase Git commit SHA")

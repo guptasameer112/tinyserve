@@ -1,6 +1,6 @@
 # Stop here: review the core project
 
-E2 is validated. After H packaging is verified, **do not start Parts F/G yet**.
+E2 is validated. After the H documentation and PDF checks, **do not start Parts F/G yet**.
 The user requested time to go through the whole core project properly first.
 Use this checklist as a discussion guide, not a request to execute models locally.
 
@@ -50,7 +50,7 @@ Use this checklist as a discussion guide, not a request to execute models locall
 
 For each claim, open the relevant [guide chapter](guide/README.md), source,
 test and [complete recorded result](../results/README.md). Explain what the test
-actually exercises. Suite counts overlap, and a passing static CI run is not
+actually exercises. Suite counts overlap, and a passing local static check is not
 a new GPU runtime validation.
 
 The loopback app is a finite teaching server, not a public production service.
